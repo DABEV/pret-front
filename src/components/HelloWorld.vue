@@ -4,7 +4,7 @@
       <h3>Pot with a plant</h3>
     </template>
     <template #img>
-      <img src="/foto5.png" alt="">
+      <img src="http://images7.memedroid.com/images/UPLOADED645/6201803e9abd9.jpeg" alt="">
     </template>
     <template #text>
       <p>
