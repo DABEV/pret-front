@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import App from './App.vue'
-import Vuesax from "vuesax";
+import Vuesax from 'vuesax';
 import VueRouter from "vue-router";
+import 'vuesax/dist/vuesax.css'
 
 
 // router setup
