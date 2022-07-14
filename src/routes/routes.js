@@ -1,3 +1,5 @@
+import Access from "@/layout/LoginLayout.vue";
+import Login from "@/components/Login.vue";
 
 const routes = [
     
@@ -13,6 +15,18 @@ const routes = [
             }
         ]
 
+    },
+    {
+        path: "/session",
+        component: Access,
+        redirect: "/session/login",
+        children: [
+            {
+                path: "login",
+                name: "Login",
+                component: Login,
+            }
+        ]
     },
 ]
 
