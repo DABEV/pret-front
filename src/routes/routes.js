@@ -1,5 +1,7 @@
 import Access from "@/layout/LoginLayout.vue";
-import Login from "@/components/Login.vue";
+import Login from "@/components/login/Login.vue";
+import RegisterRecuiter from "@/components/login/RegisterRecuiter.vue";
+import RegisterUser from "@/components/login/RegisterUser.vue";
 
 const routes = [
     
@@ -19,12 +21,21 @@ const routes = [
     {
         path: "/session",
         component: Access,
-        redirect: "/session/login",
         children: [
             {
                 path: "login",
                 name: "Login",
                 component: Login,
+            },
+            {
+                path: "registerRecruiter",
+                name: "Register Recruiter",
+                component: RegisterRecuiter,
+            },
+            {
+                path: "registerUser",
+                name: "Register User",
+                component: RegisterUser,
             }
         ]
     },

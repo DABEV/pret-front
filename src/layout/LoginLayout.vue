@@ -1,18 +1,16 @@
 <template>
     <div class="backimage bg-component">
         <div>
-            <login></login>
+            <router-view></router-view>
         </div>
     </div>
 </template>
 
 <script>
-import Login from '../components/Login.vue'
 
 export default {
     name: 'Access',
     components:{
-        Login
     }
 }
 </script>

@@ -3,7 +3,7 @@
     <vs-col>
       <vs-card type="1">
         <template #title>
-          <h4 ><b>PRET</b>&nbsp;<img alt="img" src="../assets/img/logo.svg" style="width: 15px; "></h4>
+          <h4 ><b>PRET</b>&nbsp;<img alt="img" src="../../assets/img/logo.svg" style="width: 15px; "></h4>
         </template>
         <template #text>
           <div class="con-form">
@@ -34,7 +34,7 @@
               <vs-button block animation-type="vertical">
                 Iniciar sesión
                 <template #animate>
-                  <em class="bx bx-log-in-circle"></em>Entrar
+                  <em class="bx bx-log-in-circle"></em>&nbsp;Entrar
                 </template>
               </vs-button>
             </vs-col>
