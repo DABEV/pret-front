@@ -45,9 +45,7 @@
         </vs-col>
       </vs-row>
       <div class="center">
-        <vs-input primary v-model="description" placeholder="Breve descripción">
-          <template #icon><em class="bx bxs-notepad"></em></template>
-        </vs-input>
+        <textarea v-model="description" placeholder="Breve descripción"></textarea>
       </div>
       <br />
       <vs-row>
@@ -111,6 +109,24 @@ export default {
 }
 .vs-select-content {
   width: calc(62%);
+}
+textarea{
+    display: flex;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    background: #f4f7f8;
+    font-family: "Poppins";
+    padding: 10px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    margin-left: 5px; 
+    padding-left: 10px;
+    width: 98%;
+}
+textarea::placeholder{
+    color: #b5bdc3;
+    visibility: visible;
+    pointer-events: auto;
 }
 body {
   font-family: "Poppins";
