@@ -1,16 +1,13 @@
 <template>
   <div>
-    <status></status>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Status from '../components/Status.vue';
 export default {
-  name: "ProfileLayout",
-  components: {
-    Status,
-  },
+  name: "ContentLayout",
+  components: {},
 };
 </script>
 

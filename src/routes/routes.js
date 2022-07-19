@@ -1,7 +1,6 @@
-import ProfileLayout from "@/layout/ProfileLayout"
+import ContentLayout from "@/layout/ContentLayout"
 import Profile from "@/components/Profile.vue"
 import Status from "@/components/Status.vue"
-import StatusLayout from "@/layout/StatusLayout.vue"
 
 const routes = [
     
@@ -20,7 +19,7 @@ const routes = [
     },
     {
         path: "/profile",
-        component:ProfileLayout,
+        component:ContentLayout,
         redirect: "/profile",
         children: [
             {
@@ -33,7 +32,7 @@ const routes = [
     },
     {
         path: "/postulaciones",
-        component:StatusLayout,
+        component:ContentLayout,
         redirect: "/postulaciones",
         children: [
             {
