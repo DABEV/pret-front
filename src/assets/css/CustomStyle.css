@@ -126,7 +126,6 @@ img {
     width: 100%;
     position: relative;
     display: block;
-    margin: 10px 0;
     clear: both;
     display: -ms-flexbox;
     display: flex;
@@ -139,4 +138,14 @@ img {
 .border {
     width: 100%;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.item:hover {
+    background: rgba(var(--vs-gray-1), 1) !important;
+}
+
+.pagination {
+    padding: 8px 10px;
+    background: rgba(var(--vs-gray-2), 1);
+    border-radius: 0 0 14px 14px;
 }

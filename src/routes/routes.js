@@ -1,6 +1,7 @@
 import ContentLayout from "@/layout/ContentLayout"
 import Profile from "@/components/Profile.vue"
 import Status from "@/components/Status.vue"
+import ContactList from "@/components/ContactList.vue"
 
 const routes = [
     
@@ -39,6 +40,20 @@ const routes = [
                 path: "",
                 name: "Postulaciones",
                 component: Status,
+            }
+        ]
+
+    },
+
+    {
+        path: "/contactos",
+        component:ContentLayout,
+        redirect: "/contactos",
+        children: [
+            {
+                path: "",
+                name: "Contactos",
+                component: ContactList,
             }
         ]
 

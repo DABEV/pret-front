@@ -142,15 +142,15 @@
         <vs-col lg="5" sm="12" xs="12">
           <h2>Idiomas de dominio</h2>
           <div class="space-top content-data space datos text-start bg-gray">
-            <div :key="i" v-for="(idioma, i) in idiomas" :data="idioma">
-              <vs-row>
-                <vs-col lg="1" sm="2" xs="2" class="text-center">
+            <div :key="i" v-for="(idioma, i) in idiomas" :data="idioma" class="item">
+              <vs-row class="space">
+                <vs-col lg="1" sm="2" xs="2" class="text-center space-top ">
                   <i class="bx bx-world bg-primary"></i>
                 </vs-col>
-                <vs-col lg="8" sm="6" xs="6">
+                <vs-col lg="8" sm="6" xs="6" class="space-top ">
                   <p>{{ idioma.nombre }}</p>
                 </vs-col>
-                <vs-col lg="3" sm="4" xs="4" class="text-center">
+                <vs-col lg="3" sm="4" xs="4" class="text-center space-top ">
                   <span class="badge-sec">{{ idioma.nivel }}</span>
                 </vs-col>
               </vs-row>
@@ -163,12 +163,12 @@
         <vs-col lg="6" sm="12" xs="12">
           <h2>Conocimientos y habilidades</h2>
           <div class="space-top content-data space datos text-start bg-gray">
-            <div :key="i" v-for="(hab, i) in habilidades" :data="hab">
-              <vs-row>
-                <vs-col lg="1" sm="2" xs="2" class="text-center">
+            <div :key="i" v-for="(hab, i) in habilidades" :data="hab" class="item">
+              <vs-row class="space">
+                <vs-col lg="1" sm="2" xs="2" class="text-center space-top ">
                   <i class="bx bx-book-open bg-primary"></i>
                 </vs-col>
-                <vs-col lg="11" sm="10" xs="10">
+                <vs-col lg="11" sm="10" xs="10" class="space-top ">
                   <p>{{ hab.nombre }}</p>
                 </vs-col>
               </vs-row>
