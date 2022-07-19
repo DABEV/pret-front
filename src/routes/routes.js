@@ -1,4 +1,6 @@
 import Access from "@/layout/LoginLayout.vue";
+import Vacancy from "@/layout/VacancyLayout.vue";
+import RegisterVacancy from "@/components/RegisterVacancy.vue";
 import Login from "@/components/login/Login.vue";
 import RegisterRecuiter from "@/components/login/RegisterRecuiter.vue";
 import RegisterUser from "@/components/login/RegisterUser.vue";
@@ -36,6 +38,17 @@ const routes = [
                 path: "registerUser",
                 name: "Register User",
                 component: RegisterUser,
+            }
+        ]
+    },
+    {
+        path: "/vacancy",
+        component: Vacancy,
+        children: [
+            {
+                path: "register",
+                name: "Register Vacancy",
+                component: RegisterVacancy,
             }
         ]
     },
