@@ -4,19 +4,23 @@
       <h2>Postulaciones realizadas</h2>
       <div class="space-top content-data space datos text-start bg-gray">
         <div class="center">
+          <div class="header-table">
+            <vs-row justify="flex-end">
+              <vs-col lg="4" sm="12" xs="12">
+                <vs-input
+                  v-model="search"
+                  color="#1e88e5"
+                  block
+                  placeholder="Buscar"
+                >
+                  <template #icon>
+                    <i class="bx bx-search"></i>
+                  </template>
+                </vs-input>
+              </vs-col>
+            </vs-row>
+          </div>
           <vs-table>
-            <template #header>
-              <vs-input
-                v-model="search"
-                color="#1e88e5"
-                border
-                placeholder="Buscar"
-              >
-                <template #icon>
-                  <i class="bx bx-search"></i>
-                </template>
-              </vs-input>
-            </template>
             <template #thead>
               <vs-tr>
                 <vs-th
@@ -99,20 +103,20 @@
                 <vs-td>
                   {{ tr.estado }}
                 </vs-td>
-                <vs-td>
-                  <p v-if="tr.estatus == 'Idóneo'" class="bg-success">
+                <vs-td class="text-center">
+                  <span v-if="tr.estatus == 'Idóneo'" class="badge-suc">
                     {{ tr.estatus }}
-                  </p>
-                  <p v-else-if="tr.estatus == 'Postulado'" class="bg-primary">
+                  </span>
+                  <span v-else-if="tr.estatus == 'Postulado'" class="badge-pri">
                     {{ tr.estatus }}
-                  </p>
-                  <p v-else-if="tr.estatus == 'CV visto'" class="bg-warning">
+                  </span>
+                  <span v-else-if="tr.estatus == 'CV visto'" class="badge-war">
                     {{ tr.estatus }}
-                  </p>
-                  <p v-else-if="tr.estatus == 'Cancelado'" class="bg-danger">
+                  </span>
+                  <span v-else-if="tr.estatus == 'Cancelado'" class="badge-dan">
                     {{ tr.estatus }}
-                  </p>
-                  <p v-else class="bg-gray">{{ tr.estatus }}</p>
+                  </span>
+                  <span v-else class="badge-def">{{ tr.estatus }}</span>
                 </vs-td>
                 <template #expand>
                   <div class="con-content">
@@ -131,9 +135,10 @@
             <template #footer>
               <vs-pagination
                 v-model="page"
-                :length="$vs.getLength(postulaciones, max)"
+                :length="$vs.getLength($vs.getSearch(postulaciones, search), max)"
               />
             </template>
+            <template #notFound> No se encontraron registros </template>
           </vs-table>
         </div>
       </div>
