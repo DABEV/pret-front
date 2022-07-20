@@ -4,7 +4,7 @@
       <h4>
         <strong>Registro de usuario</strong>
         <br />
-        <img alt="img" src="../../assets/img/logo.svg" style="width: 25px" />
+        <img alt="img" src="../../assets/img/logo.svg" style="width: 40px" />
       </h4>
       <vs-row>
         <vs-col lg="6" sm="12" xs="12">
@@ -91,6 +91,9 @@ export default {
   box-shadow: 0 5px 20px 0 rgba(0, 0, 0, var(--vs-shadow-opacity));
   background: rgba(var(--vs-background), 1);
 }
+img{
+  border-radius: 6px !important;
+}
 .content-card {
   border-radius: 15px;
   overflow: hidden;
@@ -118,9 +121,6 @@ textarea{
     font-family: "Poppins";
     padding: 10px;
     margin-top: 1px;
-    margin-bottom: 1px;
-    margin-left: 5px; 
-    padding-left: 10px;
     width: 98%;
 }
 textarea::placeholder{

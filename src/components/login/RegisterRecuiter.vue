@@ -6,7 +6,7 @@
           <h4>
             <strong>Registro de reclutador</strong>
             <br />
-            <img alt="img" src="../../assets/img/logo.svg" style="width: 25px" />
+            <img alt="img" src="../../assets/img/logo.svg" style="width: 40px" />
           </h4>
         </template>
         <template #text>
@@ -95,7 +95,9 @@ export default {
     width: 400px;
   }
 }
-
+img{
+  border-radius: 6px !important;
+}
 .con-form {
   width: 100%;
   align-items: center;

@@ -3,7 +3,7 @@
     <vs-col>
       <vs-card type="1">
         <template #title>
-          <h4 ><b>PRET</b>&nbsp;<img alt="img" src="../../assets/img/logo.svg" style="width: 15px; "></h4>
+          <h4 ><b>PRET</b><br><img alt="img" src="../../assets/img/logo.svg" style="width: 40px; "></h4>
         </template>
         <template #text>
           <div class="con-form">
@@ -62,7 +62,9 @@ export default {
         width: 400px;
     }
 }
-
+img{
+  border-radius: 6px !important;
+}
 .con-form {
   width: 100%;
   align-items: center;

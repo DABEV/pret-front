@@ -1,6 +1,8 @@
 import Access from "@/layout/LoginLayout.vue";
 import Vacancy from "@/layout/VacancyLayout.vue";
 import RegisterVacancy from "@/components/RegisterVacancy.vue";
+import CandidatesList from "@/components/CandidateList.vue";
+import PropiceCandidates from "@/components/PropiceCandidatesList.vue";
 import Login from "@/components/login/Login.vue";
 import RegisterRecuiter from "@/components/login/RegisterRecuiter.vue";
 import RegisterUser from "@/components/login/RegisterUser.vue";
@@ -49,6 +51,16 @@ const routes = [
                 path: "register",
                 name: "Register Vacancy",
                 component: RegisterVacancy,
+            },
+            {
+                path: "candidatesList",
+                name: "Candidates List",
+                component: CandidatesList,
+            },
+            {
+                path: "propiceCandidates",
+                name: "Propice Candidates List",
+                component: PropiceCandidates,
             }
         ]
     },
