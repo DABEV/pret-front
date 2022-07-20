@@ -115,6 +115,56 @@ img {
     padding: 1px 5px;
 }
 
+.badge-pri {
+    padding: 1px;
+    background: #1e88e5;
+    color: #fff;
+    display: inline-block;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    padding: 1px 5px;
+}
+
+.badge-war {
+    padding: 1px;
+    background: #F2BA29;
+    color: #fff;
+    display: inline-block;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    padding: 1px 5px;
+}
+
+.badge-dan {
+    padding: 1px;
+    background: #fa584c;
+    color: #fff;
+    display: inline-block;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    padding: 1px 5px;
+}
+
+.badge-suc {
+    padding: 1px;
+    background: #2ECC71;
+    color: #fff;
+    display: inline-block;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    padding: 1px 5px;
+}
+
+.badge-def {
+    padding: 1px;
+    background: #6c7885;
+    color: #fff;
+    display: inline-block;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    padding: 1px 5px;
+}
+
 .con-content {
     display: flex;
     align-items: center;
@@ -148,4 +198,10 @@ img {
     padding: 8px 10px;
     background: rgba(var(--vs-gray-2), 1);
     border-radius: 0 0 14px 14px;
+}
+
+.header-table {
+    width: 100%;
+    padding-bottom: 10px;
+    border-radius: 14px 14px 0px 0px;
 }

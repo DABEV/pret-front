@@ -37,6 +37,9 @@
         </vs-row>
       </div>
       <div class="space-top content-data space datos text-start bg-gray">
+        <div class="center" v-if="$vs.getSearch(contactos, search).length < 1">
+          No se encontraron registros
+        </div>
         <div
           :key="i"
           :data="c"
@@ -74,7 +77,7 @@
                   icon
                   animation-type="rotate"
                   danger
-                  @click="active = !active"
+                  @click="active = !active, Confirmar(c)"
                 >
                   <i class="bx bx-trash-alt"></i>
                   <template #animate><i class="bx bxs-trash-alt"></i></template>
@@ -86,37 +89,37 @@
           <div class="divider">
             <span class="border"></span>
           </div>
-
-          <vs-dialog width="450px" class="text-center" v-model="active">
-            <template #header>
-              <h4><b>Confirmación</b></h4>
-            </template>
-            <div class="text-gray">
-              <p>
-                ¿Seguro de eliminar a <b>{{ c.nombre }}</b> de tus contactos?
-              </p>
-            </div>
-            <template #footer>
-              <vs-row justify="space-between">
-                <vs-col w="5">
-                  <vs-button danger @click="active = false" block>
-                    Quitar
-                  </vs-button>
-                </vs-col>
-                <vs-col w="5">
-                  <vs-button transparent dark @click="active = false" block>
-                    Cancelar
-                  </vs-button>
-                </vs-col>
-              </vs-row>
-            </template>
-          </vs-dialog>
         </div>
         <div class="pagination">
-          <vs-pagination  v-model="page" :length="$vs.getLength(contactos, max)" />
+          <vs-pagination
+            v-model="page"
+            :length="$vs.getLength($vs.getSearch(contactos, search), max)"
+          />
         </div>
       </div>
     </div>
+    <vs-dialog width="450px" class="text-center" v-model="active">
+      <template #header>
+        <h4><b>Confirmación</b></h4>
+      </template>
+      <div class="text-gray">
+        <p>
+          ¿Seguro de eliminar a <b>{{ contacto.nombre }}</b> de tus contactos?
+        </p>
+      </div>
+      <template #footer>
+        <vs-row justify="space-between">
+          <vs-col w="5">
+            <vs-button danger @click="active = false" block> Quitar </vs-button>
+          </vs-col>
+          <vs-col w="5">
+            <vs-button transparent dark @click="active = false" block>
+              Cancelar
+            </vs-button>
+          </vs-col>
+        </vs-row>
+      </template>
+    </vs-dialog>
   </div>
 </template>
 
@@ -128,6 +131,7 @@ export default {
     page: 1,
     max: 5,
     search: "",
+    contacto: {},
     contactos: [
       {
         nombre: "Cameron",
@@ -179,5 +183,10 @@ export default {
       },
     ],
   }),
+  methods: {
+    Confirmar: function (contacto){
+      this.contacto = contacto;
+    }
+  }
 };
 </script>
