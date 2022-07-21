@@ -1,7 +1,7 @@
 <template>
   <vs-row>
     <vs-col>
-      <vs-card type="1">
+      <vs-card class="content-card">
         <template #title>
           <h4 ><b>PRET</b><br><img alt="img" src="../../assets/img/logo.svg" style="width: 40px; "></h4>
         </template>
@@ -30,7 +30,7 @@
         </template>
         <template #buttons>
           <vs-row>
-            <vs-col offset="3" w="8">
+            <vs-col offset="3" w="7">
               <vs-button block animation-type="vertical">
                 Iniciar sesión
                 <template #animate>
@@ -41,7 +41,9 @@
           </vs-row>
           <br />
           <div class="new">
-            No tienes cuenta? <a href="#">Crea una nueva</a>
+            No tienes cuenta?
+            <br>
+            <a href="#">Crea una nueva</a>
           </div>
           <br />
         </template>
@@ -57,30 +59,4 @@ export default {
 </script>
 
 <style>
-@media screen{
-    .vs-card{
-        width: 400px;
-    }
-}
-img{
-  border-radius: 6px !important;
-}
-.con-form {
-  width: 100%;
-  align-items: center;
-}
-.vs-input-content {
-  margin: 10px 0px;
-  width: calc(100%);
-}
-.vs-input {
-  width: 100%;
-}
-.vs-button {
-  margin: 0px;
-  width: 75%;
-}
-body {
-  font-family: "Poppins";
-}
 </style>

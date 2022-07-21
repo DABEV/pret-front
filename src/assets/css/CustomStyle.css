@@ -31,6 +31,23 @@ img {
     padding: 5px;
 }
 
+textarea{
+    display: flex;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    background: #f4f7f8;
+    font-family: "Poppins";
+    margin-top: 20px;
+    padding: 20px;
+    width: 100%;
+}
+
+textarea::placeholder{
+    color: #b5bdc3;
+    visibility: visible;
+    pointer-events: auto;
+}
+
 .content-data {
     border-radius: 20px;
     box-shadow: 0 5px 20px 0 rgba(0, 0, 0, var(--vs-shadow-opacity));
@@ -209,4 +226,15 @@ img {
     width: 100%;
     padding-bottom: 10px;
     border-radius: 14px 14px 0px 0px;
+}
+.button-center{
+    width: 250px;
+    padding: 20px;
+}
+.vs-select3{
+    padding-right: 0px !important;
+    width: 120% !important;
+}
+.vs-input2{
+  padding-right: 20px;
 }

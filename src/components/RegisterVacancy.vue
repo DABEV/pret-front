@@ -5,7 +5,7 @@
       <div class="space-top content-data datos text-start">
         <div class="center">
           <vs-row justify="space-around">
-            <vs-col lg="6" sm="12" xs="12">
+            <vs-col class="vs-input2" lg="5" sm="12" xs="12">
                 Título
               <vs-input primary v-model="name" placeholder="Título de la postulación">
                 <template #icon><em class="bx bxs-notepad"></em></template>
@@ -23,9 +23,9 @@
                 <template #icon><em class="bx bxs-calendar"></em></template>
               </vs-input>
             </vs-col>
-            <vs-col lg="6" sm="12" xs="12">
+            <vs-col class="vs-input2" lg="5" sm="12" xs="12">
                 Modalidad
-              <vs-select block placeholder="Modalidad de trabajo" v-model="value">
+              <vs-select class="vs-select3" block placeholder="Modalidad de trabajo" v-model="value">
                 <vs-option label="Home Office" value="1"> Home Office </vs-option>
                 <vs-option label="Planta" value="2"> Planta </vs-option>
                 <vs-option label="Modalidad mixta" value="3"> Modalidad mixta </vs-option>
@@ -47,7 +47,7 @@
                 <template #icon><em class="bx bxs-calendar"></em></template>
               </vs-input>
             </vs-col>
-            <vs-col lg="12" sm="12" xs="12">
+            <vs-col class="vs-input2" lg="11" sm="12" xs="12">
                 Descripción
                 <br>
                 <textarea
@@ -80,23 +80,4 @@ export default {
 </script>
 
 <style>
-textarea{
-    display: flex;
-    border-radius: 12px;
-    border: 2px solid transparent;
-    background: #f4f7f8;
-    font-family: "Poppins";
-    margin-top: 20px;
-    padding: 20px;
-    width: 100%;
-}
-textarea::placeholder{
-    color: #b5bdc3;
-    visibility: visible;
-    pointer-events: auto;
-}
-.button-center{
-    width: 30%;
-    padding: 20px;
-}
 </style>

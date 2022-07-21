@@ -25,7 +25,7 @@
           <vs-input primary v-model="career" placeholder="Grado de estudios">
             <template #icon><em class="bx bxs-graduation"></em></template>
           </vs-input>
-          <vs-select placeholder="Estado en el que reside" v-model="value">
+          <vs-select class="vs-select2" block placeholder="Estado en el que reside" v-model="value">
                 <vs-option label="Morelos" value="1">
                 Morelos
                 </vs-option>
@@ -44,20 +44,20 @@
           </vs-input>
         </vs-col>
       </vs-row>
-      <div class="center">
+      <div class="center2">
         <textarea v-model="description" placeholder="Breve descripción"></textarea>
       </div>
       <br />
-      <vs-row>
-        <vs-col offset="4" lg="6">
-          <vs-button block animation-type="vertical">
+      <vs-row justify="space-around">
+        <vs-col  w="4">
+          <vs-button animation-type="vertical">
             Crear cuenta
             <template #animate>
               <em class="bx bx-log-in-circle"></em>&nbsp;Registrarse
             </template>
           </vs-button>
         </vs-col>
-      </vs-row>
+      </vs-row>    
       <br />
       <div class="new">
         Ya dispones de una cuenta?
@@ -86,49 +86,4 @@ export default {
 </script>
 
 <style>
-
-.content-data {
-  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, var(--vs-shadow-opacity));
-  background: rgba(var(--vs-background), 1);
-}
-img{
-  border-radius: 6px !important;
-}
-.content-card {
-  border-radius: 15px;
-  overflow: hidden;
-  width: 100%;
-  color: rgba(var(--vs-text), 1);
-}
-.vs-input-content {
-  padding: 10px;
-  margin-top: 1px;
-  margin-bottom: 1px;
-  margin-left: 5px;
-  width: calc(100%);
-}
-.vs-button {
-  width: 65%;
-}
-.vs-select-content {
-  width: calc(62%);
-}
-textarea{
-    display: flex;
-    border-radius: 12px;
-    border: 2px solid transparent;
-    background: #f4f7f8;
-    font-family: "Poppins";
-    padding: 10px;
-    margin-top: 1px;
-    width: 98%;
-}
-textarea::placeholder{
-    color: #b5bdc3;
-    visibility: visible;
-    pointer-events: auto;
-}
-body {
-  font-family: "Poppins";
-}
 </style>

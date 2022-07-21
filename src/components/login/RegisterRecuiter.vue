@@ -1,7 +1,7 @@
 <template>
   <vs-row>
     <vs-col>
-      <vs-card type="1">
+      <vs-card class="content-card">
         <template #title>
           <h4>
             <strong>Registro de reclutador</strong>
@@ -23,7 +23,7 @@
             <vs-input primary v-model="company" placeholder="Empresa">
               <template #icon><em class="bx bxs-buildings"></em></template>
             </vs-input>
-            <vs-select placeholder="Estado en el que reside" v-model="value">
+            <vs-select block placeholder="Estado en el que reside" v-model="value">
                 <vs-option label="Morelos" value="1">
                 Morelos
                 </vs-option>
@@ -50,8 +50,8 @@
           </div>
         </template>
         <template #buttons>
-          <vs-row>
-            <vs-col offset="4" w="6">
+          <vs-row justify="space-around">
+            <vs-col  w="6">
               <vs-button block animation-type="vertical">
                 Crear cuenta
                 <template #animate>
@@ -90,37 +90,5 @@ export default {
 </script>
 
 <style>
-@media screen {
-  .vs-card {
-    width: 400px;
-  }
-}
-img{
-  border-radius: 6px !important;
-}
-.con-form {
-  width: 100%;
-  align-items: center;
-}
-.vs-input-content {
-  margin: 10px 0px;
-  width: calc(100%);
-}
-.vs-input {
-  width: 100%;
-}
-.vs-select-content {
-    margin: 10px 0px;
-    margin-left: 5px;
-}
-.vs-select {
-  width: 155%;
-}
-.vs-button {
-  margin: 0px;
-  width: 75%;
-}
-body {
-  font-family: "Poppins";
-}
+
 </style>
