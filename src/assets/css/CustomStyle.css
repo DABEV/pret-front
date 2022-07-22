@@ -6,6 +6,13 @@
     flex-wrap: wrap;
 }
 
+.center-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
 body {
     background-color: #F4F7F8;
     font-family: "Poppins";
@@ -262,15 +269,6 @@ textarea::placeholder {
     width: 85%;
 }
 
-.backimage {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.5)), url('https://wallpaperaccess.com/full/1393206.jpg');
-    height: 757px;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-}
-
 .bg-component {
     text-align: center;
     display: flex;
@@ -321,4 +319,29 @@ input[type="date" i] {
     margin: 0;
     max-height: 30px;
     color: rgba(var(--vs-text), 1);
+}
+
+.login {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.5)),
+        url("https://wallpaperaccess.com/full/1393206.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.center-content-25 {
+    position: absolute;
+    top: 25%;
+    text-align: center;
+}
+
+.margin-xy{
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.padding-xy{
+    padding-left: 5%;
+    padding-right: 5%;
 }
