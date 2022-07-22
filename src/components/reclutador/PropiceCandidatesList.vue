@@ -4,9 +4,8 @@
       <h2>Lista de candidatos idóneos</h2>
       <div class="space-top content-data space datos text-start bg-gray">
         <vs-row justify="space-between">
-          <vs-col lg="5" sm="12" xs="12">
-            Candidatos que han sido seleccionados para participar
-            en la segunda etapa del proceso de reclutamiento para el puesto de
+          <vs-col lg="7" sm="12" xs="12">
+            Candidatos en la segunda etapa del proceso de reclutamiento para el puesto de
             <strong>"{{job}}"</strong>
           </vs-col>
           <vs-col lg="4" sm="12" xs="12">

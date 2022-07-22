@@ -17,5 +17,5 @@ export default {
 
 
 <style>
-@import "../assets/css/LoginStyle.css";
+@import "../assets/css/CustomStyle.css";
 </style>

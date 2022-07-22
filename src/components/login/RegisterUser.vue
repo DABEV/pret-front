@@ -1,31 +1,31 @@
 <template>
   <div class="center">
-    <div class="content-data content-card">
+    <div class="content-data content-login">
       <h4>
         <strong>Registro de usuario</strong>
         <br />
-        <img alt="img" src="../../assets/img/logo.svg" style="width: 40px" />
+        <img class="logo" alt="img" src="../../assets/img/logo.svg" style="width: 40px" />
       </h4>
-      <vs-row>
-        <vs-col lg="6" sm="12" xs="12">
-          <vs-input primary v-model="name" placeholder="Nombre">
+      <vs-row justify="space-around">
+        <vs-col lg="5" sm="12" xs="12">
+          <vs-input block class="space" primary v-model="name" placeholder="Nombre">
             <template #icon><em class="bx bxs-user"></em></template>
           </vs-input>
-          <vs-input primary v-model="lastname" placeholder="Apellidos">
+          <vs-input block class="space" primary v-model="lastname" placeholder="Apellidos">
             <template #icon><em class="bx bxs-user"></em></template>
           </vs-input>
-          <vs-input primary v-model="phone" placeholder="Télefono">
+          <vs-input block class="space" primary v-model="phone" placeholder="Télefono">
             <template #icon><em class="bx bxs-phone"></em></template>
           </vs-input>
-          <vs-input type="date" primary v-model="birthdate">
+          <vs-input block class="space input-date" type="date" primary v-model="birthdate">
             <template #icon><em class="bx bxs-calendar"></em></template>
           </vs-input>
         </vs-col>
-        <vs-col lg="6" sm="12" xs="12">
-          <vs-input primary v-model="career" placeholder="Grado de estudios">
+        <vs-col lg="5" sm="12" xs="12">
+          <vs-input block class="space" primary v-model="career" placeholder="Grado de estudios">
             <template #icon><em class="bx bxs-graduation"></em></template>
           </vs-input>
-          <vs-select class="vs-select2" block placeholder="Estado en el que reside" v-model="value">
+          <vs-select class="space" block placeholder="Estado de recidencia" v-model="value">
                 <vs-option label="Morelos" value="1">
                 Morelos
                 </vs-option>
@@ -36,10 +36,10 @@
                 Sonora
                 </vs-option>
           </vs-select>
-          <vs-input primary v-model="email" placeholder="ejemplo@gmail.com">
+          <vs-input block class="space" primary v-model="email" placeholder="ejemplo@gmail.com">
             <template #icon> @ </template>
           </vs-input>
-          <vs-input primary type="password" v-model="password" placeholder="********">
+          <vs-input primary block class="space" type="password" v-model="password" placeholder="Contraseña">
             <template #icon><em class="bx bxs-lock-alt"></em></template>
           </vs-input>
         </vs-col>

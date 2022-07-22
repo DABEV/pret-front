@@ -1,13 +1,14 @@
 <template>
   <div class="center">
     <div class="content-data content-card space">
-      <vs-row class="datos">
-        <vs-col lg="3" sm="12" xs="12">
-          <img
-            class="photo"
-            src="https://images.unsplash.com/photo-1593439411281-6500cf61961c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
-            alt=""
-          />
+      <vs-row justify="space-around" class="datos">
+        <vs-col lg="2" sm="12" xs="12">
+          <vs-avatar size="150" circle>
+            <img
+              src="https://images.unsplash.com/photo-1609505848912-b7c3b8b4beda?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=465&q=80"
+              alt=""
+            />
+          </vs-avatar>
         </vs-col>
         <vs-col lg="7" sm="12" xs="12" class="text-start">
           <h2 class="space">{{ candidato.nombre }}</h2>
@@ -142,15 +143,20 @@
         <vs-col lg="5" sm="12" xs="12">
           <h2>Idiomas de dominio</h2>
           <div class="space-top content-data space datos text-start bg-gray">
-            <div :key="i" v-for="(idioma, i) in idiomas" :data="idioma" class="item">
+            <div
+              :key="i"
+              v-for="(idioma, i) in idiomas"
+              :data="idioma"
+              class="item"
+            >
               <vs-row class="space">
-                <vs-col lg="1" sm="2" xs="2" class="text-center space-top ">
+                <vs-col lg="1" sm="2" xs="2" class="text-center space-top">
                   <i class="bx bx-world bg-primary"></i>
                 </vs-col>
-                <vs-col lg="8" sm="6" xs="6" class="space-top ">
+                <vs-col lg="8" sm="6" xs="6" class="space-top">
                   <p>{{ idioma.nombre }}</p>
                 </vs-col>
-                <vs-col lg="3" sm="4" xs="4" class="text-center space-top ">
+                <vs-col lg="3" sm="4" xs="4" class="text-center space-top">
                   <span class="badge-sec">{{ idioma.nivel }}</span>
                 </vs-col>
               </vs-row>
@@ -163,12 +169,17 @@
         <vs-col lg="6" sm="12" xs="12">
           <h2>Conocimientos y habilidades</h2>
           <div class="space-top content-data space datos text-start bg-gray">
-            <div :key="i" v-for="(hab, i) in habilidades" :data="hab" class="item">
+            <div
+              :key="i"
+              v-for="(hab, i) in habilidades"
+              :data="hab"
+              class="item"
+            >
               <vs-row class="space">
-                <vs-col lg="1" sm="2" xs="2" class="text-center space-top ">
+                <vs-col lg="1" sm="2" xs="2" class="text-center space-top">
                   <i class="bx bx-book-open bg-primary"></i>
                 </vs-col>
-                <vs-col lg="11" sm="10" xs="10" class="space-top ">
+                <vs-col lg="11" sm="10" xs="10" class="space-top">
                   <p>{{ hab.nombre }}</p>
                 </vs-col>
               </vs-row>
