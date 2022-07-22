@@ -1,0 +1,77 @@
+body {
+    font-family: "Poppins";
+}
+img{
+    border-radius: 6px !important;
+}
+textarea{
+    display: flex;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    background: #f4f7f8;
+    font-family: "Poppins";
+    width: 50px;
+}
+textarea::placeholder{
+    color: #b5bdc3;
+    visibility: visible;
+    pointer-events: auto;
+}
+.center2 {
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.con-form {
+    width: 100%;
+    align-items: center;
+}
+.vs-input {
+    width: 100%;
+}
+.vs-button {
+    margin: 0px;
+    width: 85%;
+}
+.backimage{
+    background-image:linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5)) , url('https://wallpaperaccess.com/full/1393206.jpg');
+    height: 757px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+.bg-component {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.vs-select-content {
+      margin: 10px 0px;
+      margin-left: 5px;
+}
+.vs-select {
+    width: 95% !important;
+}
+.content-data {
+    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, var(--vs-shadow-opacity));
+    background: rgba(var(--vs-background), 1);
+}
+.content-card {
+    border-radius: 15px;
+    overflow: hidden;
+    width: 110% !important;
+    color: rgba(var(--vs-text), 1);
+}
+.vs-input-content {
+    padding: 10px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    margin-left: 5px;
+    width: calc(100%);
+}
+.vs-select2 {
+    min-width: none;
+}
