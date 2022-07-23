@@ -7,6 +7,9 @@
 <script>
 export default {
   name: "ContentLayout",
+  beforeCreate: function () {
+    document.body.className = "default";
+  },
   components: {},
 };
 </script>
