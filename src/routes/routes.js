@@ -3,17 +3,19 @@ const routes = [
     
     {
         path: "/",
-        component:() => import("@/components/HelloWorld.vue"),
+        component:() => import("@/layouts/VacancyView.vue"),
         redirect: "/",
         children: [
             {
                 path: "",
                 name: "Example",
-                component:() => import("@/components/HelloWorld.vue") ,
+                component:() => import("@/layouts/VacancyView.vue") ,
             }
-        ]
-
+        ],
     },
 ]
 
 export default routes;
+
+// @/layouts/VacancyView.vue
+// @/components/ContactList.vue
