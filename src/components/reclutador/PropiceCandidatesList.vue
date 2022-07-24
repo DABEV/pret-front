@@ -1,0 +1,155 @@
+<template>
+  <div class="center">
+    <div class="space space-top content-card">
+      <h2>Lista de candidatos idóneos</h2>
+      <div class="space-top content-data space datos text-start bg-gray">
+        <vs-row justify="space-between">
+          <vs-col lg="7" sm="12" xs="12">
+            Candidatos en la segunda etapa del proceso de reclutamiento para el puesto de
+            <strong>"{{job}}"</strong>
+          </vs-col>
+          <vs-col lg="4" sm="12" xs="12">
+            <vs-input
+              v-model="search"
+              color="#1e88e5"
+              block
+              placeholder="Buscar"
+            >
+              <template #icon>
+                <em class="bx bx-search"></em>
+              </template>
+            </vs-input>
+          </vs-col>
+        </vs-row>
+      </div>
+      <div class="space-top content-data space datos text-start bg-gray">
+        <div class="center" v-if="$vs.getSearch(contactos, search).length < 1">
+          No se encontraron registros
+        </div>
+        <div
+          :key="i"
+          :data="c"
+          v-for="(c, i) in $vs.getPage(
+            $vs.getSearch(contactos, search),
+            page,
+            max
+          )"
+          class="item"
+        >
+          <vs-row class="space">
+            <vs-col lg="1" sm="3" xs="3" class="text-center space-top">
+              <vs-avatar size="50">
+                <img :src="c.img" alt="" />
+              </vs-avatar>
+            </vs-col>
+            <vs-col lg="9" sm="9" xs="9" class="space-top">
+              <p>
+                <strong>{{ c.nombre }} {{ c.apellido1 }} {{ c.apellido2 }}</strong>
+              </p>
+              <small>{{ c.correo }}</small>
+            </vs-col>
+            <vs-col lg="1" sm="3" xs="3" class="space-top">
+              <vs-tooltip>
+                <vs-button icon animation-type="vertical" color="#009ACB">
+                  <em class="bx bx-show"></em>
+                  <template #animate><em class="bx bxs-show"></em></template>
+                </vs-button>
+                <template #tooltip> Ver perfil </template>
+              </vs-tooltip>
+            </vs-col>
+            <vs-col lg="1" sm="3" xs="3" class="space-top">
+              <vs-tooltip>
+                <vs-button
+                  @click="(active = !active), Confirmar(c)"
+                  icon
+                  animation-type="vertical"
+                  success
+                >
+                  <em class="bx bx-checkbox-checked"></em>
+                  <template #animate><em class="bx bxs-checkbox-checked"></em></template>
+                </vs-button>
+                <template #tooltip> Aceptar candidato </template>
+              </vs-tooltip>
+            </vs-col>
+          </vs-row>
+          <div class="divider">
+            <span class="border"></span>
+          </div>
+        </div>
+        <div class="pagination">
+          <vs-pagination
+            v-model="page"
+            :length="$vs.getLength($vs.getSearch(contactos, search), max)"
+          />
+        </div>
+      </div>
+    </div>
+    <vs-dialog width="450px" class="text-center" v-model="active">
+      <template #header>
+        <h4><strong>Confirmación</strong></h4>
+      </template>
+      <div class="text-gray">
+        <p>
+          ¿Seguro que desea añadir a <strong>{{ contacto.nombre }}</strong> a la lista de candidatos idóneos?
+        </p>
+      </div>
+      <template #footer>
+        <vs-row justify="space-between">
+          <vs-col w="5">
+            <vs-button success @click="active = false" block> Añadir </vs-button>
+          </vs-col>
+          <vs-col w="5">
+            <vs-button transparent dark @click="active = false" block>
+              Cancelar
+            </vs-button>
+          </vs-col>
+        </vs-row>
+      </template>
+    </vs-dialog>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "PropiceCandidates",
+  data: () => ({
+    active: false,
+    page: 1,
+    max: 5,
+    search: "",
+    job: "Apen: Desarrolladores Full-stack",
+    contacto: {},
+    contactos: [
+      {
+        nombre: "Cameron",
+        apellido1: "Williamson",
+        apellido2: "Warren",
+        correo: "cameron@example.com",
+        telefono: "(704) 555-0127",
+        img: "https://images.unsplash.com/photo-1484186139897-d5fc6b908812?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
+      },
+      {
+        nombre: "Robert",
+        apellido1: "Warren",
+        apellido2: "Hawkins",
+        correo: "robert@example.com",
+        telefono: "(217) 555-0113",
+        img: "https://images.unsplash.com/photo-1529068755536-a5ade0dcb4e8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=581&q=80",
+      },
+      {
+        nombre: "Ralph",
+        apellido1: "Williamson",
+        apellido2: "Fox",
+        correo: "ralph@example.com",
+        telefono: "(702) 555-0122",
+        img: "https://images.unsplash.com/photo-1483995564125-85915c11dcfe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=641&q=80",
+      },
+    ],
+  }),
+  methods: {
+    Confirmar: function (contacto) {
+      this.contacto = contacto;
+    },
+  },
+};
+</script>
