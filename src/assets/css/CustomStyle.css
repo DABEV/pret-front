@@ -13,6 +13,10 @@
     flex-wrap: wrap;
 }
 
+.end-item {
+    float: right !important;
+}
+
 body {
     background-color: #F4F7F8;
     font-family: "Poppins";
@@ -373,5 +377,6 @@ input[type="date" i] {
     background: rgba(var(--vs-gray-1), 1) !important;
 }
 
-
-
+.item-click:hover {
+    cursor: pointer;
+}
