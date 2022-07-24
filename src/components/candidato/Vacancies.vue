@@ -127,7 +127,7 @@
               <vs-row justify="space-between" class="space">
                 <vs-col lg="1" sm="2" xs="2" class="space-top">
                   <vs-avatar color="#b13cd2" class="space-top end-item">
-                    <template #text> {{ v.empresa }} </template>
+                    <i class="bx bxs-buildings"></i>
                   </vs-avatar>
                 </vs-col>
                 <vs-col lg="9" sm="12" xs="12" class="space-top">
@@ -251,7 +251,7 @@ export default {
     sortIcon3: true,
     vacantes: [
       {
-        nombre: "Desarrollador Full-stack PHP",
+        nombre: "Desarrollador Full-stack Java",
         reclutador: "Roberto Miramontes Ruiseñor",
         estado: "Morelos",
         tipo: "Medio tiempo",
@@ -263,7 +263,7 @@ export default {
         inicio: "5/19/12",
         fin: "7/19/12",
         descripcion:
-          "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
+          "Ut libero turpis, sollicitudin sed lectus ac, porta ornare erat. Integer nibh purus, mattis in felis eget, eleifend ultricies mi. Integer et fringilla sem, eu rhoncus nunc. ",
       },
       {
         nombre: "Desarrollador Full-stack PHP",
@@ -278,7 +278,7 @@ export default {
         inicio: "5/19/12",
         fin: "7/19/12",
         descripcion:
-          "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam egestas elit at lectus aliquet fringilla. Quisque aliquet placerat eros, sed pretium nunc. Phasellus convallis scelerisque elit in commodo.",
       },
       {
         nombre: "President of Sales",
@@ -323,7 +323,7 @@ export default {
         inicio: "5/19/12",
         fin: "7/19/12",
         descripcion:
-          "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
+          "Cras et massa dapibus ipsum faucibus varius. Pellentesque lorem nunc, venenatis sit amet augue vel, suscipit mattis orci. Curabitur rutrum libero sit amet viverra rhoncus.",
       },
       {
         nombre: "Analista de datos",
@@ -335,8 +335,8 @@ export default {
         modoPago: "Mensual",
         sueldoMin: 200050,
         sueldoMax: 500000,
-        inicio: "5/19/12",
-        fin: "7/19/12",
+        inicio: "6/19/12",
+        fin: "8/19/12",
         descripcion:
           "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
       },
