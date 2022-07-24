@@ -92,7 +92,7 @@ const routes = [
     children: [
       {
         path: "buscar",
-        name: "Vacantes",
+        name: "Vacantes disponibles",
         component: Vacancies,
       },
       {
@@ -106,8 +106,8 @@ const routes = [
         component: ContactList,
       },
       {
-        path: "postualciones",
-        name: "Postulciones",
+        path: "postulaciones",
+        name: "Postulaciones",
         component: Status,
       },
     ],
