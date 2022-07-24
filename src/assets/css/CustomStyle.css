@@ -1,0 +1,404 @@
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    flex-wrap: wrap;
+}
+
+.center-item {
+    display: flex !important;
+    align-items: center;
+    justify-content: center !important;
+    flex-wrap: wrap;
+}
+
+.end-item {
+    float: right !important;
+}
+
+body {
+    background-color: #F4F7F8;
+    font-family: "Poppins";
+}
+
+button {
+    font-family: "Poppins";
+}
+
+i {
+    font-size: 1.4rem !important;
+    text-align: center;
+}
+
+em {
+    font-size: 1.4rem !important;
+    text-align: center;
+}
+
+textarea {
+    display: flex;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    background: #f4f7f8;
+    font-family: "Poppins";
+    margin-top: 20px;
+    padding: 20px;
+    width: 100%;
+}
+
+textarea::placeholder {
+    color: #b5bdc3;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.content-data {
+    border-radius: 20px;
+    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, var(--vs-shadow-opacity));
+    background: rgba(var(--vs-background), 1);
+}
+
+.content-card {
+    overflow: hidden;
+    width: 90%;
+    color: rgba(var(--vs-text), 1);
+}
+
+.datos {
+    padding: 20px;
+    text-align: center;
+}
+
+.text-start {
+    text-align: start;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-end {
+    text-align: end;
+}
+
+.space {
+    margin-bottom: 10px;
+}
+
+.space-top {
+    margin-top: 10px;
+}
+
+.item-list {
+    margin-top: 20px;
+    color: #6c7885;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.bg-gray {
+    color: #6c7885;
+}
+
+.bg-primary {
+    color: #1e88e5;
+}
+
+.bg-warning {
+    color: #F2BA29;
+}
+
+.bg-success {
+    color: #2ECC71;
+}
+
+.bg-danger {
+    color: #fa584c;
+}
+
+.bg-sec {
+    color: #b13cd2;
+}
+
+.long {
+    width: 90%;
+}
+
+.p {
+    margin-right: 5px;
+    margin-top: 20px;
+}
+
+.badge-sec {
+    padding: 1px;
+    background: #b13cd2;
+    color: #fff;
+    display: inline-block;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    padding: 1px 5px;
+}
+
+.badge-pri {
+    padding: 1px;
+    background: #1e88e5;
+    color: #fff;
+    display: inline-block;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    padding: 1px 5px;
+}
+
+.badge-war {
+    padding: 1px;
+    background: #F2BA29;
+    color: #fff;
+    display: inline-block;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    padding: 1px 5px;
+}
+
+.badge-dan {
+    padding: 1px;
+    background: #fa584c;
+    color: #fff;
+    display: inline-block;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    padding: 1px 5px;
+}
+
+.badge-suc {
+    padding: 1px;
+    background: #2ECC71;
+    color: #fff;
+    display: inline-block;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    padding: 1px 5px;
+}
+
+.badge-def {
+    padding: 1px;
+    background: #6c7885;
+    color: #fff;
+    display: inline-block;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    padding: 1px 5px;
+}
+
+.con-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.divider {
+    width: 100%;
+    position: relative;
+    display: block;
+    clear: both;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.border {
+    width: 100%;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.item:hover {
+    background: rgba(var(--vs-gray-1), 1) !important;
+}
+
+.pagination {
+    padding: 8px 10px;
+    background: rgba(var(--vs-gray-2), 1);
+    border-radius: 0 0 14px 14px;
+}
+
+.header-table {
+    width: 100%;
+    padding-bottom: 10px;
+    border-radius: 14px 14px 0px 0px;
+
+}
+
+.button-center {
+    width: 250px;
+    padding: 20px;
+}
+
+.logo {
+    border-radius: 6px !important;
+}
+
+.textarea-login {
+    display: flex;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    background: #f4f7f8;
+    font-family: "Poppins";
+    width: 50px;
+}
+
+.center2 {
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.con-form {
+    width: 100%;
+    align-items: center;
+}
+
+.input-long {
+    width: 100%;
+}
+
+.button-long {
+    margin: 0px;
+    width: 85%;
+}
+
+.bg-component {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.select-content {
+    margin: 10px 0px;
+    margin-left: 5px;
+}
+
+.select {
+    width: 95% !important;
+}
+
+
+.input-content {
+    padding: 10px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    margin-left: 5px;
+    width: calc(100%);
+}
+
+
+.content-login {
+    border-radius: 15px;
+    overflow: hidden;
+    width: 110% !important;
+    color: rgba(var(--vs-text), 1);
+}
+
+.input-date {
+    border-radius: 12px;
+    border: 2px solid transparent;
+    background: #f4f7f8;
+}
+
+input[type="date" i] {
+    align-items: center;
+    display: inline-flex;
+    font-family: "Poppins" !important;
+    -webkit-padding-start: 10px;
+    cursor: default;
+    overflow: hidden;
+    padding-left: 38px;
+    margin: 0;
+    max-height: 30px;
+    color: rgba(var(--vs-text), 1);
+}
+
+.login {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.5)),
+        url("https://wallpaperaccess.com/full/1393206.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.center-content-25 {
+    position: absolute;
+    top: 25%;
+    text-align: center;
+}
+
+.margin-xy {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.padding-xy {
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.round {
+    border-radius: 12px;
+    border: 2px solid transparent;
+}
+
+.item:last-child {
+    border-radius: 0 0 20px 20px;
+}
+
+.item:first-child {
+    border-radius: 20px 20px 0 0;
+}
+
+.item:last-child>.divider>.border {
+    border-top: 0px solid rgba(0, 0, 0, 0.1);
+}
+
+.custom-th {
+    width: 100vh !important;
+    border-radius: 20px;
+    max-width: 100%;
+}
+
+.custom-th:hover {
+    background: rgba(var(--vs-gray-1), 1) !important;
+}
+
+.item-click:hover {
+    cursor: pointer;
+}
+
+.avatar-top {
+    margin-top: -30px;
+    border: 3px solid rgba(var(--vs-color), 1);
+    box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, .1);
+}
+
+.center-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.text-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: .9rem;
+    padding: 10px;
+    font-weight: normal;
+}
