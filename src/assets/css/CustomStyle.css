@@ -7,9 +7,9 @@
 }
 
 .center-item {
-    display: flex;
+    display: flex !important;
     align-items: center;
-    justify-content: center;
+    justify-content: center !important;
     flex-wrap: wrap;
 }
 
@@ -379,4 +379,26 @@ input[type="date" i] {
 
 .item-click:hover {
     cursor: pointer;
+}
+
+.avatar-top {
+    margin-top: -30px;
+    border: 3px solid rgba(var(--vs-color), 1);
+    box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, .1);
+}
+
+.center-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.text-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: .9rem;
+    padding: 10px;
+    font-weight: normal;
 }

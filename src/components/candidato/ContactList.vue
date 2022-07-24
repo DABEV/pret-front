@@ -4,20 +4,20 @@
       <h2>Lista de contactos</h2>
       <div class="space-top content-data space datos text-start bg-gray">
         <vs-row justify="space-between">
-          <vs-col lg="5" sm="12" xs="12">
+          <vs-col lg="5" sm="12" xs="12" class="space">
             <vs-row>
-              <vs-col lg="2" sm="4" xs="4">
+              <vs-col lg="2" sm="3" xs="3">
                 <vs-tooltip>
                   <vs-button icon animation-type="rotate" color="#B13CD2">
                     <i class="bx bx-user-plus"></i>
-                    <template #animate
-                      ><i class="bx bxs-user-plus"></i
-                    ></template>
+                    <template #animate>
+                      <i class="bx bxs-user-plus"></i>
+                    </template>
                   </vs-button>
                   <template #tooltip> Añadir contacto </template>
                 </vs-tooltip>
               </vs-col>
-              <vs-col lg="9" sm="7" xs="7">
+              <vs-col lg="9" sm="8" xs="8">
                 <p>Comparte vacantes entre todos tus contactos</p>
               </vs-col>
             </vs-row>
@@ -50,37 +50,35 @@
           )"
           class="item"
         >
-          <vs-row class="space">
-            <vs-col lg="1" sm="3" xs="3" class="text-center space-top">
-              <vs-avatar size="50">
+          <vs-row class="space" justify="space-between">
+            <vs-col lg="1" sm="2" xs="2" class="space-top">
+              <vs-avatar class="end-item" size="50">
                 <img :src="c.img" alt="" />
               </vs-avatar>
             </vs-col>
-            <vs-col lg="9" sm="9" xs="9" class="space-top">
-              <p>
-                <b>{{ c.nombre }} {{ c.apellido1 }} {{ c.apellido2 }}</b>
-              </p>
-              <small>{{ c.correo }}</small>
+            <vs-col lg="8" sm="9" xs="9" class="space-top">
+              <div
+                class="item-click"
+                @click="Confirmar(c), (detalles = !detalles)"
+              >
+                <p>
+                  <b>{{ c.nombre }} {{ c.apellido1 }} {{ c.apellido2 }}</b>
+                </p>
+                <small>{{ c.correo }}</small>
+              </div>
             </vs-col>
-            <vs-col lg="1" sm="3" xs="3" class="space-top">
-              <vs-tooltip>
-                <vs-button icon animation-type="vertical" color="#009ACB">
-                  <i class="bx bx-show"></i>
-                  <template #animate><i class="bx bxs-show"></i></template>
-                </vs-button>
-                <template #tooltip> Ver perfil </template>
-              </vs-tooltip>
-            </vs-col>
-            <vs-col lg="1" sm="3" xs="3" class="space-top">
+            <vs-col lg="1" sm="12" xs="12" class="space-top">
               <vs-tooltip>
                 <vs-button
                   icon
                   animation-type="rotate"
                   danger
-                  @click="active = !active, Confirmar(c)"
+                  @click="(active = !active), Confirmar(c)"
                 >
                   <i class="bx bx-trash-alt"></i>
-                  <template #animate><i class="bx bxs-trash-alt"></i></template>
+                  <template #animate>
+                    <i class="bx bxs-trash-alt"></i>
+                  </template>
                 </vs-button>
                 <template #tooltip> Quitar </template>
               </vs-tooltip>
@@ -120,6 +118,48 @@
         </vs-row>
       </template>
     </vs-dialog>
+
+    <vs-dialog class="text-center" v-model="detalles">
+      <vs-row>
+        <vs-col lg="4">
+          <div class="text-item bg-primary">
+            Teléfono
+            <small class="bold bg-gray">{{ contacto.telefono }}</small>
+          </div>
+        </vs-col>
+        <vs-col lg="4" class="center-item">
+          <vs-avatar circle size="100" class="avatar-top">
+            <img :src="contacto.img" alt="" />
+          </vs-avatar>
+        </vs-col>
+        <vs-col lg="4">
+          <div class="text-item bg-primary">
+            Estado
+            <small class="bold bg-gray"> {{ contacto.estado }} </small>
+          </div>
+        </vs-col>
+      </vs-row>
+      <h4 class="space-top">
+        {{ contacto.nombre }} {{ contacto.apellido1 }} {{ contacto.apellido2 }}
+      </h4>
+      <small class="bg-gray">{{ contacto.correo }}</small>
+      <div class="divider space space-top">
+        <span class="border"></span>
+      </div>
+      <vs-row justify="space-around" class="space">
+        <vs-col w="1" class="center-item">
+          <vs-avatar color="#b13cd2" size="30">
+            <i class="bx bxs-graduation"></i>
+          </vs-avatar>
+        </vs-col>
+        <vs-col w="10" class="center-item text-start">
+          <small>Titulo: {{ contacto.titulo }}</small>
+        </vs-col>
+      </vs-row>
+      <div class="divider space space-top">
+        <span class="border"></span>
+      </div>
+    </vs-dialog>
   </div>
 </template>
 
@@ -128,6 +168,7 @@ export default {
   name: "ContactList",
   data: () => ({
     active: false,
+    detalles: false,
     page: 1,
     max: 5,
     search: "",
@@ -139,6 +180,9 @@ export default {
         apellido2: "Warren",
         correo: "cameron@example.com",
         telefono: "(704) 555-0127",
+        estado: "Morelos",
+        titulo: "Grado de estudios: Administradora de base de datos (DBA)",
+        fecha: "9/4/12",
         img: "https://images.unsplash.com/photo-1484186139897-d5fc6b908812?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
       },
       {
@@ -147,6 +191,9 @@ export default {
         apellido2: "Simmons",
         correo: "esther@example.com",
         telefono: "(907) 555-0101",
+        estado: "Morelos",
+        titulo: "Grado de estudios: Administradora de base de datos (DBA)",
+        fecha: "9/4/12",
         img: "https://images.unsplash.com/photo-1518577915332-c2a19f149a75?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=562&q=80",
       },
       {
@@ -155,6 +202,9 @@ export default {
         apellido2: "Hawkins",
         correo: "robert@example.com",
         telefono: "(217) 555-0113",
+        estado: "Querétaro",
+        titulo: "Grado de estudios: Administradora de base de datos (DBA)",
+        fecha: "9/4/12",
         img: "https://images.unsplash.com/photo-1529068755536-a5ade0dcb4e8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=581&q=80",
       },
       {
@@ -163,6 +213,9 @@ export default {
         apellido2: "Wade",
         correo: "alexander@example.com",
         telefono: "(308) 555-0121",
+        estado: "Sonora",
+        titulo: "Grado de estudios: Administradora de base de datos (DBA)",
+        fecha: "9/4/12",
         img: "https://images.unsplash.com/photo-1485528562718-2ae1c8419ae2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=558&q=80",
       },
       {
@@ -171,6 +224,9 @@ export default {
         apellido2: "Williamson",
         correo: "leslie@example.com",
         telefono: "(302) 555-0107",
+        estado: "Tamaulipas",
+        titulo: "Grado de estudios: Administradora de base de datos (DBA)",
+        fecha: "9/4/12",
         img: "https://images.unsplash.com/photo-1485893086445-ed75865251e0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
       },
       {
@@ -179,14 +235,17 @@ export default {
         apellido2: "Fox",
         correo: "ralph@example.com",
         telefono: "(702) 555-0122",
+        estado: "Oaxaca",
+        titulo: "Grado de estudios: Administradora de base de datos (DBA)",
+        fecha: "9/4/12",
         img: "https://images.unsplash.com/photo-1483995564125-85915c11dcfe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=641&q=80",
       },
     ],
   }),
   methods: {
-    Confirmar: function (contacto){
+    Confirmar: function (contacto) {
       this.contacto = contacto;
-    }
-  }
+    },
+  },
 };
 </script>
