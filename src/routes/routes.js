@@ -12,6 +12,8 @@ import Status from "@/components/candidato/Status.vue";
 import ContactList from "@/components/candidato/ContactList.vue";
 import VacanciesList from "@/components/reclutador/VacanciesList.vue";
 
+import Vacancies from "@/components/candidato/Vacancies.vue";
+
 const routes = [
   {
     path: "/",
@@ -70,44 +72,6 @@ const routes = [
     ],
   },
 
-  {
-    path: "/profile",
-    component: ContentLayout,
-    redirect: "/profile",
-    children: [
-      {
-        path: "",
-        name: "Profile",
-        component: Profile,
-      },
-    ],
-  },
-
-  {
-    path: "/postulaciones",
-    component: ContentLayout,
-    redirect: "/postulaciones",
-    children: [
-      {
-        path: "",
-        name: "Postulaciones",
-        component: Status,
-      },
-    ],
-  },
-
-  {
-    path: "/contactos",
-    component: ContentLayout,
-    redirect: "/contactos",
-    children: [
-      {
-        path: "",
-        name: "Contactos",
-        component: ContactList,
-      },
-    ],
-  },
 
   {
     path: "/vacantes",
@@ -118,6 +82,33 @@ const routes = [
         path: "",
         name: "Vacantes",
         component: VacanciesList,
+      },
+    ],
+  },
+
+  {
+    path: "/candidato",
+    component: ContentLayout,
+    children: [
+      {
+        path: "buscar",
+        name: "Vacantes",
+        component: Vacancies,
+      },
+      {
+        path: "perfil",
+        name: "Perfil de usuario",
+        component: Profile,
+      },
+      {
+        path: "contactos",
+        name: "Contactos",
+        component: ContactList,
+      },
+      {
+        path: "postualciones",
+        name: "Postulciones",
+        component: Status,
       },
     ],
   },

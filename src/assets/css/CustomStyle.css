@@ -336,12 +336,42 @@ input[type="date" i] {
     text-align: center;
 }
 
-.margin-xy{
+.margin-xy {
     margin-left: 5%;
     margin-right: 5%;
 }
 
-.padding-xy{
+.padding-xy {
     padding-left: 5%;
     padding-right: 5%;
 }
+
+.round {
+    border-radius: 12px;
+    border: 2px solid transparent;
+}
+
+.item:last-child {
+    border-radius: 0 0 20px 20px;
+}
+
+.item:first-child {
+    border-radius: 20px 20px 0 0;
+}
+
+.item:last-child>.divider>.border {
+    border-top: 0px solid rgba(0, 0, 0, 0.1);
+}
+
+.custom-th {
+    width: 100vh !important;
+    border-radius: 20px;
+    max-width: 100%;
+}
+
+.custom-th:hover {
+    background: rgba(var(--vs-gray-1), 1) !important;
+}
+
+
+
