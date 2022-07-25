@@ -13,6 +13,9 @@ import ContactList from "@/components/candidato/ContactList.vue";
 import VacanciesList from "@/components/reclutador/VacanciesList.vue";
 
 import Vacancies from "@/components/candidato/Vacancies.vue";
+import ErrorLayout from "@/layout/ErrorLayout.vue"
+import ErrorPage from "@/components/ErrorPage.vue"
+import Favorites from "@/components/candidato/Favorites.vue"
 
 const routes = [
   {
@@ -109,6 +112,23 @@ const routes = [
         path: "postulaciones",
         name: "Postulaciones",
         component: Status,
+      },
+      {
+        path: "favoritos",
+        name: "Favoritos",
+        component: Favorites,
+      },
+    ],
+  },
+
+  {
+    path: "/error",
+    component: ErrorLayout,
+    children: [
+      {
+        path: "",
+        name: "Error 404",
+        component: ErrorPage,
       },
     ],
   },

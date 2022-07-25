@@ -6,17 +6,16 @@
     <div class="bubble"></div>
     <div class="bubble"></div>
     <div class="main">
-      <h1>404</h1>
-      <p>Parece que estás perdido...<br />¿Eso es un problema?</p>
+      <h1 class="error-header">404</h1>
+      <p class="error-text space">
+        Parece que estás perdido...<br />¿Eso es un problema?
+      </p>
       <vs-row>
-        <vs-button block animation-type="vertical">
+        <vs-button block animation-type="vertical" class="space-top">
           Volver
-          <template #animate> <em class="bx bx-arrow-back"></em>&nbsp; </template>
+          <template #animate> <em class="bx bx-arrow-back"></em></template>
         </vs-button>
       </vs-row>
     </div>
   </div>
 </template>
-<style>
-@import "./style.css";
-</style>

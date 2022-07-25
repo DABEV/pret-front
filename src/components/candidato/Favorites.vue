@@ -202,7 +202,7 @@
                 <vs-tr
                   style="border-top: 1px solid #6c7885"
                   :key="i"
-                  v-for="(tr, i) in users"
+                  v-for="(tr, i) in vacantes"
                   :data="tr"
                 >
                   <vs-td>
@@ -258,13 +258,9 @@
     </vs-dialog>
   </div>
 </template>
-
-<style>
-@import "./style.css";
-</style>
 <script>
 export default {
-  name: "Profile",
+  name: "Favorites",
   data: () => ({
     active: false,
     active2: false,

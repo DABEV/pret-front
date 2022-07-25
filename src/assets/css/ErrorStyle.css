@@ -1,7 +1,7 @@
-html, body {
+.error-page {
   height: 100vh;
 }
-html:before, html:after, body:before, body:after {
+.error-page:before, .error-page:after {
   content: "";
   background: linear-gradient(#90BFF5, #7EA6D4);
   border-radius: 50%;
@@ -10,26 +10,26 @@ html:before, html:after, body:before, body:after {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-html:before, body:before {
+.error-page:before {
   background: linear-gradient(#90BFF5, #7EA6D4);
 }
 
-html {
+.error-page {
   background: linear-gradient(#90BFF5, #7EA6D4);
   overflow: hidden;
 }
-html:before {
+.error-page:before {
   height: 105vmax;
   width: 105vmax;
   z-index: -4;
 }
-html:after {
+.error-page:after {
   height: 80vmax;
   width: 80vmax;
   z-index: -3;
 }
 
-body {
+.error-page {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -37,12 +37,12 @@ body {
   font-family: "Poppins";
   text-shadow: 0 30px 10px rgba(0, 0, 0, 0.15);
 }
-body:before {
+.error-page:before {
   height: 60vmax;
   width: 60vmax;
   z-index: -2;
 }
-body:after {
+.error-page:after {
   height: 40vmax;
   width: 40vmax;
   z-index: -1;
@@ -53,27 +53,14 @@ body:after {
   z-index: 5;
 }
 
-p {
+.error-text {
   font-size: 18px;
   margin-top: 0;
 }
 
-h1 {
+.error-header {
   font-size: 95px;
   margin: 0;
-}
-
-button {
-  background: linear-gradient(#1A5CFF,#009ACB);
-  padding: 0 12px;
-  border: none;
-  border-radius: 20px;
-  box-shadow: 0 30px 15px rgba(0, 0, 0, 0.15);
-  outline: none;
-  color: #FFF;
-  font: 400 16px/2.5 Nunito, "Varela Round", Sans-serif;
-  text-transform: uppercase;
-  cursor: pointer;
 }
 
 .bubble {
@@ -149,10 +136,4 @@ button {
   height: 10vmin;
   bottom: 5vmin;
   left: -25vmin;
-}
-.vs-button {
-  margin-top: 15px;
-  
-  
-
 }
