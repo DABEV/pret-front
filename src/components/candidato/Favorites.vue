@@ -101,7 +101,7 @@
                       icon
                       animation-type="vertical"
                       danger
-                      @click="favoritos = !favoritos"
+                      @click="Detalles(v), (deleteActive = !deleteActive)"
                     >
                       <i class="bx bx-trash-alt"></i>
                       <template #animate>
@@ -189,7 +189,7 @@
         >
           <vs-row justify="space-around">
             <vs-col lg="1" sm="2" xs="2" class="text-center space-top">
-              <i class='bx bx-check-shield bg-success'></i>
+              <i class="bx bx-check-shield bg-success"></i>
             </vs-col>
             <vs-col lg="10" sm="10" xs="10" class="space-top">
               <p>{{ b.nombre }}</p>
@@ -198,27 +198,24 @@
         </div>
       </div>
     </vs-dialog>
-    <vs-dialog width="450px" class="text-center" v-model="active2">
+    <vs-dialog width="450px" class="text-center" v-model="deleteActive">
       <template #header>
         <h4><b>Confirmación</b></h4>
       </template>
       <div class="text-gray">
-        <p>¿Seguro de compartir <b></b> con tus contactos?</p>
+        <p>
+          ¿Seguro de eliminar <b>{{ vacante.nombre }}</b> de tus favoritos?
+        </p>
       </div>
       <template #footer>
         <vs-row justify="space-between">
           <vs-col w="5">
-            <vs-button
-              color="bg-primary"
-              class="background-color: #ffff"
-              @click="active = false"
-              block
-            >
-              Aceptar
+            <vs-button danger @click="deleteActive = false" block>
+              Quitar
             </vs-button>
           </vs-col>
           <vs-col w="5">
-            <vs-button transparent dark @click="active2 = false" block>
+            <vs-button transparent dark @click="deleteActive = false" block>
               Cancelar
             </vs-button>
           </vs-col>
@@ -232,12 +229,11 @@ export default {
   name: "Favorites",
   data: () => ({
     active: false,
-    active2: false,
+    deleteActive: false,
     search: "",
     page: 1,
     max: 4,
     vacante: {},
-    checkbox1: false,
     vacantes: [
       {
         nombre: "Desarrollador Full-stack Java",
