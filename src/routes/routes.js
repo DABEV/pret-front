@@ -25,8 +25,8 @@ const routes = [
     children: [
       {
         path: "",
-        name: "Example",
-        component: Profile,
+        name: "Buscar",
+        component: Vacancies,
       },
     ],
   },
