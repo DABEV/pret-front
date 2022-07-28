@@ -68,7 +68,9 @@
                   <vs-th
                     class="custom-th"
                     sort
-                    @click="vacantes = $vs.sortData($event, vacantes, 'fin')"
+                    @click="
+                      vacantes = $vs.sortData($event, vacantes, 'fechaVigencia')
+                    "
                   >
                     Vigencia
                   </vs-th>
@@ -146,7 +148,9 @@
                         <small class="bg-gray"> {{ v.estado }}</small>
                       </vs-col>
                       <vs-col w="6">
-                        <small class="bg-sec"> Vigencia: {{ v.fin }}</small>
+                        <small class="bg-sec">
+                          Vigencia: {{ v.fechaVigencia }}</small
+                        >
                       </vs-col>
                     </vs-row>
                     <small class="bg-gray">{{ v.descripcion }}</small>
@@ -224,8 +228,74 @@
 
     <vs-dialog prevent-close scroll width="550px" v-model="active">
       <template #header>
-        <h4>{{ vacante.nombre }}</h4>
+        <h4 class="space-top">{{ vacante.nombre }}</h4>
       </template>
+      <vs-row justify="space-around">
+        <vs-col lg="9" sm="10" xs="12">
+          <p class="bold">Empresa: {{ vacante.empresa }}</p>
+          <small>Ubicado en: {{ vacante.estado }}</small>
+        </vs-col>
+        <vs-col lg="2" sm="12" xs="12">
+          <vs-button success>Postularse</vs-button>
+        </vs-col>
+      </vs-row>
+      <div class="divider space-top">
+        <span class="border"></span>
+      </div>
+      <vs-row justify="space-around" class="space-top">
+        <vs-col lg="9" sm="10" xs="12">
+          <small class="bg-primary">
+            Vigencia: {{ vacante.fechaVigencia }}
+          </small>
+        </vs-col>
+        <vs-col lg="2" sm="12" xs="12" class="text-end">
+          <small class="badge-sec">{{ vacante.modalidad }}</small>
+        </vs-col>
+      </vs-row>
+      <p class="center">{{ vacante.descripcion }}</p>
+      <div class="divider space">
+        <span class="border"></span>
+      </div>
+      <p class="text-center bold">Modo de pago: {{ vacante.modoPago }}</p>
+      <vs-row justify="space-around" class="text-center space">
+        <vs-col lg="4" sm="3" xs="3">
+          <p>
+            Mínimo:
+            <small class="badge-pri"> ${{ vacante.sueldoMin }}</small>
+          </p>
+        </vs-col>
+        <vs-col lg="4" sm="3" xs="3">
+          <p>
+            Máximo:
+            <small class="badge-war"> ${{ vacante.sueldoMax }}</small>
+          </p>
+        </vs-col>
+      </vs-row>
+      <div class="divider space-top">
+        <span class="border"></span>
+      </div>
+      <p class="bg-gray text-center space-top">Tipo: {{ vacante.tipo }}</p>
+      <div class="divider space-top">
+        <span class="border"></span>
+      </div>
+      <p class="text-center bold space-top">Beneficios</p>
+      <div class="space text-start bg-gray">
+        <div
+          :key="i"
+          v-for="(b, i) in vacante.beneficios"
+          :data="b"
+          class="item"
+        >
+          <vs-row justify="space-around">
+            <vs-col lg="1" sm="2" xs="2" class="text-center space-top">
+              <i class="bx bx-check-shield bg-success"></i>
+            </vs-col>
+            <vs-col lg="10" sm="10" xs="10" class="space-top">
+              <p>{{ b.nombre }}</p>
+            </vs-col>
+          </vs-row>
+        </div>
+      </div>
     </vs-dialog>
 
     <vs-dialog prevent-close v-model="favoritos">
@@ -260,8 +330,25 @@ export default {
         modoPago: "Mensual",
         sueldoMin: 40000,
         sueldoMax: 80000,
-        inicio: "5/19/12",
-        fin: "7/19/12",
+        fechaInicio: "5/19/12",
+        fechaVigencia: "7/19/12",
+        beneficios: [
+          {
+            nombre: "Ofrecemos sueldo competitivo",
+          },
+          {
+            nombre: "Trabajo en modalidad híbrida (Homeoffice)",
+          },
+          {
+            nombre: "Cursos y Certificaciones constantes",
+          },
+          {
+            nombre: "Prestaciones de ley y Superirores",
+          },
+          {
+            nombre: "Programas de crecimiento a corto, mediano y largo plazo",
+          },
+        ],
         descripcion:
           "Ut libero turpis, sollicitudin sed lectus ac, porta ornare erat. Integer nibh purus, mattis in felis eget, eleifend ultricies mi. Integer et fringilla sem, eu rhoncus nunc. ",
       },
@@ -275,8 +362,25 @@ export default {
         modoPago: "Quincenal",
         sueldoMin: 20000,
         sueldoMax: 50000,
-        inicio: "5/19/12",
-        fin: "7/19/12",
+        fechaInicio: "5/19/12",
+        fechaVigencia: "7/19/12",
+        beneficios: [
+          {
+            nombre: "Ofrecemos sueldo competitivo",
+          },
+          {
+            nombre: "Trabajo en modalidad híbrida (Homeoffice)",
+          },
+          {
+            nombre: "Cursos y Certificaciones constantes",
+          },
+          {
+            nombre: "Prestaciones de ley y Superirores",
+          },
+          {
+            nombre: "Programas de crecimiento a corto, mediano y largo plazo",
+          },
+        ],
         descripcion:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam egestas elit at lectus aliquet fringilla. Quisque aliquet placerat eros, sed pretium nunc. Phasellus convallis scelerisque elit in commodo.",
       },
@@ -290,8 +394,25 @@ export default {
         modoPago: "Quincenal",
         sueldoMin: 50000,
         sueldoMax: 80000,
-        inicio: "5/19/12",
-        fin: "7/19/12",
+        fechaInicio: "5/19/12",
+        fechaVigencia: "7/19/12",
+        beneficios: [
+          {
+            nombre: "Ofrecemos sueldo competitivo",
+          },
+          {
+            nombre: "Trabajo en modalidad híbrida (Homeoffice)",
+          },
+          {
+            nombre: "Cursos y Certificaciones constantes",
+          },
+          {
+            nombre: "Prestaciones de ley y Superirores",
+          },
+          {
+            nombre: "Programas de crecimiento a corto, mediano y largo plazo",
+          },
+        ],
         descripcion:
           "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
       },
@@ -305,8 +426,8 @@ export default {
         modoPago: "Semanal",
         sueldoMin: 20000,
         sueldoMax: 50000,
-        inicio: "5/19/12",
-        fin: "7/19/12",
+        fechaInicio: "5/19/12",
+        fechaVigencia: "7/19/12",
         descripcion:
           "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
       },
@@ -320,8 +441,25 @@ export default {
         modoPago: "Quincenal",
         sueldoMin: 20000,
         sueldoMax: 30000,
-        inicio: "5/19/12",
-        fin: "7/19/12",
+        fechaInicio: "5/19/12",
+        fechaVigencia: "7/19/12",
+        beneficios: [
+          {
+            nombre: "Ofrecemos sueldo competitivo",
+          },
+          {
+            nombre: "Trabajo en modalidad híbrida (Homeoffice)",
+          },
+          {
+            nombre: "Cursos y Certificaciones constantes",
+          },
+          {
+            nombre: "Prestaciones de ley y Superirores",
+          },
+          {
+            nombre: "Programas de crecimiento a corto, mediano y largo plazo",
+          },
+        ],
         descripcion:
           "Cras et massa dapibus ipsum faucibus varius. Pellentesque lorem nunc, venenatis sit amet augue vel, suscipit mattis orci. Curabitur rutrum libero sit amet viverra rhoncus.",
       },
@@ -335,8 +473,25 @@ export default {
         modoPago: "Mensual",
         sueldoMin: 200050,
         sueldoMax: 500000,
-        inicio: "6/19/12",
-        fin: "8/19/12",
+        fechaInicio: "6/19/12",
+        fechaVigencia: "8/19/12",
+        beneficios: [
+          {
+            nombre: "Ofrecemos sueldo competitivo",
+          },
+          {
+            nombre: "Trabajo en modalidad híbrida (Homeoffice)",
+          },
+          {
+            nombre: "Cursos y Certificaciones constantes",
+          },
+          {
+            nombre: "Prestaciones de ley y Superirores",
+          },
+          {
+            nombre: "Programas de crecimiento a corto, mediano y largo plazo",
+          },
+        ],
         descripcion:
           "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
       },
@@ -350,10 +505,27 @@ export default {
         modoPago: "Quincenal",
         sueldoMin: 20000,
         sueldoMax: 50000,
-        inicio: "5/19/12",
-        fin: "7/19/12",
+        fechaInicio: "5/19/12",
+        fechaVigencia: "7/19/12",
         descripcion:
           "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
+        beneficios: [
+          {
+            nombre: "Ofrecemos sueldo competitivo",
+          },
+          {
+            nombre: "Trabajo en modalidad híbrida (Homeoffice)",
+          },
+          {
+            nombre: "Cursos y Certificaciones constantes",
+          },
+          {
+            nombre: "Prestaciones de ley y Superirores",
+          },
+          {
+            nombre: "Programas de crecimiento a corto, mediano y largo plazo",
+          },
+        ],
       },
     ],
   }),
