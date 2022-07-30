@@ -1,6 +1,6 @@
 <template>
   <div class="center">
-    <vs-col lg="4" sm="10" xs="10" class="center-content-15">
+    <vs-col lg="5" sm="10" xs="10" class="display-table text-center">
       <div class="content-data padding-xy">
         <h4>
           <strong>Registro de usuario</strong>
@@ -76,7 +76,7 @@
               class="space"
               primary
               v-model="email"
-              placeholder="ejemplo@gmail.com"
+              placeholder="Correo"
             >
               <template #icon> @ </template>
             </vs-input>
@@ -92,14 +92,11 @@
             </vs-input>
           </vs-col>
         </vs-row>
-        <div class="center2">
-          <textarea
-            v-model="description"
-            placeholder="Breve descripción"
-          ></textarea>
+        <div class="center2 space">
+          <textarea class="space" v-model="description" placeholder="Breve descripción">
+          </textarea>
         </div>
-        <br />
-        <vs-row justify="space-around">
+        <vs-row justify="space-around" class="space-top">
           <vs-col w="4">
             <vs-button block animation-type="vertical">
               Crear cuenta
@@ -109,8 +106,7 @@
             </vs-button>
           </vs-col>
         </vs-row>
-        <br />
-        <div class="new">
+        <div class="space-top">
           Ya dispones de una cuenta?
           <br />
           <a href="#">Inicia sesión</a>

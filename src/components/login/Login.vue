@@ -1,6 +1,6 @@
 <template>
   <div class="center">
-    <vs-col lg="4" sm="10" xs="10" class="center-content-25">
+    <vs-col lg="4" sm="10" xs="10" class="display-table text-center">
       <div class="content-data padding-xy">
         <h3>
           <b>PRET</b>
@@ -20,7 +20,7 @@
                 primary
                 v-model="email"
                 class="space"
-                placeholder="ejemplo@gmail.com"
+                placeholder="Correo"
               >
                 <template #icon> @ </template>
               </vs-input>
@@ -29,14 +29,14 @@
                 block
                 type="password"
                 v-model="password"
-                placeholder="********"
+                placeholder="Contraseña"
               >
                 <template #icon>
                   <em class="bx bxs-lock-alt"></em>
                 </template>
               </vs-input>
               <div class="center-item space space-top">
-                <vs-checkbox v-model="remember"> Recuérdame </vs-checkbox>
+                <vs-checkbox v-model="option"> Recuérdame </vs-checkbox>
               </div>
               <a href="#">Olvidaste la contraseña?</a>
             </div>
@@ -44,7 +44,7 @@
         </vs-row>
         <vs-row class="space-top" justify="space-around">
           <vs-col w="5">
-            <vs-button transparent block> Crear cuenta </vs-button>
+            <vs-button transparent block> Crear cuenta</vs-button>
           </vs-col>
           <vs-col w="5">
             <vs-button primary block> Iniciar sesión </vs-button>
@@ -57,6 +57,7 @@
 <script>
 export default {
   name: "Login",
+  option: true,
 };
 </script>
 
