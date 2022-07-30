@@ -32,7 +32,7 @@ const routes = [
   },
 
   {
-    path: "/session",
+    path: "/acceso",
     component: Access,
     children: [
       {
@@ -41,50 +41,42 @@ const routes = [
         component: Login,
       },
       {
-        path: "registerRecruiter",
+        path: "registroReclutador",
         name: "Register Recruiter",
         component: RegisterRecuiter,
       },
       {
-        path: "registerUser",
+        path: "registroReclutador",
         name: "Register User",
         component: RegisterUser,
       },
     ],
   },
 
+
   {
-    path: "/vacancy",
+    path: "/reclutador",
     component: ContentLayout,
     children: [
       {
-        path: "register",
-        name: "Register Vacancy",
+        path: "/vacantes",
+        name: "Vacantes",
+        component: VacanciesList,
+      },
+      {
+        path: "registrarVacante",
+        name: "Registro Vacante",
         component: RegisterVacancy,
       },
       {
-        path: "candidatesList",
-        name: "Candidates List",
+        path: "candidatos",
+        name: "Lista de Candidaos",
         component: CandidatesList,
       },
       {
-        path: "propiceCandidates",
-        name: "Propice Candidates List",
+        path: "idoneos",
+        name: "Lista de Candidatos idoneos",
         component: PropiceCandidates,
-      },
-    ],
-  },
-
-
-  {
-    path: "/vacantes",
-    component: ContentLayout,
-    redirect: "/vacantes",
-    children: [
-      {
-        path: "",
-        name: "Vacantes",
-        component: VacanciesList,
       },
     ],
   },
