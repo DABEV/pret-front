@@ -340,6 +340,12 @@ input[type="date" i] {
     text-align: center;
 }
 
+.center-content-15 {
+    position: absolute;
+    top: 15%;
+    text-align: center;
+}
+
 .margin-xy {
     margin-left: 5%;
     margin-right: 5%;
