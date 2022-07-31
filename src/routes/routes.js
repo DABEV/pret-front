@@ -59,7 +59,7 @@ const routes = [
     component: ContentLayout,
     children: [
       {
-        path: "/vacantes",
+        path: "vacantes",
         name: "Vacantes",
         component: VacanciesList,
       },

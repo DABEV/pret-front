@@ -241,7 +241,7 @@
           <div class="space-top content-data space datos text-start bg-gray">
             <div
               :key="i"
-              v-for="(hab, i) in candidato.conocimientosHabilidades"
+              v-for="(hab, i) in candidato.conocimientosHabilidades.conocimientos"
               :data="hab"
               class="item"
             >
@@ -250,7 +250,7 @@
                   <i class="bx bx-book-open bg-primary"></i>
                 </vs-col>
                 <vs-col lg="11" sm="10" xs="10" class="space-top">
-                  <p>{{ hab.nombre }}</p>
+                  <p>{{ hab}}</p>
                 </vs-col>
               </vs-row>
               <div class="divider">
@@ -379,20 +379,10 @@ export default {
       descripcionPerfil:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aenean praesent non donec adipiscing ullamcorper. Tincidunt id suspendisse id sit. Nisi sed diam est.",
       foto: "https://images.unsplash.com/photo-1609505848912-b7c3b8b4beda?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=465&q=80",
-      conocimientosHabilidades: [
-        {
-          nombre: "Manejo de bases de datos",
-        },
-        {
-          nombre: "Data science",
-        },
-        {
-          nombre: "Manejo de Bigdata y machine learning",
-        },
-        {
-          nombre: "Uso de servicios en la nube (AWS)",
-        },
-      ],
+      conocimientosHabilidades: {
+        conocimientos: ["Laravel", "PHP"],
+        habilidades: ["Analista", "Trabajo en Equipo"],
+      },
       cursos: [
         {
           nombre: "Fundamento de bases de datos",
