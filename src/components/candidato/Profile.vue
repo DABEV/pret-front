@@ -1,88 +1,154 @@
 <template>
   <div class="center">
-    <div class="content-data content-card space">
-      <vs-row justify="space-around" class="datos">
-        <vs-col lg="2" sm="12" xs="12">
-          <vs-avatar size="150" circle>
-            <img
-              src="https://images.unsplash.com/photo-1609505848912-b7c3b8b4beda?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=465&q=80"
-              alt=""
-            />
-          </vs-avatar>
-        </vs-col>
-        <vs-col lg="7" sm="12" xs="12" class="text-start">
-          <h2 class="space">{{ candidato.nombre }}</h2>
-          <p class="bg-gray">{{ candidato.correo }}</p>
-          <p class="space">{{ candidato.titulo }}</p>
-          <vs-row class="bg-gray">
-            <vs-col lg="4" sm="12" xs="12">
-              <vs-row class="p">
-                <vs-col w="2" class="text-center">
-                  <i class="bx bx-phone bg-primary"></i>
-                </vs-col>
-                <vs-col w="10">
-                  <p>{{ candidato.telefono }}</p>
-                </vs-col>
-              </vs-row>
-            </vs-col>
-            <vs-col lg="4" sm="12" xs="12">
-              <vs-row class="p">
-                <vs-col w="2" class="text-center">
-                  <i class="bx bx-calendar bg-primary"></i>
-                </vs-col>
-                <vs-col w="10">
-                  <p>{{ candidato.fecha }}</p>
-                </vs-col>
-              </vs-row>
-            </vs-col>
-            <vs-col lg="4" sm="12" xs="12">
-              <vs-row class="p">
-                <vs-col w="2" class="text-center">
-                  <i class="bx bx-map bg-primary"></i>
-                </vs-col>
-                <vs-col w="10">
-                  <p>{{ candidato.estado }}</p>
-                </vs-col>
-              </vs-row>
-            </vs-col>
-          </vs-row>
-        </vs-col>
-        <vs-col lg="2" sm="12" xs="12">
-          <vs-row justify="space-between">
-            <vs-col lg="8" sm="5" xs="5">
-              <vs-button color="#1E88E5"> Editar perfil </vs-button>
-            </vs-col>
-            <vs-col lg="4" sm="5" xs="5">
-              <vs-button icon color="#B13CD2">
-                <i class="bx bx-download"></i>
-              </vs-button>
-            </vs-col>
-          </vs-row>
-        </vs-col>
-      </vs-row>
-    </div>
     <div class="space space-top content-card">
       <vs-row justify="space-between">
+        <vs-col lg="7" sm="12" xs="12" class="text-center">
+          <div class="content-card space">
+            <div class="content-data">
+              <vs-row class="margin-top-avatar">
+                <vs-col lg="3" sm="12" xs="12" class="space-top">
+                  <p class="text-item bg-primary">
+                    Teléfono
+                    <small class="bold bg-gray">{{ candidato.telefono }}</small>
+                  </p>
+                </vs-col>
+                <vs-col lg="6" sm="12" xs="12" class="center-item">
+                  <vs-avatar circle size="150" class="avatar-top-card">
+                    <img :src="candidato.foto" alt="" />
+                  </vs-avatar>
+                </vs-col>
+                <vs-col lg="3" sm="12" xs="12" class="space-top">
+                  <p class="text-item bg-primary">
+                    Estado
+                    <small class="bold bg-gray">
+                      {{ candidato.estadoRepublica.nombre }}
+                    </small>
+                  </p>
+                </vs-col>
+              </vs-row>
+              <h3 class="space-top">
+                {{ candidato.nombre }} {{ candidato.apellidoMaterno }}
+                {{ candidato.apellidoPaterno }}
+              </h3>
+              <p class="bg-gray">{{ candidato.correoElectronico }}</p>
+              <div class="center-item">
+                <div class="content-card">
+                  <div class="divider space space-top">
+                    <span class="border"></span>
+                  </div>
+                  <vs-row justify="space-around" class="space">
+                    <vs-col lg="1" sm="2" xs="2" class="center-item">
+                      <vs-avatar color="#b13cd2" size="30">
+                        <i class="bx bxs-graduation"></i>
+                      </vs-avatar>
+                    </vs-col>
+                    <vs-col
+                      lg="10"
+                      sm="9"
+                      xs="9"
+                      class="center-item text-start"
+                    >
+                      <p>Titulo: {{ candidato.tituloCurricular }}</p>
+                    </vs-col>
+                  </vs-row>
+                  <div class="divider space space-top">
+                    <span class="border"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="center-item">
+                <div class="content-card">
+                  <vs-row justify="space-around" class="space">
+                    <vs-col lg="1" sm="2" xs="2" class="center-item">
+                      <vs-avatar color="#1E88E5" size="30">
+                        <i class="bx bxs-cake"></i>
+                      </vs-avatar>
+                    </vs-col>
+                    <vs-col
+                      lg="10"
+                      sm="9"
+                      xs="9"
+                      class="center-item text-start"
+                    >
+                      <p>
+                        Fecha de nacimiento: {{ candidato.fechaNacimiento }}
+                      </p>
+                    </vs-col>
+                  </vs-row>
+                  <div class="divider space space-top">
+                    <span class="border"></span>
+                  </div>
+                  <vs-row justify="center" class="space">
+                    <vs-col lg="3" sm="6" xs="6">
+                      <vs-button color="#1E88E5"> Editar perfil </vs-button>
+                    </vs-col>
+                    <vs-col lg="1" sm="2" xs="2">
+                      <vs-tooltip>
+                        <vs-button
+                          icon
+                          animation-type="vertical"
+                          color="#B13CD2"
+                        >
+                          <i class="bx bx-download"></i>
+                          <template #animate>
+                            <i class="bx bx-import"></i>
+                          </template>
+                        </vs-button>
+                        <template #tooltip> Descargar CV </template>
+                      </vs-tooltip>
+                    </vs-col>
+                  </vs-row>
+                </div>
+              </div>
+            </div>
+          </div>
+        </vs-col>
         <vs-col lg="5" sm="12" xs="12">
           <h2>Perfil profesional</h2>
           <div class="space-top content-data space datos text-start bg-gray">
-            <p>{{ candidato.descripcion }}</p>
+            <p>{{ candidato.descripcionPerfil }}</p>
           </div>
-        </vs-col>
-        <vs-col lg="6" sm="12" xs="12">
           <h2>Estudios</h2>
-          <div class="space-top content-data space datos text-start">
-            <vs-row justify="space-between">
-              <vs-col w="1" sm="2" xs="2">
-                <i class="bx bx-book bg-primary"></i>
-              </vs-col>
-              <vs-col w="11" sm="10" xs="10">
-                <p class="bold">{{ estudios.universidad }}</p>
-                <p class="bg-gray">{{ estudios.titulo }}</p>
-                <p class="bg-primary">Grado: {{ estudios.grado }}</p>
-                <span class="badge-sec">{{ estudios.periodo }}</span>
-              </vs-col>
-            </vs-row>
+          <div class="text-center bg-gray">
+            <div>
+              <vs-card-group>
+                <vs-card
+                  :key="i"
+                  :data="c"
+                  v-for="(c, i) in candidato.estudios"
+                >
+                  <template #text>
+                    <vs-row>
+                      <vs-col lg="2" sm="3" xs="3" class="space-top">
+                        <vs-avatar primary size="35">
+                          <i class="bx bx-book"></i>
+                        </vs-avatar>
+                      </vs-col>
+                      <vs-col
+                        lg="10"
+                        sm="9"
+                        xs="9"
+                        class="text-start space-top"
+                      >
+                        <h4>{{ c.gradoAcademico }}</h4>
+                        <small>{{ c.universidad }}</small>
+                      </vs-col>
+                    </vs-row>
+                    <small class="bold"> {{ c.carrera }}</small>
+                    <vs-row justify="space-between">
+                      <vs-col w="4" class="space-top">
+                        Inicio:
+                        <span class="badge-sec"> {{ c.fechaInicio }}</span>
+                      </vs-col>
+                      <vs-col w="4" class="space-top">
+                        Fin:
+                        <span class="badge-sec"> {{ c.fechaFin }}</span>
+                      </vs-col>
+                    </vs-row>
+                  </template>
+                </vs-card>
+              </vs-card-group>
+            </div>
           </div>
         </vs-col>
       </vs-row>
@@ -102,17 +168,21 @@
             <template #tbody>
               <vs-tr
                 :key="i"
-                v-for="(tr, i) in $vs.getPage(experiencia, page, max)"
+                v-for="(tr, i) in $vs.getPage(
+                  candidato.experienciasLaborales,
+                  page,
+                  max
+                )"
                 :data="tr"
               >
                 <vs-td>
                   {{ tr.puesto }}
                 </vs-td>
                 <vs-td>
-                  {{ tr.tiempo }}
+                  {{ tr.fechaInicio }}
                 </vs-td>
                 <vs-td>
-                  {{ tr.actividades }}
+                  {{ tr.actividadesRealizadas }}
                 </vs-td>
                 <template #expand>
                   <div class="con-content">
@@ -131,7 +201,7 @@
             <template #footer>
               <vs-pagination
                 v-model="page"
-                :length="$vs.getLength(experiencia, max)"
+                :length="$vs.getLength(candidato.experienciasLaborales, max)"
               />
             </template>
           </vs-table>
@@ -145,7 +215,7 @@
           <div class="space-top content-data space datos text-start bg-gray">
             <div
               :key="i"
-              v-for="(idioma, i) in idiomas"
+              v-for="(idioma, i) in candidato.idiomas"
               :data="idioma"
               class="item"
             >
@@ -171,7 +241,7 @@
           <div class="space-top content-data space datos text-start bg-gray">
             <div
               :key="i"
-              v-for="(hab, i) in habilidades"
+              v-for="(hab, i) in candidato.conocimientosHabilidades"
               :data="hab"
               class="item"
             >
@@ -207,7 +277,11 @@
             <template #tbody>
               <vs-tr
                 :key="i"
-                v-for="(tr, i) in $vs.getPage(certificaciones, page2, max)"
+                v-for="(tr, i) in $vs.getPage(
+                  candidato.certificaciones,
+                  page2,
+                  max
+                )"
                 :data="tr"
               >
                 <vs-td>
@@ -217,10 +291,10 @@
                   {{ tr.empresa }}
                 </vs-td>
                 <vs-td>
-                  {{ tr.inicio }}
+                  {{ tr.fechaObtencion }}
                 </vs-td>
                 <vs-td>
-                  {{ tr.fin }}
+                  {{ tr.fechaCaducidad }}
                 </vs-td>
                 <template #expand>
                   <div class="con-content">
@@ -239,7 +313,7 @@
             <template #footer>
               <vs-pagination
                 v-model="page2"
-                :length="$vs.getLength(certificaciones, max)"
+                :length="$vs.getLength(candidato.certificaciones, max)"
               />
             </template>
           </vs-table>
@@ -251,7 +325,7 @@
       <div class="text-start bg-gray">
         <div>
           <vs-card-group>
-            <vs-card :key="i" :data="c" v-for="(c, i) in cursos">
+            <vs-card :key="i" :data="c" v-for="(c, i) in candidato.cursos">
               <template #title>
                 <vs-row>
                   <vs-col lg="2" sm="3" xs="3">
@@ -267,10 +341,10 @@
               <template #text>
                 <vs-row>
                   <vs-col w="8">
-                    <p>Fecha: {{ c.fecha }}</p>
+                    <p>Fecha: {{ c.fechaObtencion }}</p>
                   </vs-col>
                   <vs-col w="4" class="text-end">
-                    <span class="badge-sec">{{ c.horas }}hrs</span>
+                    <span class="badge-sec">{{ c.numeroHoras }}hrs</span>
                   </vs-col>
                 </vs-row>
               </template>
@@ -291,157 +365,170 @@ export default {
     page2: 1,
     max: 5,
     candidato: {
-      nombre: "Michelle Rivera",
-      correo: "michelle.rivera@example.com",
-      titulo: "Grado de estudios: Administradora de base de datos (DBA)",
+      nombre: "Michelle",
+      apellidoPaterno: "Rivera",
+      apellidoMaterno: "Solaz",
+      correoElectronico: "michelle.rivera@example.com",
+      habilitado: true,
       telefono: "(225) 555-0118",
-      fecha: "9/4/12",
-      estado: "Morelos",
-      descripcion:
+      fechaNacimiento: "9/4/12",
+      estadoRepublica: {
+        nombre: "Morelos",
+      },
+      tituloCurricular: "Administradora de base de datos (DBA)",
+      descripcionPerfil:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aenean praesent non donec adipiscing ullamcorper. Tincidunt id suspendisse id sit. Nisi sed diam est.",
+      foto: "https://images.unsplash.com/photo-1609505848912-b7c3b8b4beda?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=465&q=80",
+      conocimientosHabilidades: [
+        {
+          nombre: "Manejo de bases de datos",
+        },
+        {
+          nombre: "Data science",
+        },
+        {
+          nombre: "Manejo de Bigdata y machine learning",
+        },
+        {
+          nombre: "Uso de servicios en la nube (AWS)",
+        },
+      ],
+      cursos: [
+        {
+          nombre: "Fundamento de bases de datos",
+          fechaObtencion: "12/4/17",
+          empresa: "Platzi",
+          numeroHoras: "12",
+        },
+        {
+          nombre: "Fundamento de bases de datos",
+          fechaObtencion: "12/4/17",
+          empresa: "Platzi",
+          numeroHoras: "12",
+        },
+        {
+          nombre: "Fundamento de bases de datos",
+          fechaObtencion: "12/4/17",
+          empresa: "Platzi",
+          numeroHoras: "12",
+        },
+        {
+          nombre: "Fundamento de bases de datos",
+          fechaObtencion: "12/4/17",
+          empresa: "Platzi",
+          numeroHoras: "12",
+        },
+      ],
+      experienciasLaborales: [
+        {
+          puesto: "Analista de datos",
+          fechaInicio: "2 años",
+          fechaFin: "",
+          actividadesRealizadas: "Análisis y manejo de Bigdata",
+        },
+        {
+          puesto: "Administrador de BD",
+          fechaInicio: "11 meses",
+          fechaFin: "",
+          actividadesRealizadas: "Mantenimiento de BD",
+        },
+        {
+          puesto: "Gerente de BD en la nube",
+          fechaInicio: "1 año",
+          fechaFin: "",
+          actividadesRealizadas: "Monitoreo de bases en la nube",
+        },
+        {
+          puesto: "Diseñador de BD relacionales",
+          fechaInicio: "6 meses",
+          fechaFin: "",
+          actividadesRealizadas: "Maquetado y análisis de relaciones",
+        },
+        {
+          puesto: "Analista de datos",
+          fechaInicio: "2 años",
+          fechaFin: "",
+          actividadesRealizadas: "Análisis y manejo de Bigdata",
+        },
+        {
+          puesto: "Analista de datos",
+          fechaInicio: "2 años",
+          actividadesRealizadas: "Análisis y manejo de Bigdata",
+        },
+        {
+          puesto: "Analista de datos",
+          fechaInicio: "2 años",
+          actividadesRealizadas: "Análisis y manejo de Bigdata",
+        },
+      ],
+      estudios: [
+        {
+          universidad: "Universidad del estado de Morelos",
+          carrera: "Ingeniería en Manejo de Datos Computacionales",
+          gradoAcademico: "Ingeniería en TI y Data Cience",
+          fechaInicio: "2015",
+          fechaFin: "2020",
+        },
+        {
+          universidad: "Universidad Tecnológica Emiliano Zapata",
+          carrera: "Ingeniería en Tecnologías de la comunicación",
+          gradoAcademico: "Ingeniería en TI y Data Cience",
+          fechaInicio: "2019",
+          fechaFin: "2024",
+        },
+        {
+          universidad: "Universidad del estado de Morelos",
+          carrera: "Ingeniería en Manejo de Datos Computacionales",
+          gradoAcademico: "Ingeniería en TI y Data Cience",
+          fechaInicio: "2015",
+          fechaFin: "2020",
+        },
+      ],
+      idiomas: [
+        {
+          nombre: "Español",
+          nivel: "Avanzado",
+        },
+        {
+          nombre: "Inglés (USA)",
+          nivel: "Medio",
+        },
+        {
+          nombre: "Portugués",
+          nivel: "Básico",
+        },
+        {
+          nombre: "Alemán",
+          nivel: "Básico",
+        },
+      ],
+      certificaciones: [
+        {
+          nombre: "Analista de datos",
+          empresa: "Microsoft",
+          fechaObtencion: "8/15/17",
+          fechaCaducidad: "8/15/20",
+        },
+        {
+          nombre: "Administrador de BD",
+          empresa: "Oracle",
+          fechaObtencion: "8/21/17",
+          fechaCaducidad: "8/21/20",
+        },
+        {
+          nombre: "Industria 2.0",
+          empresa: "Cisco",
+          fechaObtencion: "8/15/17",
+          fechaCaducidad: "8/15/20",
+        },
+        {
+          nombre: "Manejo de AWS",
+          empresa: "Amazon Web Services",
+          fechaObtencion: "6/19/14",
+          fechaCaducidad: "6/19/20",
+        },
+      ],
     },
-    estudios: {
-      universidad: "Universidad del estado de Morelos",
-      titulo: "Ingeniería en Manejo de Datos Computacionales",
-      grado: "Ingeniería en TI y Data Cience",
-      periodo: "2015-2020",
-    },
-    experiencia: [
-      {
-        puesto: "Analista de datos",
-        tiempo: "2 años",
-        actividades: "Análisis y manejo de Bigdata",
-      },
-      {
-        puesto: "Administrador de BD",
-        tiempo: "11 meses",
-        actividades: "Mantenimiento de BD",
-      },
-      {
-        puesto: "Gerente de BD en la nube",
-        tiempo: "1 año",
-        actividades: "Monitoreo de bases en la nube",
-      },
-      {
-        puesto: "Diseñador de BD relacionales",
-        tiempo: "6 meses",
-        actividades: "Maquetado y análisis de relaciones",
-      },
-      {
-        puesto: "Analista de datos",
-        tiempo: "2 años",
-        actividades: "Análisis y manejo de Bigdata",
-      },
-      {
-        puesto: "Analista de datos",
-        tiempo: "2 años",
-        actividades: "Análisis y manejo de Bigdata",
-      },
-      {
-        puesto: "Analista de datos",
-        tiempo: "2 años",
-        actividades: "Análisis y manejo de Bigdata",
-      },
-      {
-        puesto: "Analista de datos",
-        tiempo: "2 años",
-        actividades: "Análisis y manejo de Bigdata",
-      },
-      {
-        puesto: "Analista de datos",
-        tiempo: "2 años",
-        actividades: "Análisis y manejo de Bigdata",
-      },
-      {
-        puesto: "Analista de datos",
-        tiempo: "2 años",
-        actividades: "Análisis y manejo de Bigdata",
-      },
-    ],
-    idiomas: [
-      {
-        nombre: "Español",
-        nivel: "Avanzado",
-      },
-      {
-        nombre: "Inglés (USA)",
-        nivel: "Medio",
-      },
-      {
-        nombre: "Portugués",
-        nivel: "Básico",
-      },
-      {
-        nombre: "Alemán",
-        nivel: "Básico",
-      },
-    ],
-    habilidades: [
-      {
-        nombre: "Manejo de bases de datos",
-      },
-      {
-        nombre: "Data science",
-      },
-      {
-        nombre: "Manejo de Bigdata y machine learning",
-      },
-      {
-        nombre: "Uso de servicios en la nube (AWS)",
-      },
-    ],
-    certificaciones: [
-      {
-        nombre: "Analista de datos",
-        empresa: "Microsoft",
-        inicio: "8/15/17",
-        fin: "8/15/20",
-      },
-      {
-        nombre: "Administrador de BD",
-        empresa: "Oracle",
-        inicio: "8/21/17",
-        fin: "8/21/20",
-      },
-      {
-        nombre: "Industria 2.0",
-        empresa: "Cisco",
-        inicio: "8/15/17",
-        fin: "8/15/20",
-      },
-      {
-        nombre: "Manejo de AWS",
-        empresa: "Amazon Web Services",
-        inicio: "6/19/14",
-        fin: "6/19/20",
-      },
-    ],
-    cursos: [
-      {
-        nombre: "Fundamento de bases de datos",
-        fecha: "12/4/17",
-        empresa: "Platzi",
-        horas: "12",
-      },
-      {
-        nombre: "Fundamento de bases de datos",
-        fecha: "12/4/17",
-        empresa: "Platzi",
-        horas: "12",
-      },
-      {
-        nombre: "Fundamento de bases de datos",
-        fecha: "12/4/17",
-        empresa: "Platzi",
-        horas: "12",
-      },
-      {
-        nombre: "Fundamento de bases de datos",
-        fecha: "12/4/17",
-        empresa: "Platzi",
-        horas: "12",
-      },
-    ],
   }),
 };
 </script>
