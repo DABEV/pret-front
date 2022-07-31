@@ -18,7 +18,7 @@
               block
               class="space"
               primary
-              v-model="name"
+              v-model="nombre"
               placeholder="Nombre"
             >
               <template #icon><em class="bx bxs-user"></em></template>
@@ -27,8 +27,8 @@
               block
               class="space"
               primary
-              v-model="lastname"
-              placeholder="Apellidos"
+              v-model="apellidoPaterno"
+              placeholder="Apellido paterno"
             >
               <template #icon><em class="bx bxs-user"></em></template>
             </vs-input>
@@ -36,10 +36,10 @@
               block
               class="space"
               primary
-              v-model="stance"
-              placeholder="Puesto de trabajo"
+              v-model="apellidoMaterno"
+              placeholder="Apellido materno"
             >
-              <template #icon><em class="bx bxs-briefcase"></em></template>
+              <template #icon><em class="bx bxs-user"></em></template>
             </vs-input>
             <vs-input
               block
@@ -66,7 +66,7 @@
               block
               class="space"
               primary
-              v-model="email"
+              v-model="correoElectronico"
               placeholder="Correo"
             >
               <template #icon> @ </template>
@@ -86,10 +86,23 @@
               block
               class="space"
               type="password"
-              v-model="password"
+              v-model="contrasena"
               placeholder="Repetir contraseña"
             >
               <template #icon><em class="bx bxs-lock-alt"></em></template>
+            </vs-input>
+          </vs-col>
+            
+        </vs-row>
+        <vs-row justify="space-around">
+          <vs-col lg="11" sm="12" xs="12">
+            <vs-input
+              block
+              primary
+              v-model="stance"
+              placeholder="Puesto de trabajo"
+            >
+              <template #icon><em class="bx bxs-briefcase"></em></template>
             </vs-input>
           </vs-col>
         </vs-row>
@@ -121,12 +134,13 @@ export default {
   data: () => ({
     value: "",
     placeholder: "",
-    name: "",
-    lastname: "",
+    nombre: "",
+    apellidoPaterno: "",
+    apellidoMaterno: "",
     stance: "",
     company: "",
-    email: "",
-    password: "",
+    correoElectronico: "",
+    contrasena: "",
   }),
 };
 </script>

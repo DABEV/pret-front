@@ -43,9 +43,9 @@
             </vs-col>
             <vs-col lg="8" sm="9" xs="9" class="space-top">
               <p>
-                <strong>{{ c.nombre }} {{ c.apellido1 }} {{ c.apellido2 }}</strong>
+                <strong>{{ c.nombre }} {{ c.apellidoPaterno }} {{ c.apellidoMaterno }}</strong>
               </p>
-              <small>{{ c.correo }}</small>
+              <small>{{ c.correoElectronico }}</small>
             </vs-col>
             <vs-col lg="1" sm="3" xs="3" class="space-top">
               <vs-tooltip>
@@ -130,50 +130,62 @@ export default {
     contactos: [
       {
         nombre: "Cameron",
-        apellido1: "Williamson",
-        apellido2: "Warren",
-        correo: "cameron@example.com",
+        apellidoPaterno: "Williamson",
+        apellidoMaterno: "Warren",
+        correoElectronico: "cameron@example.com",
         telefono: "(704) 555-0127",
+        fechaNacimiento: "",
+        estadoRepublica: "",
         img: "https://images.unsplash.com/photo-1484186139897-d5fc6b908812?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
       },
       {
         nombre: "Esther",
-        apellido1: "Howard",
-        apellido2: "Simmons",
-        correo: "esther@example.com",
+        apellidoPaterno: "Howard",
+        apellidoMaterno: "Simmons",
+        correoElectronico: "esther@example.com",
         telefono: "(907) 555-0101",
+        fechaNacimiento: "",
+        estadoRepublica: "",
         img: "https://images.unsplash.com/photo-1518577915332-c2a19f149a75?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=562&q=80",
       },
       {
         nombre: "Robert",
-        apellido1: "Warren",
-        apellido2: "Hawkins",
-        correo: "robert@example.com",
+        apellidoPaterno: "Warren",
+        apellidoMaterno: "Hawkins",
+        correoElectronico: "robert@example.com",
         telefono: "(217) 555-0113",
+        fechaNacimiento: "",
+        estadoRepublica: "",
         img: "https://images.unsplash.com/photo-1529068755536-a5ade0dcb4e8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=581&q=80",
       },
       {
         nombre: "Alexander",
-        apellido1: "Edwards",
-        apellido2: "Wade",
-        correo: "alexander@example.com",
+        apellidoPaterno: "Edwards",
+        apellidoMaterno: "Wade",
+        correoElectronico: "alexander@example.com",
         telefono: "(308) 555-0121",
+        fechaNacimiento: "",
+        estadoRepublica: "",
         img: "https://images.unsplash.com/photo-1485528562718-2ae1c8419ae2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=558&q=80",
       },
       {
         nombre: "Leslie",
-        apellido1: "Brooklyn",
-        apellido2: "Williamson",
-        correo: "leslie@example.com",
+        apellidoPaterno: "Brooklyn",
+        apellidoMaterno: "Williamson",
+        correoElectronico: "leslie@example.com",
         telefono: "(302) 555-0107",
+        fechaNacimiento: "",
+        estadoRepublica: "",
         img: "https://images.unsplash.com/photo-1485893086445-ed75865251e0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
       },
       {
         nombre: "Ralph",
-        apellido1: "Williamson",
-        apellido2: "Fox",
-        correo: "ralph@example.com",
+        apellidoPaterno: "Williamson",
+        apellidoMaterno: "Fox",
+        correoElectronico: "ralph@example.com",
         telefono: "(702) 555-0122",
+        fechaNacimiento: "",
+        estadoRepublica: "",
         img: "https://images.unsplash.com/photo-1483995564125-85915c11dcfe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=641&q=80",
       },
     ],
