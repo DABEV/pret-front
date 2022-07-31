@@ -1,0 +1,87 @@
+button {
+    font-family: "Poppins";
+}
+
+i {
+    font-size: 1.4rem !important;
+    text-align: center;
+}
+
+em {
+    font-size: 1.4rem !important;
+    text-align: center;
+}
+
+textarea {
+    display: flex;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    background: #f4f7f8;
+    font-family: "Poppins";
+    margin-top: 20px;
+    padding: 20px;
+    width: 100%;
+}
+
+textarea::placeholder {
+    color: #b5bdc3;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+input[type="date" i] {
+    align-items: center;
+    display: inline-flex;
+    font-family: "Poppins" !important;
+    -webkit-padding-start: 10px;
+    cursor: default;
+    overflow: hidden;
+    padding-left: 38px;
+    margin: 0;
+    max-height: 30px;
+    color: rgba(var(--vs-text), 1);
+}
+
+.input-date {
+    border-radius: 12px;
+    border: 2px solid transparent;
+    background: #f4f7f8;
+}
+
+.input-content {
+    padding: 10px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    margin-left: 5px;
+    width: calc(100%);
+}
+
+.bg-component {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-long {
+    width: 100%;
+}
+
+.button-long {
+    margin: 0px;
+    width: 85%;
+}
+
+.textarea-login {
+    display: flex;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    background: #f4f7f8;
+    font-family: "Poppins";
+    width: 50px;
+}
+
+.button-center {
+    width: 250px;
+    padding: 20px;
+}

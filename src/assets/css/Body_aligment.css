@@ -1,0 +1,45 @@
+body {
+    background-color: #F4F7F8;
+    font-family: "Poppins";
+}
+
+.login {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.5)),
+        url("https://wallpaperaccess.com/full/1393206.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    flex-wrap: wrap;
+}
+
+.center-item {
+    display: flex !important;
+    align-items: center;
+    justify-content: center !important;
+    flex-wrap: wrap;
+}
+
+.end-item {
+    float: right !important;
+}
+
+.con-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.center-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
