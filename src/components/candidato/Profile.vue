@@ -91,7 +91,7 @@
           <div class="content-data space datos text-start bg-gray">
             <vs-row justify="space-between">
               <vs-col lg="6" sm="6" xs="6">
-                <vs-button color="#1E88E5"> Editar perfil </vs-button>
+                <vs-button color="#1E88E5" @click="IrEditar()"> Editar perfil </vs-button>
               </vs-col>
               <vs-col lg="2" sm="2" xs="2">
                 <vs-tooltip>
@@ -557,6 +557,11 @@ export default {
       ],
     },
   }),
+  methods: {
+    IrEditar: function () {
+      this.$router.push('/candidato/editarPerfil') 
+    }
+  }
 };
 </script>
 

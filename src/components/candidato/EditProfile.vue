@@ -194,7 +194,9 @@
                   {{ candidato.certificaciones.length }}
                 </small>
                 <div class="center-item">
-                  <vs-button success @click="activeCer = !activeCer"> Añadir certificación </vs-button>
+                  <vs-button success @click="activeCer = !activeCer">
+                    Añadir certificación
+                  </vs-button>
                 </div>
               </template>
             </vs-card>
@@ -211,7 +213,9 @@
                   {{ candidato.idiomas.length }}
                 </small>
                 <div class="center-item">
-                  <vs-button success> Añadir idioma </vs-button>
+                  <vs-button success @click="activeIdi = !activeIdi">
+                    Añadir idioma
+                  </vs-button>
                 </div>
               </template>
             </vs-card>
@@ -228,7 +232,9 @@
                   {{ candidato.cursos.length }}
                 </small>
                 <div class="center-item">
-                  <vs-button success> Añadir curso </vs-button>
+                  <vs-button success @click="activeCur = !activeCur">
+                    Añadir curso
+                  </vs-button>
                 </div>
               </template>
             </vs-card>
@@ -462,7 +468,7 @@
           block
         >
           <template #icon>
-            <i class='bx bxs-purchase-tag-alt'></i>
+            <i class="bx bxs-purchase-tag-alt"></i>
           </template>
         </vs-input>
         <vs-input
@@ -473,7 +479,7 @@
           block
         >
           <template #icon>
-            <i class='bx bxs-buildings'></i>
+            <i class="bx bxs-buildings"></i>
           </template>
         </vs-input>
         <vs-row justify="space-between">
@@ -518,6 +524,128 @@
         </vs-row>
       </template>
     </vs-dialog>
+
+    <vs-dialog v-model="activeIdi">
+      <template #header>
+        <h2>Añadir Idioma</h2>
+      </template>
+      <div class="margin-xy space space-top">
+        <vs-input
+          class="space-top space"
+          placeholder="Nombre"
+          v-model="idioma.nombre"
+          color="#1e88e5"
+          block
+        >
+          <template #icon>
+            <i class="bx bx-world"></i>
+          </template>
+        </vs-input>
+      </div>
+      <template #footer>
+        <vs-row justify="center">
+          <vs-col lg="5" sm="12" xs="12" class="space-top center-item">
+            <vs-button transparent dark @click="activeIdi = false" block>
+              Cancelar
+            </vs-button>
+          </vs-col>
+          <vs-col lg="5" sm="12" xs="12" class="space-top center-item">
+            <vs-button block primary @click="enviarIdi()">
+              Enviar datos
+            </vs-button>
+          </vs-col>
+        </vs-row>
+      </template>
+    </vs-dialog>
+
+    <vs-dialog scroll width="600px" v-model="activeCur">
+      <template #header>
+        <h2>Añadir Curso</h2>
+      </template>
+      <div class="margin-xy space space-top">
+        <vs-input
+          class="space-top space"
+          placeholder="Nombre"
+          v-model="curso.nombre"
+          color="#1e88e5"
+          block
+        >
+          <template #icon>
+            <i class="bx bxs-purchase-tag-alt"></i>
+          </template>
+        </vs-input>
+        <vs-row justify="space-between">
+          <vs-col lg="5">
+            <vs-input
+              class="space-top space"
+              placeholder="Empresa"
+              v-model="curso.empresa"
+              color="#1e88e5"
+              block
+            >
+              <template #icon>
+                <i class="bx bxs-buildings"></i>
+              </template>
+            </vs-input>
+          </vs-col>
+          <vs-col lg="5">
+            <vs-input
+              class="space-top space"
+              placeholder="No. Hrs"
+              type="number"
+              v-model="curso.numeroHoras"
+              color="#1e88e5"
+              min="1"
+              block
+            >
+              <template #icon>
+                <i class="bx bx-time"></i>
+              </template>
+            </vs-input>
+          </vs-col>
+        </vs-row>
+        <vs-row justify="space-between">
+          <vs-col lg="5">
+            <small>Obtención</small>
+            <vs-input
+              type="date"
+              block
+              class="input-date"
+              primary
+              v-model="certificado.fechaObtencion"
+            >
+              <template #icon><em class="bx bxs-calendar"></em></template>
+            </vs-input>
+          </vs-col>
+          <vs-col lg="5">
+            <small>Caducidad</small>
+            <vs-input
+              type="date"
+              block
+              class="input-date"
+              primary
+              v-model="experiencia.fechaCaducidad"
+            >
+              <template #icon><em class="bx bxs-calendar"></em></template>
+            </vs-input>
+          </vs-col>
+        </vs-row>
+      </div>
+      <template #footer>
+        <vs-row justify="center">
+          <vs-col lg="5" sm="12" xs="12" class="space-top center-item">
+            <vs-button transparent dark @click="activeCur = false" block>
+              Cancelar
+            </vs-button>
+          </vs-col>
+          <vs-col lg="5" sm="12" xs="12" class="space-top center-item">
+            <vs-button block primary @click="enviarCur()">
+              Enviar datos
+            </vs-button>
+          </vs-col>
+        </vs-row>
+      </template>
+    </vs-dialog>
   </div>
 </template>
 <script>
@@ -531,7 +659,13 @@ export default {
     activeIdi: false,
     activeCer: false,
     activeCur: false,
+    success: false,
+    error: false,
+    progress: 0,
     estado: {},
+    idioma: {
+      nombre: "",
+    },
     estudio: {
       universidad: "",
       carrera: "",
@@ -550,6 +684,12 @@ export default {
       empresa: "",
       fechaObtencion: "",
       fechaCaducidad: "",
+    },
+    curso: {
+      nombre: "",
+      fechaObtencion: "",
+      empresa: "",
+      numeroHoras: "",
     },
     estados: [
       {
@@ -744,12 +884,23 @@ export default {
 
     enviarEst: function () {
       this.activeEst = false;
+      this.success = true;
     },
     enviarExp: function () {
       this.activeExp = false;
+      this.success = true;
     },
     enviarCer: function () {
       this.activeCer = false;
+      this.success = true;
+    },
+    enviarIdi: function () {
+      this.activeIdi = false;
+      this.success = true;
+    },
+    enviarCur: function () {
+      this.activeCur = false;
+      this.success = true;
     },
   },
 };
