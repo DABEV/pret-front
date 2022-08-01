@@ -55,7 +55,7 @@
               class="space input-date"
               type="date"
               primary
-              v-model="birthdate"
+              v-model="fechaNacimiento"
             >
               <template #icon><em class="bx bxs-calendar"></em></template>
             </vs-input>
@@ -65,7 +65,7 @@
               block
               class="space"
               primary
-              v-model="career"
+              v-model="tituloCurricular"
               placeholder="Grado de estudios"
             >
               <template #icon><em class="bx bxs-graduation"></em></template>
@@ -113,7 +113,7 @@
         </vs-row>
         <vs-row justify="space-around">
           <vs-col lg="11" sm="12" xs="12">
-            <textarea v-model="description" placeholder="Breve descripción">
+            <textarea v-model="descripcionPerfil" placeholder="Breve descripción">
           </textarea>
           </vs-col>
         </vs-row>
@@ -146,11 +146,25 @@ export default {
     nombre: "",
     apellidoPaterno: "",
     apellidoMaterno: "",
-    career: "",
+    estadoRepublica: {
+      nombre: "Morelos",
+    },
+    habilitado: true,
+    tituloCurricular: "",
     telefono: "",
+    fechaNacimiento: "9/4/12",
     correoElectronico: "",
     contrasena: "",
-    description: "",
+    descripcionPerfil: "",
+    conocimientosHabilidades: {
+      conocimientos: [],
+      habilidades: [],
+    },
+    cursos: [],
+    experienciasLaborales: [],
+    estudios: [],
+    idiomas: [],
+    certificaciones: [],
   }),
 };
 </script>

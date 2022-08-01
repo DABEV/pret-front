@@ -45,7 +45,7 @@
               block
               class="space"
               primary
-              v-model="company"
+              v-model="nombreEmpresa"
               placeholder="Empresa"
             >
               <template #icon><em class="bx bxs-buildings"></em></template>
@@ -99,7 +99,7 @@
             <vs-input
               block
               primary
-              v-model="stance"
+              v-model="puesto"
               placeholder="Puesto de trabajo"
             >
               <template #icon><em class="bx bxs-briefcase"></em></template>
@@ -137,8 +137,18 @@ export default {
     nombre: "",
     apellidoPaterno: "",
     apellidoMaterno: "",
-    stance: "",
-    company: "",
+    habilitado: true,
+    telefono: "",
+    fechaNacimiento: "",
+    estadoRepublica: {
+      nombre: "",
+    },
+    roles: "",
+    puesto: "",
+    estadoRepublicaEmpresa: {
+      nombre: "",
+    },
+    nombreEmpresa: "",
     correoElectronico: "",
     contrasena: "",
   }),

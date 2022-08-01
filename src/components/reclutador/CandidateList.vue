@@ -127,15 +127,19 @@ export default {
     search: "",
     job: "Apen: Desarrolladores Full-stack",
     contacto: {},
-    contactos: [
+    contactos: [ 
       {
         nombre: "Cameron",
         apellidoPaterno: "Williamson",
         apellidoMaterno: "Warren",
         correoElectronico: "cameron@example.com",
         telefono: "(704) 555-0127",
+        tituloCurricular: "",
         fechaNacimiento: "",
-        estadoRepublica: "",
+        descripcionPerfil: "",
+        estadoRepublica: {
+          nombre: "Morelos",
+        },
         img: "https://images.unsplash.com/photo-1484186139897-d5fc6b908812?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
       },
       {
@@ -144,8 +148,12 @@ export default {
         apellidoMaterno: "Simmons",
         correoElectronico: "esther@example.com",
         telefono: "(907) 555-0101",
+        tituloCurricular: "",
         fechaNacimiento: "",
-        estadoRepublica: "",
+        descripcionPerfil: "",
+        estadoRepublica: {
+          nombre: "Morelos",
+        },
         img: "https://images.unsplash.com/photo-1518577915332-c2a19f149a75?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=562&q=80",
       },
       {
@@ -154,8 +162,12 @@ export default {
         apellidoMaterno: "Hawkins",
         correoElectronico: "robert@example.com",
         telefono: "(217) 555-0113",
+        tituloCurricular: "",
         fechaNacimiento: "",
-        estadoRepublica: "",
+        descripcionPerfil: "",
+        estadoRepublica: {
+          nombre: "Morelos",
+        },
         img: "https://images.unsplash.com/photo-1529068755536-a5ade0dcb4e8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=581&q=80",
       },
       {
@@ -164,8 +176,12 @@ export default {
         apellidoMaterno: "Wade",
         correoElectronico: "alexander@example.com",
         telefono: "(308) 555-0121",
+        tituloCurricular: "",
         fechaNacimiento: "",
-        estadoRepublica: "",
+        descripcionPerfil: "",
+        estadoRepublica: {
+          nombre: "Morelos",
+        },
         img: "https://images.unsplash.com/photo-1485528562718-2ae1c8419ae2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=558&q=80",
       },
       {
@@ -174,8 +190,12 @@ export default {
         apellidoMaterno: "Williamson",
         correoElectronico: "leslie@example.com",
         telefono: "(302) 555-0107",
+        tituloCurricular: "",
         fechaNacimiento: "",
-        estadoRepublica: "",
+        descripcionPerfil: "",
+        estadoRepublica: {
+          nombre: "Morelos",
+        },
         img: "https://images.unsplash.com/photo-1485893086445-ed75865251e0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
       },
       {
@@ -184,8 +204,12 @@ export default {
         apellidoMaterno: "Fox",
         correoElectronico: "ralph@example.com",
         telefono: "(702) 555-0122",
+        tituloCurricular: "",
         fechaNacimiento: "",
-        estadoRepublica: "",
+        descripcionPerfil: "",
+        estadoRepublica: {
+          nombre: "Morelos",
+        },
         img: "https://images.unsplash.com/photo-1483995564125-85915c11dcfe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=641&q=80",
       },
     ],

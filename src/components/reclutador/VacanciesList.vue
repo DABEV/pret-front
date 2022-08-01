@@ -56,13 +56,13 @@
                 >
                 <vs-th
                   sort
-                  @click="vacantes = $vs.sortData($event, vacantes, 'inicio')"
+                  @click="vacantes = $vs.sortData($event, vacantes, 'fechaInicio')"
                 >
                   Publicación</vs-th
                 >
                 <vs-th
                   sort
-                  @click="vacantes = $vs.sortData($event, vacantes, 'fin')"
+                  @click="vacantes = $vs.sortData($event, vacantes, 'fechaFin')"
                 >
                   Vigencia</vs-th
                 >
@@ -88,10 +88,10 @@
                   {{ tr.tipo }}
                 </vs-td>
                 <vs-td>
-                  {{ tr.inicio }}
+                  {{ tr.fechaInicio }}
                 </vs-td>
                 <vs-td>
-                  {{ tr.fin }}
+                  {{ tr.fechaFin }}
                 </vs-td>
                 <template #expand>
                   <div class="divider">
@@ -168,106 +168,149 @@ export default {
     vacantes: [
       {
         nombre: "Desarrollador Full-stack PHP",
-        reclutador: "Roberto Miramontes Ruiseñor",
-        estado: "Morelos",
+        reclutador: {
+          nombre: "Roberto",
+          apellidoPaterno: "Miramontes",
+          apellidoMaterno: "Ruiseñor",
+          nombreEmpresa: "Sony",
+          estadoRepublicaEmpresa:{
+            nombre:"Morelos"
+          },
+        },
         tipo: "Medio tiempo",
-        empresa: "Sony",
         modalidad: "Híbrido",
-        modoPago: "Quincenal",
+        periodoPago: "Quincenal",
         sueldoMin: 20000,
         sueldoMax: 50000,
-        inicio: "5/19/12",
-        fin: "7/19/12",
+        fechaInicio: "5/19/12",
+        fechaFin: "7/19/12",
         descripcion:
           "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
       },
       {
         nombre: "Desarrollador Full-stack PHP",
-        reclutador: "Roberto Miramontes Ruiseñor",
-        estado: "Morelos",
+        reclutador: {
+          nombre: "Roberto",
+          apellidoPaterno: "Miramontes",
+          apellidoMaterno: "Ruiseñor",
+          nombreEmpresa: "Sony",
+          estadoRepublicaEmpresa:{
+            nombre:"Morelos"
+          },
+        },
         tipo: "Medio tiempo",
-        empresa: "Sony",
         modalidad: "Híbrido",
-        modoPago: "Quincenal",
+        periodoPago: "Quincenal",
         sueldoMin: 20000,
         sueldoMax: 50000,
-        inicio: "5/19/12",
-        fin: "7/19/12",
+        fechaInicio: "5/19/12",
+        fechaFin: "7/19/12",
         descripcion:
           "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
       },
       {
         nombre: "President of Sales",
-        reclutador: "Roberto Miramontes Ruiseñor",
-        estado: "Morelos",
+        reclutador: {
+          nombre: "Roberto",
+          apellidoPaterno: "Miramontes",
+          apellidoMaterno: "Ruiseñor",
+          nombreEmpresa: "Sony",
+          estadoRepublicaEmpresa:{
+            nombre:"Morelos"
+          },
+        },
         tipo: "Medio tiempo",
-        empresa: "Sony",
         modalidad: "Híbrido",
-        modoPago: "Quincenal",
+        periodoPago: "Quincenal",
         sueldoMin: 20000,
         sueldoMax: 50000,
-        inicio: "5/19/12",
-        fin: "7/19/12",
+        fechaInicio: "5/19/12",
+        fechaFin: "7/19/12",
         descripcion:
           "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
       },
       {
         nombre: "Web Designer",
-        reclutador: "Roberto Miramontes Ruiseñor",
-        estado: "Morelos",
+        reclutador: {
+          nombre: "Roberto",
+          apellidoPaterno: "Miramontes",
+          apellidoMaterno: "Ruiseñor",
+          nombreEmpresa: "Sony",
+          estadoRepublicaEmpresa:{
+            nombre:"Morelos"
+          },
+        },
         tipo: "Medio tiempo",
         empresa: "Sony",
         modalidad: "Híbrido",
-        modoPago: "Quincenal",
+        periodoPago: "Quincenal",
         sueldoMin: 20000,
         sueldoMax: 50000,
-        inicio: "5/19/12",
-        fin: "7/19/12",
+        fechaInicio: "5/19/12",
+        fechaFin: "7/19/12",
         descripcion:
           "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
       },
       {
         nombre: "Desarrollador Full-stack PHP",
-        reclutador: "Roberto Miramontes Ruiseñor",
-        estado: "Morelos",
+        reclutador: {
+          nombre: "Roberto",
+          apellidoPaterno: "Miramontes",
+          apellidoMaterno: "Ruiseñor",
+          nombreEmpresa: "Sony",
+          estadoRepublicaEmpresa:{
+            nombre:"Morelos"
+          },
+        },
         tipo: "Medio tiempo",
-        empresa: "Sony",
         modalidad: "Híbrido",
-        modoPago: "Quincenal",
+        periodoPago: "Quincenal",
         sueldoMin: 20000,
         sueldoMax: 50000,
-        inicio: "5/19/12",
-        fin: "7/19/12",
+        fechaInicio: "5/19/12",
+        fechaFin: "7/19/12",
         descripcion:
           "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
       },
       {
         nombre: "Desarrollador Full-stack PHP",
-        reclutador: "Roberto Miramontes Ruiseñor",
-        estado: "Morelos",
+        reclutador: {
+          nombre: "Roberto",
+          apellidoPaterno: "Miramontes",
+          apellidoMaterno: "Ruiseñor",
+          nombreEmpresa: "Sony",
+          estadoRepublicaEmpresa:{
+            nombre:"Morelos"
+          },
+        },
         tipo: "Medio tiempo",
-        empresa: "Sony",
         modalidad: "Híbrido",
-        modoPago: "Quincenal",
+        periodoPago: "Quincenal",
         sueldoMin: 20000,
         sueldoMax: 50000,
-        inicio: "5/19/12",
-        fin: "7/19/12",
+        fechaInicio: "5/19/12",
+        fechaFin: "7/19/12",
         descripcion:
           "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
       },
       {
         nombre: "Marketing Coordinator",
-        reclutador: "Roberto Miramontes Ruiseñor",
-        estado: "Morelos",
+        reclutador: {
+          nombre: "Roberto",
+          apellidoPaterno: "Miramontes",
+          apellidoMaterno: "Ruiseñor",
+          nombreEmpresa: "Sony",
+          estadoRepublicaEmpresa:{
+            nombre:"Morelos"
+          },
+        },
         tipo: "Medio tiempo",
-        empresa: "Sony",
         modalidad: "Híbrido",
-        modoPago: "Quincenal",
+        periodoPago: "Quincenal",
         sueldoMin: 20000,
         sueldoMax: 50000,
-        inicio: "5/19/12",
-        fin: "7/19/12",
+        fechaInicio: "5/19/12",
+        fechaFin: "7/19/12",
         descripcion:
           "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
       },
