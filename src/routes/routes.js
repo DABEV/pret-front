@@ -16,6 +16,7 @@ import Vacancies from "@/components/candidato/Vacancies.vue";
 import ErrorLayout from "@/layout/ErrorLayout.vue"
 import ErrorPage from "@/components/ErrorPage.vue"
 import Favorites from "@/components/candidato/Favorites.vue"
+import EditProfile from "@/components/candidato/EditProfile.vue"
 
 const routes = [
   {
@@ -94,6 +95,11 @@ const routes = [
         path: "perfil",
         name: "Perfil de usuario",
         component: Profile,
+      },
+      {
+        path: "editarPerfil",
+        name: "Editar Perfil",
+        component: EditProfile,
       },
       {
         path: "contactos",

@@ -3,7 +3,7 @@
     <div class="space space-top content-card">
       <vs-row justify="space-between">
         <vs-col lg="7" sm="12" xs="12" class="text-center">
-          <div class="content-card space">
+          <div>
             <div class="content-data">
               <vs-row class="margin-top-avatar">
                 <vs-col lg="3" sm="12" xs="12" class="space-top">
@@ -78,80 +78,113 @@
                   <div class="divider space space-top">
                     <span class="border"></span>
                   </div>
-                  <vs-row justify="center" class="space">
-                    <vs-col lg="3" sm="6" xs="6">
-                      <vs-button color="#1E88E5"> Editar perfil </vs-button>
-                    </vs-col>
-                    <vs-col lg="1" sm="2" xs="2">
-                      <vs-tooltip>
-                        <vs-button
-                          icon
-                          animation-type="vertical"
-                          color="#B13CD2"
-                        >
-                          <i class="bx bx-download"></i>
-                          <template #animate>
-                            <i class="bx bx-import"></i>
-                          </template>
-                        </vs-button>
-                        <template #tooltip> Descargar CV </template>
-                      </vs-tooltip>
-                    </vs-col>
-                  </vs-row>
+                  <h4>Perfil profesional</h4>
+                  <div class="space bg-gray">
+                    <p>{{ candidato.descripcionPerfil }}</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </vs-col>
-        <vs-col lg="5" sm="12" xs="12">
-          <h2>Perfil profesional</h2>
-          <div class="space-top content-data space datos text-start bg-gray">
-            <p>{{ candidato.descripcionPerfil }}</p>
+        <vs-col lg="4" sm="12" xs="12" class="margin-top-avatar">
+          <div class="content-data space datos text-start bg-gray">
+            <vs-row justify="space-between">
+              <vs-col lg="6" sm="6" xs="6">
+                <vs-button color="#1E88E5"> Editar perfil </vs-button>
+              </vs-col>
+              <vs-col lg="2" sm="2" xs="2">
+                <vs-tooltip>
+                  <vs-button icon animation-type="rotate" color="#B13CD2">
+                    <i class="bx bx-download"></i>
+                    <template #animate>
+                      <i class="bx bx-import"></i>
+                    </template>
+                  </vs-button>
+                  <template #tooltip> Descargar CV </template>
+                </vs-tooltip>
+              </vs-col>
+            </vs-row>
           </div>
-          <h2>Estudios</h2>
-          <div class="text-center bg-gray">
-            <div>
-              <vs-card-group>
-                <vs-card
-                  :key="i"
-                  :data="c"
-                  v-for="(c, i) in candidato.estudios"
-                >
-                  <template #text>
-                    <vs-row>
-                      <vs-col lg="2" sm="3" xs="3" class="space-top">
-                        <vs-avatar primary size="35">
-                          <i class="bx bx-book"></i>
-                        </vs-avatar>
-                      </vs-col>
-                      <vs-col
-                        lg="10"
-                        sm="9"
-                        xs="9"
-                        class="text-start space-top"
-                      >
-                        <h4>{{ c.gradoAcademico }}</h4>
-                        <small>{{ c.universidad }}</small>
-                      </vs-col>
-                    </vs-row>
-                    <small class="bold"> {{ c.carrera }}</small>
-                    <vs-row justify="space-between">
-                      <vs-col w="4" class="space-top">
-                        Inicio:
-                        <span class="badge-sec"> {{ c.fechaInicio }}</span>
-                      </vs-col>
-                      <vs-col w="4" class="space-top">
-                        Fin:
-                        <span class="badge-sec"> {{ c.fechaFin }}</span>
-                      </vs-col>
-                    </vs-row>
-                  </template>
-                </vs-card>
-              </vs-card-group>
+          <h2 class="space-top">Conocimientos</h2>
+          <div class="space-top content-data space datos text-start bg-gray">
+            <div
+              class="center"
+              v-if="candidato.conocimientosHabilidades.conocimientos.length < 1"
+            >
+              No se encontraron registros
+            </div>
+            <div
+              :key="i"
+              v-for="(hab, i) in $vs.getPage(
+                candidato.conocimientosHabilidades.conocimientos,
+                page3,
+                max2
+              )"
+              :data="hab"
+              class="item"
+            >
+              <vs-row class="space">
+                <vs-col lg="2" sm="3" xs="3" class="text-center space-top">
+                  <i class="bx bx-book-open bg-primary"></i>
+                </vs-col>
+                <vs-col lg="10" sm="9" xs="9" class="space-top">
+                  <p>{{ hab }}</p>
+                </vs-col>
+              </vs-row>
+              <div class="divider">
+                <span class="border"></span>
+              </div>
+            </div>
+            <div class="pagination">
+              <vs-pagination
+                v-model="page3"
+                :length="
+                  $vs.getLength(
+                    candidato.conocimientosHabilidades.conocimientos,
+                    max2
+                  )
+                "
+              />
             </div>
           </div>
         </vs-col>
       </vs-row>
+    </div>
+    <div class="space space-top long">
+      <h2 class="text-center">Estudios</h2>
+      <div class="text-center bg-gray">
+        <div>
+          <vs-card-group>
+            <vs-card :key="i" :data="c" v-for="(c, i) in candidato.estudios">
+              <template #text>
+                <vs-row>
+                  <vs-col lg="2" sm="3" xs="3" class="space-top">
+                    <vs-avatar primary size="35">
+                      <i class="bx bx-book"></i>
+                    </vs-avatar>
+                  </vs-col>
+                  <vs-col lg="10" sm="9" xs="9" class="text-start space-top">
+                    <h4>{{ c.gradoAcademico }}</h4>
+                    <small>{{ c.universidad }}</small>
+                  </vs-col>
+                </vs-row>
+                <small class="bold"> {{ c.carrera }}</small>
+                <vs-row justify="space-between">
+                  <vs-col w="4" class="space-top">
+                    Inicio:
+                    <span class="badge-sec"> {{ c.fechaInicio }}</span>
+                  </vs-col>
+                  <vs-col w="4" class="space-top">
+                    Fin:
+                    <span class="badge-sec"> {{ c.fechaFin }}</span>
+                  </vs-col>
+                </vs-row>
+              </template>
+            </vs-card>
+          </vs-card-group>
+        </div>
+      </div>
     </div>
     <div class="space space-top content-card">
       <h2 class="text-center">Experiencia laboral</h2>
@@ -204,6 +237,7 @@
                 :length="$vs.getLength(candidato.experienciasLaborales, max)"
               />
             </template>
+            <template #notFound> No se encontraron registros </template>
           </vs-table>
         </div>
       </div>
@@ -237,11 +271,11 @@
           </div>
         </vs-col>
         <vs-col lg="6" sm="12" xs="12">
-          <h2>Conocimientos y habilidades</h2>
+          <h2>Habilidades</h2>
           <div class="space-top content-data space datos text-start bg-gray">
             <div
               :key="i"
-              v-for="(hab, i) in candidato.conocimientosHabilidades.conocimientos"
+              v-for="(hab, i) in candidato.conocimientosHabilidades.habilidades"
               :data="hab"
               class="item"
             >
@@ -250,7 +284,7 @@
                   <i class="bx bx-book-open bg-primary"></i>
                 </vs-col>
                 <vs-col lg="11" sm="10" xs="10" class="space-top">
-                  <p>{{ hab}}</p>
+                  <p>{{ hab }}</p>
                 </vs-col>
               </vs-row>
               <div class="divider">
@@ -316,6 +350,7 @@
                 :length="$vs.getLength(candidato.certificaciones, max)"
               />
             </template>
+            <template #notFound> No se encontraron registros </template>
           </vs-table>
         </div>
       </div>
@@ -363,7 +398,9 @@ export default {
     active: 0,
     page: 1,
     page2: 1,
+    page3: 1,
     max: 5,
+    max2: 3,
     candidato: {
       nombre: "Michelle",
       apellidoPaterno: "Rivera",
@@ -380,7 +417,7 @@ export default {
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aenean praesent non donec adipiscing ullamcorper. Tincidunt id suspendisse id sit. Nisi sed diam est.",
       foto: "https://images.unsplash.com/photo-1609505848912-b7c3b8b4beda?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=465&q=80",
       conocimientosHabilidades: {
-        conocimientos: ["Laravel", "PHP"],
+        conocimientos: ["Laravel", "PHP", "Java", "MySQL"],
         habilidades: ["Analista", "Trabajo en Equipo"],
       },
       cursos: [
