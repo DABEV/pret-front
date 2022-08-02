@@ -17,6 +17,7 @@ import ErrorLayout from "@/layout/ErrorLayout.vue"
 import ErrorPage from "@/components/ErrorPage.vue"
 import Favorites from "@/components/candidato/Favorites.vue"
 import EditProfile from "@/components/candidato/EditProfile.vue"
+import ProfileRec from "@/components/reclutador/Profile.vue"
 
 const routes = [
   {
@@ -78,6 +79,11 @@ const routes = [
         path: "idoneos",
         name: "Lista de Candidatos idoneos",
         component: PropiceCandidates,
+      },
+      {
+        path: "perfil",
+        name: "Perfil reclutador",
+        component: ProfileRec,
       },
     ],
   },
