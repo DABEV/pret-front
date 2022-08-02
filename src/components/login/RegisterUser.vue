@@ -18,7 +18,7 @@
               block
               class="space"
               primary
-              v-model="name"
+              v-model="nombre"
               placeholder="Nombre"
             >
               <template #icon><em class="bx bxs-user"></em></template>
@@ -27,8 +27,8 @@
               block
               class="space"
               primary
-              v-model="lastname"
-              placeholder="Apellidos"
+              v-model="apellidoPaterno"
+              placeholder="Apellido paterno"
             >
               <template #icon><em class="bx bxs-user"></em></template>
             </vs-input>
@@ -36,7 +36,16 @@
               block
               class="space"
               primary
-              v-model="phone"
+              v-model="apellidoMaterno"
+              placeholder="Apellido materno"
+            >
+              <template #icon><em class="bx bxs-user"></em></template>
+            </vs-input>
+            <vs-input
+              block
+              class="space"
+              primary
+              v-model="telefono"
               placeholder="Télefono"
             >
               <template #icon><em class="bx bxs-phone"></em></template>
@@ -46,7 +55,7 @@
               class="space input-date"
               type="date"
               primary
-              v-model="birthdate"
+              v-model="fechaNacimiento"
             >
               <template #icon><em class="bx bxs-calendar"></em></template>
             </vs-input>
@@ -56,7 +65,7 @@
               block
               class="space"
               primary
-              v-model="career"
+              v-model="tituloCurricular"
               placeholder="Grado de estudios"
             >
               <template #icon><em class="bx bxs-graduation"></em></template>
@@ -75,7 +84,7 @@
               block
               class="space"
               primary
-              v-model="email"
+              v-model="correoElectronico"
               placeholder="Correo"
             >
               <template #icon> @ </template>
@@ -85,17 +94,29 @@
               block
               class="space"
               type="password"
-              v-model="password"
+              v-model="contrasena"
               placeholder="Contraseña"
+            >
+              <template #icon><em class="bx bxs-lock-alt"></em></template>
+            </vs-input>
+            <vs-input
+              primary
+              block
+              class="space"
+              type="password"
+              v-model="value"
+              placeholder="Repetir contraseña"
             >
               <template #icon><em class="bx bxs-lock-alt"></em></template>
             </vs-input>
           </vs-col>
         </vs-row>
-        <div class="center2 space">
-          <textarea class="space" v-model="description" placeholder="Breve descripción">
+        <vs-row justify="space-around">
+          <vs-col lg="11" sm="12" xs="12">
+            <textarea v-model="descripcionPerfil" placeholder="Breve descripción">
           </textarea>
-        </div>
+          </vs-col>
+        </vs-row>
         <vs-row justify="space-around" class="space-top">
           <vs-col w="4">
             <vs-button block animation-type="vertical">
@@ -122,13 +143,28 @@ export default {
   name: "RegisterUser",
   data: () => ({
     value: "",
-    name: "",
-    lastname: "",
-    career: "",
-    phone: "",
-    email: "",
-    password: "",
-    description: "",
+    nombre: "",
+    apellidoPaterno: "",
+    apellidoMaterno: "",
+    estadoRepublica: {
+      nombre: "Morelos",
+    },
+    habilitado: true,
+    tituloCurricular: "",
+    telefono: "",
+    fechaNacimiento: "9/4/12",
+    correoElectronico: "",
+    contrasena: "",
+    descripcionPerfil: "",
+    conocimientosHabilidades: {
+      conocimientos: [],
+      habilidades: [],
+    },
+    cursos: [],
+    experienciasLaborales: [],
+    estudios: [],
+    idiomas: [],
+    certificaciones: [],
   }),
 };
 </script>
