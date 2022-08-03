@@ -8,8 +8,12 @@
             <vs-row>
               <vs-col lg="2" sm="3" xs="3">
                 <vs-tooltip>
-
-                  <vs-button @click="(active2 = !active2), Enviar(c)" icon animation-type="rotate" color="#B13CD2">
+                  <vs-button
+                    @click="(active2 = !active2), Enviar(c)"
+                    icon
+                    animation-type="rotate"
+                    color="#B13CD2"
+                  >
                     <i class="bx bx-user-plus"></i>
                     <template #animate>
                       <i class="bx bxs-user-plus"></i>
@@ -57,7 +61,7 @@
                 <img :src="c.foto" alt="" />
               </vs-avatar>
             </vs-col>
-            <vs-col lg="8" sm="9" xs="9" class="space-top">
+            <vs-col lg="9" sm="9" xs="9" class="space-top">
               <div
                 class="item-click"
                 @click="Confirmar(c), (detalles = !detalles)"
@@ -70,29 +74,6 @@
                 </p>
                 <small>{{ c.correoElectronico }}</small>
               </div>
-            </vs-col>
-            <vs-col lg="1" sm="3" xs="3" class="space-top">
-              <vs-tooltip>
-                <vs-button
-                  @click="(active3 = !active3), Confirmar(c)"
-                  icon
-                  animation-type="vertical"
-                  color="#009ACB"
-                >
-                  <i class="bx bx-user-plus"></i>
-                  <template #animate><i class="bx bxs-user-plus"></i></template>
-                </vs-button>
-                <template #tooltip> Ver perfil </template>
-              </vs-tooltip>
-            </vs-col>
-            <vs-col lg="1" sm="3" xs="3" class="space-top">
-              <vs-tooltip>
-                <vs-button icon animation-type="vertical" color="#009ACB">
-                  <i class="bx bx-show"></i>
-                  <template #animate><i class="bx bxs-show"></i></template>
-                </vs-button>
-                <template #tooltip> Ver perfil </template>
-              </vs-tooltip>
             </vs-col>
             <vs-col lg="1" sm="12" xs="12" class="space-top">
               <vs-tooltip>
@@ -150,7 +131,12 @@
       <template #header>
         <vs-col>
           <h4><b>Compartir</b></h4>
-          <vs-input v-model="searchCompartir" color="#1e88e5" block placeholder="Buscar">
+          <vs-input
+            v-model="searchCompartir"
+            color="#1e88e5"
+            block
+            placeholder="Buscar"
+          >
             <template #icon>
               <em class="bx bx-search"></em>
             </template>
@@ -158,7 +144,10 @@
         </vs-col>
       </template>
       <div class="space-top content-data space datos text-start bg-gray">
-        <div class="center" v-if="$vs.getSearch(contactos, searchCompartir).length < 1">
+        <div
+          class="center"
+          v-if="$vs.getSearch(contactos, searchCompartir).length < 1"
+        >
           No se encontraron registros
         </div>
         <div
@@ -181,7 +170,7 @@
               <p>
                 <b>{{ c.nombre }} {{ c.apellido1 }} {{ c.apellido2 }}</b>
               </p>
-               <small>{{ c.correo }}</small>
+              <small>{{ c.correo }}</small>
             </vs-col>
           </vs-row>
           <div class="divider">
@@ -191,13 +180,14 @@
         <div class="pagination">
           <vs-pagination
             v-model="page"
-            :length="$vs.getLength($vs.getSearch(contactos, searchCompartir), max)"
+            :length="
+              $vs.getLength($vs.getSearch(contactos, searchCompartir), max)
+            "
           />
         </div>
       </div>
-    
     </vs-dialog>
-    <!-- añadir contacto -->
+
     <vs-dialog width="450px" class="text-center" v-model="active3">
       <template #header>
         <h4><b>Confirmación</b></h4>
@@ -216,7 +206,7 @@
           </vs-col>
         </vs-row>
       </template>
-
+    </vs-dialog>
     <vs-dialog class="text-center" v-model="detalles">
       <vs-row>
         <vs-col lg="4">
@@ -271,7 +261,6 @@ export default {
     active: false,
     active2: false,
     active3: false,
-    value3: ['1'],
     detalles: false,
     page: 1,
     max: 5,
@@ -369,13 +358,11 @@ export default {
   methods: {
     Confirmar: function (contacto) {
       this.contacto = contacto;
-    },
-     Enviar: function (contacto){
-       this.contacto = contacto;
-     }
       this.estado = contacto.estadoRepublica;
     },
-
+    Enviar: function (contacto) {
+      this.contacto = contacto;
+    },
   },
 };
 </script>
