@@ -12,6 +12,13 @@ import Status from "@/components/candidato/Status.vue";
 import ContactList from "@/components/candidato/ContactList.vue";
 import VacanciesList from "@/components/reclutador/VacanciesList.vue";
 
+import Vacancies from "@/components/candidato/Vacancies.vue";
+import ErrorLayout from "@/layout/ErrorLayout.vue"
+import ErrorPage from "@/components/ErrorPage.vue"
+import Favorites from "@/components/candidato/Favorites.vue"
+import EditProfile from "@/components/candidato/EditProfile.vue"
+import ProfileRec from "@/components/reclutador/Profile.vue"
+
 const routes = [
   {
     path: "/",
@@ -20,14 +27,14 @@ const routes = [
     children: [
       {
         path: "",
-        name: "Example",
-        component: Profile,
+        name: "Buscar",
+        component: Vacancies,
       },
     ],
   },
 
   {
-    path: "/session",
+    path: "/acceso",
     component: Access,
     children: [
       {
@@ -36,88 +43,96 @@ const routes = [
         component: Login,
       },
       {
-        path: "registerRecruiter",
+        path: "registroReclutador",
         name: "Register Recruiter",
         component: RegisterRecuiter,
       },
       {
-        path: "registerUser",
+        path: "registroReclutador",
         name: "Register User",
         component: RegisterUser,
       },
     ],
   },
 
+
   {
-    path: "/vacancy",
+    path: "/reclutador",
     component: ContentLayout,
     children: [
       {
-        path: "register",
-        name: "Register Vacancy",
+        path: "vacantes",
+        name: "Vacantes",
+        component: VacanciesList,
+      },
+      {
+        path: "registrarVacante",
+        name: "Registro Vacante",
         component: RegisterVacancy,
       },
       {
-        path: "candidatesList",
-        name: "Candidates List",
+        path: "candidatos",
+        name: "Lista de Candidaos",
         component: CandidatesList,
       },
       {
-        path: "propiceCandidates",
-        name: "Propice Candidates List",
+        path: "idoneos",
+        name: "Lista de Candidatos idoneos",
         component: PropiceCandidates,
       },
+      {
+        path: "perfil",
+        name: "Perfil reclutador",
+        component: ProfileRec,
+      },
     ],
   },
 
   {
-    path: "/profile",
+    path: "/candidato",
     component: ContentLayout,
-    redirect: "/profile",
     children: [
       {
-        path: "",
-        name: "Profile",
+        path: "buscar",
+        name: "Vacantes disponibles",
+        component: Vacancies,
+      },
+      {
+        path: "perfil",
+        name: "Perfil de usuario",
         component: Profile,
       },
-    ],
-  },
-
-  {
-    path: "/postulaciones",
-    component: ContentLayout,
-    redirect: "/postulaciones",
-    children: [
       {
-        path: "",
-        name: "Postulaciones",
-        component: Status,
+        path: "editarPerfil",
+        name: "Editar Perfil",
+        component: EditProfile,
       },
-    ],
-  },
-
-  {
-    path: "/contactos",
-    component: ContentLayout,
-    redirect: "/contactos",
-    children: [
       {
-        path: "",
+        path: "contactos",
         name: "Contactos",
         component: ContactList,
       },
+      {
+        path: "postulaciones",
+        name: "Postulaciones",
+        component: Status,
+      },
+      {
+        path: "favoritos",
+        name: "Favoritos",
+        component: Favorites,
+      },
     ],
   },
 
   {
-    path: "/vacantes",
-    component: ContentLayout,
-    redirect: "/vacantes",
+    path: "/error",
+    component: ErrorLayout,
     children: [
       {
         path: "",
-        name: "Vacantes",
-        component: VacanciesList,
+        name: "Error 404",
+        component: ErrorPage,
       },
     ],
   },

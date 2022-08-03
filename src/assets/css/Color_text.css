@@ -1,0 +1,49 @@
+.bg-gray {
+    color: #6c7885;
+}
+
+.bg-primary {
+    color: #1e88e5;
+}
+
+.bg-warning {
+    color: #F2BA29;
+}
+
+.bg-success {
+    color: #2ECC71;
+}
+
+.bg-danger {
+    color: #fa584c;
+}
+
+.bg-sec {
+    color: #b13cd2;
+}
+
+.text-start {
+    text-align: start;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-end {
+    text-align: end;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.text-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: .9rem;
+    padding: 10px;
+    font-weight: normal;
+}

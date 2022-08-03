@@ -11,7 +11,7 @@
                 primary
                 block
                 class="space"
-                v-model="name"
+                v-model="nombre"
                 placeholder="Título de la postulación"
               >
                 <template #icon><em class="bx bxs-notepad"></em></template>
@@ -21,7 +21,7 @@
                 primary
                 block
                 class="space"
-                v-model="lastname"
+                v-model="tipo"
                 placeholder="Horario de trabajo"
               >
                 <template #icon><em class="bx bxs-time-five"></em></template>
@@ -32,7 +32,7 @@
                 block
                 class="space"
                 type="number"
-                v-model="phone"
+                v-model="sueldoMin"
                 placeholder="1000"
               >
                 <template #icon><em class="bx bx-money"></em></template>
@@ -43,7 +43,7 @@
                 block
                 class="space input-date"
                 primary
-                v-model="birthdate"
+                v-model="fechaInicio"
               >
                 <template #icon><em class="bx bxs-calendar"></em></template>
               </vs-input>
@@ -54,7 +54,7 @@
                 class="space"
                 block
                 placeholder="Modalidad de trabajo"
-                v-model="value"
+                v-model="modalidad"
               >
                 <vs-option label="Home Office" value="1">
                   Home Office
@@ -67,7 +67,7 @@
               Periodo de pago
               <vs-input
                 primary
-                v-model="career"
+                v-model="periodoPago"
                 placeholder="Lapso de pago"
                 block
                 class="space"
@@ -80,7 +80,7 @@
                 block
                 class="space"
                 primary
-                v-model="email"
+                v-model="sueldoMax"
                 placeholder="1000.99"
               >
                 <template #icon><em class="bx bx-money"></em></template>
@@ -91,14 +91,14 @@
                 block
                 class="space input-date"
                 primary
-                v-model="birthdate"
+                v-model="fechaVigencia"
               >
                 <template #icon><em class="bx bxs-calendar"></em></template>
               </vs-input>
             </vs-col>
             <vs-col class="vs-input2" lg="11" sm="12" xs="12">
               Descripción
-              <textarea v-model="description" placeholder="Breve descripción">
+              <textarea v-model="descripcion" placeholder="Breve descripción">
               </textarea>
             </vs-col>
           </vs-row>
@@ -121,6 +121,24 @@ export default {
   name: "RegisterVacancy",
   data: () => ({
     value: "",
+    nombre: "",
+    descripcion: "",
+    modalidad: "",
+    tipo: "",
+    fechaInicio:"",
+    fechaVigencia: "",
+    sueldoMin: "",
+    sueldoMax: "",
+    periodoPago: "",
+    reclutador: {
+      nombre: "",
+      apellidoPaterno: "",
+      apellidoMaterno: "",
+      nombreEmpresa: "",
+      estadoRepublicaEmpresa:{
+        nombre:""
+      },
+    },
   }),
 };
 </script>
