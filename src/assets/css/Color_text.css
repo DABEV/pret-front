@@ -2,6 +2,11 @@
     color: #6c7885;
 }
 
+.bg-white {
+    color: #f0f0f0;
+    font-size: large;
+}
+
 .bg-primary {
     color: #1e88e5;
 }
