@@ -144,48 +144,22 @@
       <template #header>
         <vs-col>
           <h4><b>Compartir</b></h4>
-          <vs-input v-model="search" color="#1e88e5" block placeholder="Buscar">
+          <vs-input v-model="searchCompartir" color="#1e88e5" block placeholder="Buscar">
             <template #icon>
               <em class="bx bx-search"></em>
             </template>
           </vs-input>
         </vs-col>
       </template>
-      <vs-select
-        label="Group Multiple Filter"
-        filter
-        block
-        multiple
-        placeholder="Group Multiple Filter"
-        v-model="value3"
-      >
-        <vs-option-group>
-          <div
-            :key="i"
-            :data="c"
-            v-for="(c, i) in $vs.getPage(
-              $vs.getSearch(contactos, search),
-              page,
-              max
-            )"
-            class="item"
-          >
-            <vs-option  value="0" label="xx">
-              <b>{{ c.correo }}</b>
-            </vs-option>
-          </div>
-        </vs-option-group>
-      </vs-select>
-
       <div class="space-top content-data space datos text-start bg-gray">
-        <div class="center" v-if="$vs.getSearch(contactos, search).length < 1">
+        <div class="center" v-if="$vs.getSearch(contactos, searchCompartir).length < 1">
           No se encontraron registros
         </div>
         <div
           :key="i"
           :data="c"
           v-for="(c, i) in $vs.getPage(
-            $vs.getSearch(contactos, search),
+            $vs.getSearch(contactos, searchCompartir),
             page,
             max
           )"
@@ -199,9 +173,9 @@
             </vs-col>
             <vs-col lg="7" sm="9" xs="9" class="space-top">
               <p>
-                <small>{{ c.correo }}</small>
-                <!-- <b>{{ c.nombre }} {{ c.apellido1 }} {{ c.apellido2 }}</b> -->
+                <b>{{ c.nombre }} {{ c.apellido1 }} {{ c.apellido2 }}</b>
               </p>
+               <small>{{ c.correo }}</small>
             </vs-col>
           </vs-row>
           <div class="divider">
@@ -211,22 +185,11 @@
         <div class="pagination">
           <vs-pagination
             v-model="page"
-            :length="$vs.getLength($vs.getSearch(contactos, search), max)"
+            :length="$vs.getLength($vs.getSearch(contactos, searchCompartir), max)"
           />
         </div>
       </div>
-      <template #footer>
-        <vs-row justify="space-between">
-          <vs-col w="5">
-            <vs-button danger @click="active = false" block> Quitar </vs-button>
-          </vs-col>
-          <vs-col w="5">
-            <vs-button transparent dark @click="active = false" block>
-              Cancelar
-            </vs-button>
-          </vs-col>
-        </vs-row>
-      </template>
+    
     </vs-dialog>
     <!-- añadir contacto -->
     <vs-dialog width="450px" class="text-center" v-model="active3">
@@ -262,6 +225,7 @@ export default {
     page: 1,
     max: 5,
     search: "",
+    searchCompartir: "",
     contacto: {},
     contactos: [
       {
