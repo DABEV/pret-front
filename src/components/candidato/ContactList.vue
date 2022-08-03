@@ -8,10 +8,15 @@
             <vs-row>
               <vs-col lg="2" sm="4" xs="4">
                 <vs-tooltip>
-                  <vs-button icon animation-type="rotate" color="#B13CD2">
-                    <i class="bx bx-user-plus"></i>
+                  <vs-button
+                    @click="(active2 = !active2), Enviar(c)"
+                    icon
+                    animation-type="vertical"
+                    color="#B13CD2"
+                  >
+                    <em class="bx bx-user-plus"></em>
                     <template #animate
-                      ><i class="bx bxs-user-plus"></i
+                      ><em class="bx bxs-user-plus"></em
                     ></template>
                   </vs-button>
                   <template #tooltip> Añadir contacto </template>
@@ -64,6 +69,20 @@
             </vs-col>
             <vs-col lg="1" sm="3" xs="3" class="space-top">
               <vs-tooltip>
+                <vs-button
+                  @click="(active3 = !active3), Confirmar(c)"
+                  icon
+                  animation-type="vertical"
+                  color="#009ACB"
+                >
+                  <i class="bx bx-user-plus"></i>
+                  <template #animate><i class="bx bxs-user-plus"></i></template>
+                </vs-button>
+                <template #tooltip> Ver perfil </template>
+              </vs-tooltip>
+            </vs-col>
+            <vs-col lg="1" sm="3" xs="3" class="space-top">
+              <vs-tooltip>
                 <vs-button icon animation-type="vertical" color="#009ACB">
                   <i class="bx bx-show"></i>
                   <template #animate><i class="bx bxs-show"></i></template>
@@ -77,7 +96,7 @@
                   icon
                   animation-type="rotate"
                   danger
-                  @click="active = !active, Confirmar(c)"
+                  @click="(active = !active), Confirmar(c)"
                 >
                   <i class="bx bx-trash-alt"></i>
                   <template #animate><i class="bx bxs-trash-alt"></i></template>
@@ -120,6 +139,115 @@
         </vs-row>
       </template>
     </vs-dialog>
+    <!-- Enviar vacante -->
+    <vs-dialog width="450px" class="text-center" v-model="active2">
+      <template #header>
+        <vs-col>
+          <h4><b>Compartir</b></h4>
+          <vs-input v-model="search" color="#1e88e5" block placeholder="Buscar">
+            <template #icon>
+              <em class="bx bx-search"></em>
+            </template>
+          </vs-input>
+        </vs-col>
+      </template>
+      <vs-select
+        label="Group Multiple Filter"
+        filter
+        block
+        multiple
+        placeholder="Group Multiple Filter"
+        v-model="value3"
+      >
+        <vs-option-group>
+          <div
+            :key="i"
+            :data="c"
+            v-for="(c, i) in $vs.getPage(
+              $vs.getSearch(contactos, search),
+              page,
+              max
+            )"
+            class="item"
+          >
+            <vs-option  value="0" label="xx">
+              <b>{{ c.correo }}</b>
+            </vs-option>
+          </div>
+        </vs-option-group>
+      </vs-select>
+
+      <div class="space-top content-data space datos text-start bg-gray">
+        <div class="center" v-if="$vs.getSearch(contactos, search).length < 1">
+          No se encontraron registros
+        </div>
+        <div
+          :key="i"
+          :data="c"
+          v-for="(c, i) in $vs.getPage(
+            $vs.getSearch(contactos, search),
+            page,
+            max
+          )"
+          class="item"
+        >
+          <vs-row class="space">
+            <vs-col lg="2" sm="3" xs="3" class="text-center space-top">
+              <vs-avatar size="50">
+                <img :src="c.img" alt="" />
+              </vs-avatar>
+            </vs-col>
+            <vs-col lg="7" sm="9" xs="9" class="space-top">
+              <p>
+                <small>{{ c.correo }}</small>
+                <!-- <b>{{ c.nombre }} {{ c.apellido1 }} {{ c.apellido2 }}</b> -->
+              </p>
+            </vs-col>
+          </vs-row>
+          <div class="divider">
+            <span class="border"></span>
+          </div>
+        </div>
+        <div class="pagination">
+          <vs-pagination
+            v-model="page"
+            :length="$vs.getLength($vs.getSearch(contactos, search), max)"
+          />
+        </div>
+      </div>
+      <template #footer>
+        <vs-row justify="space-between">
+          <vs-col w="5">
+            <vs-button danger @click="active = false" block> Quitar </vs-button>
+          </vs-col>
+          <vs-col w="5">
+            <vs-button transparent dark @click="active = false" block>
+              Cancelar
+            </vs-button>
+          </vs-col>
+        </vs-row>
+      </template>
+    </vs-dialog>
+    <!-- añadir contacto -->
+    <vs-dialog width="450px" class="text-center" v-model="active3">
+      <template #header>
+        <h4><b>Confirmación</b></h4>
+      </template>
+      <div class="text-gray">
+        <p>
+          Espera a que <b>{{ contacto.nombre }}</b> acepte tu solicitud
+        </p>
+      </div>
+      <template #footer>
+        <vs-row justify="space-between">
+          <vs-col w="5">
+            <vs-button success @click="active = false" block>
+              Aceptar
+            </vs-button>
+          </vs-col>
+        </vs-row>
+      </template>
+    </vs-dialog>
   </div>
 </template>
 
@@ -128,6 +256,9 @@ export default {
   name: "ContactList",
   data: () => ({
     active: false,
+    active2: false,
+    active3: false,
+    value3: ['1'],
     page: 1,
     max: 5,
     search: "",
@@ -184,9 +315,12 @@ export default {
     ],
   }),
   methods: {
-    Confirmar: function (contacto){
+    Confirmar: function (contacto) {
       this.contacto = contacto;
-    }
-  }
+    },
+    // Enviar: function (contacto){
+    //   this.contacto = contacto;
+    // }
+  },
 };
 </script>
