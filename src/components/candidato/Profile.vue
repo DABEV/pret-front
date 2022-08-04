@@ -217,18 +217,6 @@
                 <vs-td>
                   {{ tr.actividadesRealizadas }}
                 </vs-td>
-                <template #expand>
-                  <div class="con-content">
-                    <vs-row justify="space-between">
-                      <vs-col lg="10">
-                        <p class="bold">{{ tr.puesto }}</p>
-                      </vs-col>
-                      <vs-button icon>
-                        <i class="bx bx-lock-open-alt"></i>
-                      </vs-button>
-                    </vs-row>
-                  </div>
-                </template>
               </vs-tr>
             </template>
             <template #footer>
@@ -330,18 +318,6 @@
                 <vs-td>
                   {{ tr.fechaCaducidad }}
                 </vs-td>
-                <template #expand>
-                  <div class="con-content">
-                    <vs-row justify="space-between">
-                      <vs-col lg="10">
-                        <p class="bold">{{ tr.nombre }}</p>
-                      </vs-col>
-                      <vs-button icon>
-                        <i class="bx bx-lock-open-alt"></i>
-                      </vs-button>
-                    </vs-row>
-                  </div>
-                </template>
               </vs-tr>
             </template>
             <template #footer>

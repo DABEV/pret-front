@@ -102,6 +102,49 @@
           </div>
         </vs-col>
       </vs-row>
+      <div class="content-data space space-top datos text-start bg-gray">
+        <vs-row justify="space-between">
+          <vs-col lg="5" sm="12" xs="12">
+            <h4 class="bg-gray space-top">Cambiar tu contraseña</h4>
+          </vs-col>
+          <vs-col lg="2" sm="12" xs="12">
+            <vs-button block success> Guardar contraseña </vs-button>
+          </vs-col>
+        </vs-row>
+        <vs-row justify="space-between" class="space-top">
+          <vs-col lg="6" sm="12" xs="12" >
+            <vs-input
+              class="space-top space padding-y"
+              placeholder="Nueva contraseña"
+              color="#1e88e5"
+              v-model="pswd"
+              type="password"
+              block
+            >
+              <template #icon>
+                <i class="bx bxs-lock"></i>
+              </template>
+            </vs-input>
+          </vs-col>
+          <vs-col lg="6" sm="12" xs="12">
+            <vs-input
+              class="space-top space padding-x"
+              placeholder="Repite la contraseña"
+              color="#1e88e5"
+              v-model="pswd2"
+              type="password"
+              block
+            >
+              <template #icon>
+                <i class="bx bxs-lock"></i>
+              </template>
+              <template v-if="!samePassword" #message-danger>
+                Las contraseñas no coinciden
+              </template>
+            </vs-input>
+          </vs-col>
+        </vs-row>
+      </div>
       <div class="text-center bg-gray">
         <div>
           <vs-card-group>
@@ -661,6 +704,10 @@ export default {
     activeCur: false,
     success: false,
     error: false,
+    pswd: "",
+    pswd2: "",
+    conocimiento: "",
+    habilidad: "",
     progress: 0,
     estado: {},
     idioma: {
@@ -711,8 +758,6 @@ export default {
         nombre: "Querétaro",
       },
     ],
-    conocimiento: "",
-    habilidad: "",
     candidato: {
       nombre: "Michelle",
       apellidoPaterno: "Rivera",
@@ -901,6 +946,11 @@ export default {
     enviarCur: function () {
       this.activeCur = false;
       this.success = true;
+    },
+  },
+  computed: {
+    samePassword() {
+      return this.pswd == this.pswd2;
     },
   },
 };

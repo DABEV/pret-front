@@ -243,11 +243,19 @@
     border-radius: 5px;
 }
 
-.avatar-lg-icon{
+.avatar-lg-icon {
     font-size: 3rem !important;
 }
 
-.vs-sidebar{
-    position: relative!important;
+.vs-sidebar {
+    position: relative !important;
     box-shadow: none;
+}
+
+.padding-x {
+    padding-left: 5%;
+}
+
+.padding-y {
+    padding-right: 5%;
 }
