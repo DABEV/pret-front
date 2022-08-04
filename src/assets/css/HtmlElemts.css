@@ -85,7 +85,8 @@ input[type="date" i] {
     width: 250px;
     padding: 20px;
 }
-input{
+
+input {
     font-family: "Poppins";
 }
 
@@ -106,7 +107,7 @@ input{
     width: 100%;
 }
 
-.input-icon .select-custom{
+.input-icon .select-custom {
     padding: 5px 0px 4px 36px;
 }
 
@@ -115,7 +116,7 @@ input{
     background-color: white;
 }
 
-.input-icon span{
+.input-icon span {
     position: absolute;
     right: auto;
     width: 36px;
@@ -129,7 +130,14 @@ input{
     justify-content: center;
     margin-top: 9px;
     border-radius: 10px;
-    box-shadow: 12px 0 10px -10px rgba(0,0,0,var(--vs-shadow-opacity));
+    box-shadow: 12px 0 10px -10px rgba(0, 0, 0, var(--vs-shadow-opacity));
     background: rgba(var(--vs-gray-2), 1);
 }
 
+::-webkit-file-upload-button {
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-color: #d8e0e6;
+    cursor: pointer;
+    font-family: "Poppins";
+}

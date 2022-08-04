@@ -8,7 +8,12 @@
             <vs-row justify="space-between">
               <vs-col lg="1" sm="4" xs="4">
                 <vs-tooltip>
-                  <vs-button icon animation-type="rotate" color="#B13CD2">
+                  <vs-button
+                    icon
+                    animation-type="rotate"
+                    color="#B13CD2"
+                    @click="IrAdd()"
+                  >
                     <i class="bx bx-folder-plus"></i>
                     <template #animate>
                       <i class="bx bxs-folder-plus"></i>
@@ -56,7 +61,9 @@
                 >
                 <vs-th
                   sort
-                  @click="vacantes = $vs.sortData($event, vacantes, 'fechaInicio')"
+                  @click="
+                    vacantes = $vs.sortData($event, vacantes, 'fechaInicio')
+                  "
                 >
                   Publicación</vs-th
                 >
@@ -173,8 +180,8 @@ export default {
           apellidoPaterno: "Miramontes",
           apellidoMaterno: "Ruiseñor",
           nombreEmpresa: "Sony",
-          estadoRepublicaEmpresa:{
-            nombre:"Morelos"
+          estadoRepublicaEmpresa: {
+            nombre: "Morelos",
           },
         },
         tipo: "Medio tiempo",
@@ -194,8 +201,8 @@ export default {
           apellidoPaterno: "Miramontes",
           apellidoMaterno: "Ruiseñor",
           nombreEmpresa: "Sony",
-          estadoRepublicaEmpresa:{
-            nombre:"Morelos"
+          estadoRepublicaEmpresa: {
+            nombre: "Morelos",
           },
         },
         tipo: "Medio tiempo",
@@ -215,8 +222,8 @@ export default {
           apellidoPaterno: "Miramontes",
           apellidoMaterno: "Ruiseñor",
           nombreEmpresa: "Sony",
-          estadoRepublicaEmpresa:{
-            nombre:"Morelos"
+          estadoRepublicaEmpresa: {
+            nombre: "Morelos",
           },
         },
         tipo: "Medio tiempo",
@@ -236,8 +243,8 @@ export default {
           apellidoPaterno: "Miramontes",
           apellidoMaterno: "Ruiseñor",
           nombreEmpresa: "Sony",
-          estadoRepublicaEmpresa:{
-            nombre:"Morelos"
+          estadoRepublicaEmpresa: {
+            nombre: "Morelos",
           },
         },
         tipo: "Medio tiempo",
@@ -258,8 +265,8 @@ export default {
           apellidoPaterno: "Miramontes",
           apellidoMaterno: "Ruiseñor",
           nombreEmpresa: "Sony",
-          estadoRepublicaEmpresa:{
-            nombre:"Morelos"
+          estadoRepublicaEmpresa: {
+            nombre: "Morelos",
           },
         },
         tipo: "Medio tiempo",
@@ -279,8 +286,8 @@ export default {
           apellidoPaterno: "Miramontes",
           apellidoMaterno: "Ruiseñor",
           nombreEmpresa: "Sony",
-          estadoRepublicaEmpresa:{
-            nombre:"Morelos"
+          estadoRepublicaEmpresa: {
+            nombre: "Morelos",
           },
         },
         tipo: "Medio tiempo",
@@ -300,8 +307,8 @@ export default {
           apellidoPaterno: "Miramontes",
           apellidoMaterno: "Ruiseñor",
           nombreEmpresa: "Sony",
-          estadoRepublicaEmpresa:{
-            nombre:"Morelos"
+          estadoRepublicaEmpresa: {
+            nombre: "Morelos",
           },
         },
         tipo: "Medio tiempo",
@@ -319,6 +326,9 @@ export default {
   methods: {
     Confirmar: function (contacto) {
       this.contacto = contacto;
+    },
+    IrAdd: function () {
+      this.$router.push("/reclutador/registrarVacante");
     },
   },
 };

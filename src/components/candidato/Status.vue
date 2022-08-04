@@ -23,62 +23,11 @@
           <vs-table>
             <template #thead>
               <vs-tr>
-                <vs-th
-                  sort
-                  @click="
-                    postulaciones = $vs.sortData(
-                      $event,
-                      postulaciones,
-                      'puesto'
-                    )
-                  "
-                >
-                  Puesto
-                </vs-th>
-                <vs-th
-                  sort
-                  @click="
-                    postulaciones = $vs.sortData(
-                      $event,
-                      postulaciones,
-                      'modalidad'
-                    )
-                  "
-                >
-                  Modalidad
-                </vs-th>
-                <vs-th
-                  sort
-                  @click="
-                    postulaciones = $vs.sortData($event, postulaciones, 'tipo')
-                  "
-                >
-                  Tipo</vs-th
-                >
-                <vs-th
-                  sort
-                  @click="
-                    postulaciones = $vs.sortData(
-                      $event,
-                      postulaciones,
-                      'estado'
-                    )
-                  "
-                >
-                  Edo. Rep</vs-th
-                >
-                <vs-th
-                  sort
-                  @click="
-                    postulaciones = $vs.sortData(
-                      $event,
-                      postulaciones,
-                      'estatus'
-                    )
-                  "
-                >
-                  Estatus</vs-th
-                >
+                <vs-th> Puesto </vs-th>
+                <vs-th> Modalidad </vs-th>
+                <vs-th> Tipo</vs-th>
+                <vs-th> Edo. Rep</vs-th>
+                <vs-th> Estatus</vs-th>
               </vs-tr>
             </template>
             <template #tbody>
@@ -89,53 +38,59 @@
                   page,
                   max
                 )"
+                class="item-click"
+                @click="Detalles(tr)"
                 :data="tr"
               >
                 <vs-td>
-                  {{ tr.puesto }}
+                  {{ tr.vacante.nombre }}
                 </vs-td>
                 <vs-td>
-                  {{ tr.modalidad }}
+                  {{ tr.vacante.modalidad }}
                 </vs-td>
                 <vs-td>
-                  {{ tr.tipo }}
+                  {{ tr.vacante.tipo }}
                 </vs-td>
                 <vs-td>
-                  {{ tr.estado }}
+                  {{ tr.vacante.reclutador.estadoRepublicaEmpresa.nombre }}
                 </vs-td>
                 <vs-td class="text-center">
-                  <span v-if="tr.estatus == 'Idóneo'" class="badge-suc">
-                    {{ tr.estatus }}
+                  <span
+                    v-if="tr.estadoVacante.nombre == 'Idóneo'"
+                    class="badge-suc"
+                  >
+                    {{ tr.estadoVacante.nombre }}
                   </span>
-                  <span v-else-if="tr.estatus == 'Postulado'" class="badge-pri">
-                    {{ tr.estatus }}
+                  <span
+                    v-else-if="tr.estadoVacante.nombre == 'Postulado'"
+                    class="badge-pri"
+                  >
+                    {{ tr.estadoVacante.nombre }}
                   </span>
-                  <span v-else-if="tr.estatus == 'CV visto'" class="badge-war">
-                    {{ tr.estatus }}
+                  <span
+                    v-else-if="tr.estadoVacante.nombre == 'CV visto'"
+                    class="badge-war"
+                  >
+                    {{ tr.estadoVacante.nombre }}
                   </span>
-                  <span v-else-if="tr.estatus == 'Cancelado'" class="badge-dan">
-                    {{ tr.estatus }}
+                  <span
+                    v-else-if="tr.estadoVacante.nombre == 'Cancelado'"
+                    class="badge-dan"
+                  >
+                    {{ tr.estadoVacante.nombre }}
                   </span>
-                  <span v-else class="badge-def">{{ tr.estatus }}</span>
+                  <span v-else class="badge-def">{{
+                    tr.estadoVacante.nombre
+                  }}</span>
                 </vs-td>
-                <template #expand>
-                  <div class="con-content">
-                    <vs-row justify="space-between">
-                      <vs-col lg="10">
-                        <p class="bold">{{ tr.puesto }}</p>
-                      </vs-col>
-                      <vs-button icon>
-                        <i class="bx bx-lock-open-alt"></i>
-                      </vs-button>
-                    </vs-row>
-                  </div>
-                </template>
               </vs-tr>
             </template>
             <template #footer>
               <vs-pagination
                 v-model="page"
-                :length="$vs.getLength($vs.getSearch(postulaciones, search), max)"
+                :length="
+                  $vs.getLength($vs.getSearch(postulaciones, search), max)
+                "
               />
             </template>
             <template #notFound> No se encontraron registros </template>
@@ -143,6 +98,80 @@
         </div>
       </div>
     </div>
+
+    <vs-dialog scroll width="550px" v-model="active">
+      <template #header>
+        <h4 class="space-top">{{ vacante.nombre }}</h4>
+      </template>
+      <vs-row justify="space-around">
+        <vs-col lg="5" sm="10" xs="12" class="text-center">
+          <p class="bold">Empresa: {{ reclutador.nombreEmpresa }}</p>
+          <small>Ubicado en: {{ estadoRepublicaEmpresaReclutador }}</small>
+        </vs-col>
+        <vs-col lg="5" sm="12" xs="12" class="text-center">
+          <p class="bold">Reclutador</p>
+          <small>
+            {{ reclutador.nombre }} {{ reclutador.apellidoPaterno }}
+            {{ reclutador.apellidoMaterno }}</small
+          >
+        </vs-col>
+      </vs-row>
+      <div class="divider space-top">
+        <span class="border"></span>
+      </div>
+      <vs-row justify="space-around" class="space-top">
+        <vs-col lg="9" sm="10" xs="12">
+          <small class="bg-primary"> Vigencia: {{ vacante.fechaFin }} </small>
+        </vs-col>
+        <vs-col lg="2" sm="12" xs="12" class="text-end">
+          <small class="badge-sec">{{ vacante.modalidad }}</small>
+        </vs-col>
+      </vs-row>
+      <p class="center">{{ vacante.descripcion }}</p>
+      <div class="divider space">
+        <span class="border"></span>
+      </div>
+      <p class="text-center bold">Modo de pago: {{ vacante.periodoPago }}</p>
+      <vs-row justify="space-around" class="text-center space">
+        <vs-col lg="4" sm="3" xs="3">
+          <p>
+            Mínimo:
+            <small class="badge-pri"> ${{ vacante.sueldoMin }}</small>
+          </p>
+        </vs-col>
+        <vs-col lg="4" sm="3" xs="3">
+          <p>
+            Máximo:
+            <small class="badge-war"> ${{ vacante.sueldoMax }}</small>
+          </p>
+        </vs-col>
+      </vs-row>
+      <div class="divider space-top">
+        <span class="border"></span>
+      </div>
+      <p class="bg-gray text-center space-top">Tipo: {{ vacante.tipo }}</p>
+      <div class="divider space-top">
+        <span class="border"></span>
+      </div>
+      <p class="text-center bold space-top">Beneficios</p>
+      <div class="space text-start bg-gray">
+        <div
+          :key="i"
+          v-for="(b, i) in vacante.beneficios"
+          :data="b"
+          class="item"
+        >
+          <vs-row justify="space-around">
+            <vs-col lg="1" sm="2" xs="2" class="text-center space-top">
+              <i class="bx bx-check-shield bg-success"></i>
+            </vs-col>
+            <vs-col lg="10" sm="10" xs="10" class="space-top">
+              <p>{{ b.nombre }}</p>
+            </vs-col>
+          </vs-row>
+        </div>
+      </div>
+    </vs-dialog>
   </div>
 </template>
 
@@ -150,68 +179,328 @@
 export default {
   name: "Profile",
   data: () => ({
-    active: 0,
+    active: false,
     page: 1,
     max: 7,
     search: "",
     postulaciones: [
       {
-        puesto: "Analista de datos",
-        modalidad: "Presencial",
-        tipo: "Tiempo completo",
-        estado: "Morelos",
-        estatus: "Postulado",
+        cv: "",
+        candidato: {},
+        estadoVacante: { nombre: "Postulado" },
+        vacante: {
+          nombre: "Desarrollador Full-stack Java",
+          reclutador: {
+            nombre: "Roberto",
+            apellidoPaterno: "Miramontes",
+            apellidoMaterno: "Ruiseñor",
+            nombreEmpresa: "Sony",
+            estadoRepublicaEmpresa: {
+              nombre: "Morelos",
+            },
+          },
+          beneficios: [
+            {
+              nombre: "Ofrecemos sueldo competitivo",
+            },
+            {
+              nombre: "Trabajo en modalidad híbrida (Homeoffice)",
+            },
+            {
+              nombre: "Cursos y Certificaciones constantes",
+            },
+            {
+              nombre: "Prestaciones de ley y Superirores",
+            },
+            {
+              nombre: "Programas de crecimiento a corto, mediano y largo plazo",
+            },
+          ],
+          tipo: "Medio tiempo",
+          modalidad: "Remoto",
+          periodoPago: "Quincenal",
+          sueldoMin: 10000,
+          sueldoMax: 30000,
+          fechaInicio: "5/19/12",
+          fechaFin: "8/19/12",
+          descripcion:
+            "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
+        },
       },
       {
-        puesto: "Administrador de BD",
-        modalidad: "Remoto",
-        tipo: "Tiempo completo",
-        estado: "Morelos",
-        estatus: "CV visto",
+        cv: "",
+        candidato: {},
+        estadoVacante: { nombre: "Cancelado" },
+        vacante: {
+          nombre: "Desarrollador Full-stack PHP",
+          reclutador: {
+            nombre: "Roberto",
+            apellidoPaterno: "Miramontes",
+            apellidoMaterno: "Ruiseñor",
+            nombreEmpresa: "Sony",
+            estadoRepublicaEmpresa: {
+              nombre: "Morelos",
+            },
+          },
+          beneficios: [
+            {
+              nombre: "Ofrecemos sueldo competitivo",
+            },
+            {
+              nombre: "Trabajo en modalidad híbrida (Homeoffice)",
+            },
+            {
+              nombre: "Cursos y Certificaciones constantes",
+            },
+            {
+              nombre: "Prestaciones de ley y Superirores",
+            },
+            {
+              nombre: "Programas de crecimiento a corto, mediano y largo plazo",
+            },
+          ],
+          tipo: "Medio tiempo",
+          modalidad: "Híbrido",
+          periodoPago: "Mensual",
+          sueldoMin: 50000,
+          sueldoMax: 80000,
+          fechaInicio: "5/19/12",
+          fechaFin: "6/25/12",
+          descripcion:
+            "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
+        },
       },
       {
-        puesto: "Gerente de BD en la nube",
-        modalidad: "Presencial",
-        tipo: "Medio tiempo",
-        estado: "Guerrero",
-        estatus: "Postulado",
+        cv: "",
+        candidato: {},
+        estadoVacante: { nombre: "CV visto" },
+        vacante: {
+          nombre: "President of Sales",
+          reclutador: {
+            nombre: "Roberto",
+            apellidoPaterno: "Miramontes",
+            apellidoMaterno: "Ruiseñor",
+            nombreEmpresa: "Sony",
+            estadoRepublicaEmpresa: {
+              nombre: "Quintana Roo",
+            },
+          },
+          beneficios: [
+            {
+              nombre: "Ofrecemos sueldo competitivo",
+            },
+            {
+              nombre: "Trabajo en modalidad híbrida (Homeoffice)",
+            },
+            {
+              nombre: "Cursos y Certificaciones constantes",
+            },
+            {
+              nombre: "Prestaciones de ley y Superirores",
+            },
+            {
+              nombre: "Programas de crecimiento a corto, mediano y largo plazo",
+            },
+          ],
+          tipo: "Medio tiempo",
+          modalidad: "Híbrido",
+          periodoPago: "Semanal",
+          sueldoMin: 15000,
+          sueldoMax: 30000,
+          fechaInicio: "5/19/12",
+          fechaFin: "7/19/12",
+          descripcion:
+            "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
+        },
       },
       {
-        puesto: "Administrador de BD",
-        modalidad: "Híbrido",
-        tipo: "Horario flexible",
-        estado: "CDMX",
-        estatus: "CV visto",
+        cv: "",
+        candidato: {},
+        estadoVacante: { nombre: "Idóneo" },
+        vacante: {
+          nombre: "Web Designer",
+          reclutador: {
+            nombre: "Roberto",
+            apellidoPaterno: "Miramontes",
+            apellidoMaterno: "Ruiseñor",
+            nombreEmpresa: "Sony",
+            estadoRepublicaEmpresa: {
+              nombre: "Sonora",
+            },
+          },
+          beneficios: [
+            {
+              nombre: "Ofrecemos sueldo competitivo",
+            },
+            {
+              nombre: "Trabajo en modalidad híbrida (Homeoffice)",
+            },
+            {
+              nombre: "Cursos y Certificaciones constantes",
+            },
+            {
+              nombre: "Prestaciones de ley y Superirores",
+            },
+            {
+              nombre: "Programas de crecimiento a corto, mediano y largo plazo",
+            },
+          ],
+          tipo: "Medio tiempo",
+          empresa: "Sony",
+          modalidad: "Híbrido",
+          periodoPago: "Semanal",
+          sueldoMin: 1500,
+          sueldoMax: 3000,
+          fechaInicio: "5/19/12",
+          fechaFin: "9/19/12",
+          descripcion:
+            "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
+        },
       },
       {
-        puesto: "Diseñador de BD relacionales",
-        modalidad: "Remoto",
-        tipo: "Presencial",
-        estado: "Sonora",
-        estatus: "Cancelado",
+        cv: "",
+        candidato: {},
+        estadoVacante: { nombre: "Postulado" },
+        vacante: {
+          nombre: "Desarrollador Full-stack PHP",
+          reclutador: {
+            nombre: "Roberto",
+            apellidoPaterno: "Miramontes",
+            apellidoMaterno: "Ruiseñor",
+            nombreEmpresa: "Sony",
+            estadoRepublicaEmpresa: {
+              nombre: "Nayarit",
+            },
+          },
+          beneficios: [
+            {
+              nombre: "Ofrecemos sueldo competitivo",
+            },
+            {
+              nombre: "Trabajo en modalidad híbrida (Homeoffice)",
+            },
+            {
+              nombre: "Cursos y Certificaciones constantes",
+            },
+            {
+              nombre: "Prestaciones de ley y Superirores",
+            },
+            {
+              nombre: "Programas de crecimiento a corto, mediano y largo plazo",
+            },
+          ],
+          tipo: "Medio tiempo",
+          modalidad: "Híbrido",
+          periodoPago: "Quincenal",
+          sueldoMin: 20000,
+          sueldoMax: 50000,
+          fechaInicio: "5/19/12",
+          fechaFin: "7/19/12",
+          descripcion:
+            "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
+        },
       },
       {
-        puesto: "Subgerente de Cómputo en la nube",
-        modalidad: "Presencial",
-        tipo: "Tiempo completo",
-        estado: "Morelos",
-        estatus: "Idóneo",
+        cv: "",
+        candidato: {},
+        estadoVacante: { nombre: "CV visto" },
+        vacante: {
+          nombre: "Desarrollador Full-stack PHP",
+          reclutador: {
+            nombre: "Roberto",
+            apellidoPaterno: "Miramontes",
+            apellidoMaterno: "Ruiseñor",
+            nombreEmpresa: "Sony",
+            estadoRepublicaEmpresa: {
+              nombre: "Morelos",
+            },
+          },
+          
+          beneficios: [
+            {
+              nombre: "Ofrecemos sueldo competitivo",
+            },
+            {
+              nombre: "Trabajo en modalidad híbrida (Homeoffice)",
+            },
+            {
+              nombre: "Cursos y Certificaciones constantes",
+            },
+            {
+              nombre: "Prestaciones de ley y Superirores",
+            },
+            {
+              nombre: "Programas de crecimiento a corto, mediano y largo plazo",
+            },
+          ],
+          tipo: "Medio tiempo",
+          modalidad: "Híbrido",
+          periodoPago: "Quincenal",
+          sueldoMin: 15000,
+          sueldoMax: 40000,
+          fechaInicio: "5/19/12",
+          fechaFin: "7/19/12",
+          descripcion:
+            "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
+        },
       },
       {
-        puesto: "Analista en servicios AWS",
-        modalidad: "Remoto",
-        tipo: "Horario flexible",
-        estado: "Querétaro",
-        estatus: "Idóneo",
-      },
-      {
-        puesto: "Experto machine learning",
-        modalidad: "Híbrido",
-        tipo: "Tiempo completo",
-        estado: "CDMX",
-        estatus: "Postulado",
+        cv: "",
+        candidato: {},
+        estadoVacante: { nombre: "Postulado" },
+        vacante: {
+          nombre: "Marketing Coordinator",
+          reclutador: {
+            nombre: "Roberto",
+            apellidoPaterno: "Miramontes",
+            apellidoMaterno: "Ruiseñor",
+            nombreEmpresa: "Sony",
+            estadoRepublicaEmpresa: {
+              nombre: "Morelos",
+            },
+          },
+          beneficios: [
+            {
+              nombre: "Ofrecemos sueldo competitivo",
+            },
+            {
+              nombre: "Trabajo en modalidad híbrida (Homeoffice)",
+            },
+            {
+              nombre: "Cursos y Certificaciones constantes",
+            },
+            {
+              nombre: "Prestaciones de ley y Superirores",
+            },
+            {
+              nombre: "Programas de crecimiento a corto, mediano y largo plazo",
+            },
+          ],
+          tipo: "Medio tiempo",
+          modalidad: "Híbrido",
+          periodoPago: "Quincenal",
+          sueldoMin: 12000,
+          sueldoMax: 23000,
+          fechaInicio: "5/19/12",
+          fechaFin: "7/19/12",
+          descripcion:
+            "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
+        },
       },
     ],
+    vacante: {},
+    reclutador: {},
+    nombreEmpresaReclutador: "",
+    estadoRepublicaEmpresaReclutador: "",
   }),
+  methods: {
+    Detalles: function (postulacion) {
+      this.active = true;
+      this.vacante = postulacion.vacante;
+      this.estadoRepublicaEmpresaReclutador =
+        postulacion.vacante.reclutador.estadoRepublicaEmpresa.nombre;
+      this.reclutador = postulacion.vacante.reclutador;
+    },
+  },
 };
 </script>

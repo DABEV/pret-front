@@ -69,7 +69,7 @@
                     class="custom-th"
                     sort
                     @click="
-                      vacantes = $vs.sortData($event, vacantes, 'fechaVigencia')
+                      vacantes = $vs.sortData($event, vacantes, 'fechaFin')
                     "
                   >
                     Vigencia
@@ -83,22 +83,10 @@
                     class="custom-th"
                     sort
                     @click="
-                      vacantes = $vs.sortData($event, vacantes, 'modoPago')
+                      vacantes = $vs.sortData($event, vacantes, 'periodoPago')
                     "
                   >
                     Modo de pago
-                  </vs-th>
-                  <div class="divider">
-                    <span class="border"></span>
-                  </div>
-                </vs-col>
-                <vs-col class="item">
-                  <vs-th
-                    class="custom-th"
-                    sort
-                    @click="vacantes = $vs.sortData($event, vacantes, 'estado')"
-                  >
-                    Estado
                   </vs-th>
                   <div class="divider">
                     <span class="border"></span>
@@ -142,14 +130,20 @@
                     </p>
                     <vs-row class="space">
                       <vs-col w="3">
-                        <small class="bg-primary">{{ v.empresa }}</small>
+                        <small class="bg-primary">{{
+                          v.reclutador.nombreEmpresa
+                        }}</small>
                       </vs-col>
                       <vs-col w="3">
-                        <small class="bg-gray"> {{ v.estado }}</small>
+                        <small class="bg-gray">
+                          {{
+                            v.reclutador.estadoRepublicaEmpresa.nombre
+                          }}</small
+                        >
                       </vs-col>
                       <vs-col w="6">
                         <small class="bg-sec">
-                          Vigencia: {{ v.fechaVigencia }}</small
+                          Vigencia: {{ v.fechaFin }}</small
                         >
                       </vs-col>
                     </vs-row>
@@ -157,7 +151,7 @@
                     <vs-row justify="space-between" class="space-top space">
                       <vs-col lg="4" sm="3" xs="3">
                         <p class="bold">
-                          {{ v.modoPago }}
+                          {{ v.periodoPago }}
                         </p>
                       </vs-col>
                       <vs-col lg="4" sm="3" xs="3">
@@ -233,11 +227,11 @@
       </template>
       <vs-row justify="space-around">
         <vs-col lg="9" sm="10" xs="12">
-          <p class="bold">Empresa: {{ vacante.empresa }}</p>
-          <small>Ubicado en: {{ vacante.estado }}</small>
+          <p class="bold">Empresa: {{ nombreEmpresaReclutador }}</p>
+          <small>Ubicado en: {{ estadoRepublicaEmpresaReclutador }}</small>
         </vs-col>
         <vs-col lg="2" sm="12" xs="12">
-          <vs-button success>Postularse</vs-button>
+          <vs-button success @click="AbrirPostular(vacante)">Postularse</vs-button>
         </vs-col>
       </vs-row>
       <div class="divider space-top">
@@ -245,9 +239,7 @@
       </div>
       <vs-row justify="space-around" class="space-top">
         <vs-col lg="9" sm="10" xs="12">
-          <small class="bg-primary">
-            Vigencia: {{ vacante.fechaVigencia }}
-          </small>
+          <small class="bg-primary"> Vigencia: {{ vacante.fechaFin }} </small>
         </vs-col>
         <vs-col lg="2" sm="12" xs="12" class="text-end">
           <small class="badge-sec">{{ vacante.modalidad }}</small>
@@ -257,7 +249,7 @@
       <div class="divider space">
         <span class="border"></span>
       </div>
-      <p class="text-center bold">Modo de pago: {{ vacante.modoPago }}</p>
+      <p class="text-center bold">Modo de pago: {{ vacante.periodoPago }}</p>
       <vs-row justify="space-around" class="text-center space">
         <vs-col lg="4" sm="3" xs="3">
           <p>
@@ -297,12 +289,6 @@
           </vs-row>
         </div>
       </div>
-    </vs-dialog>
-
-    <vs-dialog prevent-close v-model="favoritos">
-      <template #header>
-        <h4>Añadir a favoritos</h4>
-      </template>
     </vs-dialog>
 
     <vs-dialog
@@ -406,6 +392,48 @@
         </vs-row>
       </template>
     </vs-dialog>
+
+    <vs-dialog width="450px" prevent-close v-model="activePostular">
+      <template #header>
+        <h2>Postularse</h2>
+      </template>
+      <div class="margin-xy space space-top text-center">
+        <small class="bold">Vacante: {{ postulacion.vacante.nombre }}</small>
+        <br />
+        <small class="bg-primary">Agregar CV</small>
+        <vs-input
+          class="space-top space"
+          v-model="postulacion.cv"
+          color="#1e88e5"
+          type="file"
+          accept=".pdf"
+          block
+        >
+          <template #icon>
+            <i class="bx bxs-file-pdf"></i>
+          </template>
+        </vs-input>
+      </div>
+      <template #footer>
+        <vs-row justify="center">
+          <vs-col lg="5" sm="12" xs="12" class="space-top center-item">
+            <vs-button
+              transparent
+              dark
+              @click="activePostular = !activePostular"
+              block
+            >
+              Cancelar
+            </vs-button>
+          </vs-col>
+          <vs-col lg="5" sm="12" xs="12" class="space-top center-item">
+            <vs-button success block @click="EnviarPostular()">
+              Enviar CV
+            </vs-button>
+          </vs-col>
+        </vs-row>
+      </template>
+    </vs-dialog>
   </div>
 </template>
 
@@ -417,30 +445,47 @@ export default {
     activeConfirmarCom: false,
     activeCompartir: false,
     favoritos: false,
+    activePostular: false,
     page: 1,
     pageCompartir: 1,
     maxCompartir: 4,
     max: 5,
     search: "",
     searchCompartir: "",
+    nombreEmpresaReclutador: "",
+    estadoRepublicaEmpresaReclutador: "",
     vacante: {},
     contacto: {},
-    sortIcon1: true,
-    sortIcon2: true,
-    sortIcon3: true,
+    postulacion: {
+      id: 0,
+      cv: "",
+      vacante: {},
+      candidato: {},
+      estadoVacante: {
+        id: 1,
+      },
+    },
     vacantes: [
       {
         nombre: "Desarrollador Full-stack Java",
-        reclutador: "Roberto Miramontes Ruiseñor",
-        estado: "Morelos",
+        reclutador: {
+          nombre: "Roberto",
+          apellidoPaterno: "Miramontes",
+          apellidoMaterno: "Ruiseñor",
+          nombreEmpresa: "Sony",
+          estadoRepublicaEmpresa: {
+            nombre: "Morelos",
+          },
+        },
         tipo: "Medio tiempo",
-        empresa: "Microsoft",
         modalidad: "Híbrido",
-        modoPago: "Mensual",
-        sueldoMin: 40000,
-        sueldoMax: 80000,
+        periodoPago: "Quincenal",
+        sueldoMin: 10000,
+        sueldoMax: 30000,
         fechaInicio: "5/19/12",
-        fechaVigencia: "7/19/12",
+        fechaFin: "8/19/12",
+        descripcion:
+          "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
         beneficios: [
           {
             nombre: "Ofrecemos sueldo competitivo",
@@ -458,53 +503,39 @@ export default {
             nombre: "Programas de crecimiento a corto, mediano y largo plazo",
           },
         ],
-        descripcion:
-          "Ut libero turpis, sollicitudin sed lectus ac, porta ornare erat. Integer nibh purus, mattis in felis eget, eleifend ultricies mi. Integer et fringilla sem, eu rhoncus nunc. ",
       },
       {
         nombre: "Desarrollador Full-stack PHP",
-        reclutador: "Roberto Miramontes Ruiseñor",
-        estado: "Morelos",
+        reclutador: {
+          nombre: "Roberto",
+          apellidoPaterno: "Miramontes",
+          apellidoMaterno: "Ruiseñor",
+          nombreEmpresa: "Sony",
+          estadoRepublicaEmpresa: {
+            nombre: "Morelos",
+          },
+        },
         tipo: "Medio tiempo",
-        empresa: "Sony",
         modalidad: "Híbrido",
-        modoPago: "Quincenal",
-        sueldoMin: 20000,
-        sueldoMax: 50000,
-        fechaInicio: "5/19/12",
-        fechaVigencia: "7/19/12",
-        beneficios: [
-          {
-            nombre: "Ofrecemos sueldo competitivo",
-          },
-          {
-            nombre: "Trabajo en modalidad híbrida (Homeoffice)",
-          },
-          {
-            nombre: "Cursos y Certificaciones constantes",
-          },
-          {
-            nombre: "Prestaciones de ley y Superirores",
-          },
-          {
-            nombre: "Programas de crecimiento a corto, mediano y largo plazo",
-          },
-        ],
-        descripcion:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam egestas elit at lectus aliquet fringilla. Quisque aliquet placerat eros, sed pretium nunc. Phasellus convallis scelerisque elit in commodo.",
-      },
-      {
-        nombre: "President of Sales",
-        reclutador: "Roberto Miramontes Ruiseñor",
-        estado: "Morelos",
-        tipo: "Medio tiempo",
-        empresa: "Oracle",
-        modalidad: "Híbrido",
-        modoPago: "Quincenal",
+        periodoPago: "Mensual",
         sueldoMin: 50000,
         sueldoMax: 80000,
         fechaInicio: "5/19/12",
-        fechaVigencia: "7/19/12",
+        fechaFin: "6/25/12",
+        descripcion:
+          "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
+      },
+      {
+        nombre: "President of Sales",
+        reclutador: {
+          nombre: "Roberto",
+          apellidoPaterno: "Miramontes",
+          apellidoMaterno: "Ruiseñor",
+          nombreEmpresa: "Sony",
+          estadoRepublicaEmpresa: {
+            nombre: "Quintana Roo",
+          },
+        },
         beneficios: [
           {
             nombre: "Ofrecemos sueldo competitivo",
@@ -522,36 +553,66 @@ export default {
             nombre: "Programas de crecimiento a corto, mediano y largo plazo",
           },
         ],
+        tipo: "Medio tiempo",
+        modalidad: "Híbrido",
+        periodoPago: "Semanal",
+        sueldoMin: 15000,
+        sueldoMax: 30000,
+        fechaInicio: "5/19/12",
+        fechaFin: "7/19/12",
         descripcion:
           "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
       },
       {
         nombre: "Web Designer",
-        reclutador: "Roberto Miramontes Ruiseñor",
-        estado: "Morelos",
+        reclutador: {
+          nombre: "Roberto",
+          apellidoPaterno: "Miramontes",
+          apellidoMaterno: "Ruiseñor",
+          nombreEmpresa: "Sony",
+          estadoRepublicaEmpresa: {
+            nombre: "Sonora",
+          },
+        },
+        beneficios: [
+          {
+            nombre: "Ofrecemos sueldo competitivo",
+          },
+          {
+            nombre: "Trabajo en modalidad híbrida (Homeoffice)",
+          },
+          {
+            nombre: "Cursos y Certificaciones constantes",
+          },
+          {
+            nombre: "Prestaciones de ley y Superirores",
+          },
+          {
+            nombre: "Programas de crecimiento a corto, mediano y largo plazo",
+          },
+        ],
         tipo: "Medio tiempo",
         empresa: "Sony",
         modalidad: "Híbrido",
-        modoPago: "Semanal",
-        sueldoMin: 20000,
-        sueldoMax: 50000,
+        periodoPago: "Semanal",
+        sueldoMin: 1500,
+        sueldoMax: 3000,
         fechaInicio: "5/19/12",
-        fechaVigencia: "7/19/12",
+        fechaFin: "9/19/12",
         descripcion:
           "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
       },
       {
         nombre: "Desarrollador Full-stack PHP",
-        reclutador: "Roberto Miramontes Ruiseñor",
-        estado: "Morelos",
-        tipo: "Medio tiempo",
-        empresa: "Sony",
-        modalidad: "Híbrido",
-        modoPago: "Quincenal",
-        sueldoMin: 20000,
-        sueldoMax: 30000,
-        fechaInicio: "5/19/12",
-        fechaVigencia: "7/19/12",
+        reclutador: {
+          nombre: "Roberto",
+          apellidoPaterno: "Miramontes",
+          apellidoMaterno: "Ruiseñor",
+          nombreEmpresa: "Sony",
+          estadoRepublicaEmpresa: {
+            nombre: "Nayarit",
+          },
+        },
         beneficios: [
           {
             nombre: "Ofrecemos sueldo competitivo",
@@ -569,21 +630,27 @@ export default {
             nombre: "Programas de crecimiento a corto, mediano y largo plazo",
           },
         ],
+        tipo: "Medio tiempo",
+        modalidad: "Híbrido",
+        periodoPago: "Quincenal",
+        sueldoMin: 20000,
+        sueldoMax: 50000,
+        fechaInicio: "5/19/12",
+        fechaFin: "7/19/12",
         descripcion:
-          "Cras et massa dapibus ipsum faucibus varius. Pellentesque lorem nunc, venenatis sit amet augue vel, suscipit mattis orci. Curabitur rutrum libero sit amet viverra rhoncus.",
+          "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
       },
       {
-        nombre: "Analista de datos",
-        reclutador: "Roberto Miramontes Ruiseñor",
-        estado: "Nayarit",
-        tipo: "Tiempo completo",
-        empresa: "Rappi",
-        modalidad: "Híbrido",
-        modoPago: "Mensual",
-        sueldoMin: 200050,
-        sueldoMax: 500000,
-        fechaInicio: "6/19/12",
-        fechaVigencia: "8/19/12",
+        nombre: "Desarrollador Full-stack PHP",
+        reclutador: {
+          nombre: "Roberto",
+          apellidoPaterno: "Miramontes",
+          apellidoMaterno: "Ruiseñor",
+          nombreEmpresa: "Sony",
+          estadoRepublicaEmpresa: {
+            nombre: "Morelos",
+          },
+        },
         beneficios: [
           {
             nombre: "Ofrecemos sueldo competitivo",
@@ -601,23 +668,27 @@ export default {
             nombre: "Programas de crecimiento a corto, mediano y largo plazo",
           },
         ],
+        tipo: "Medio tiempo",
+        modalidad: "Híbrido",
+        periodoPago: "Quincenal",
+        sueldoMin: 15000,
+        sueldoMax: 40000,
+        fechaInicio: "5/19/12",
+        fechaFin: "7/19/12",
         descripcion:
           "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
       },
       {
         nombre: "Marketing Coordinator",
-        reclutador: "Roberto Miramontes Ruiseñor",
-        estado: "Morelos",
-        tipo: "Medio tiempo",
-        empresa: "Microsoft",
-        modalidad: "Híbrido",
-        modoPago: "Quincenal",
-        sueldoMin: 20000,
-        sueldoMax: 50000,
-        fechaInicio: "5/19/12",
-        fechaVigencia: "7/19/12",
-        descripcion:
-          "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
+        reclutador: {
+          nombre: "Roberto",
+          apellidoPaterno: "Miramontes",
+          apellidoMaterno: "Ruiseñor",
+          nombreEmpresa: "Sony",
+          estadoRepublicaEmpresa: {
+            nombre: "Morelos",
+          },
+        },
         beneficios: [
           {
             nombre: "Ofrecemos sueldo competitivo",
@@ -635,6 +706,15 @@ export default {
             nombre: "Programas de crecimiento a corto, mediano y largo plazo",
           },
         ],
+        tipo: "Medio tiempo",
+        modalidad: "Híbrido",
+        periodoPago: "Quincenal",
+        sueldoMin: 12000,
+        sueldoMax: 23000,
+        fechaInicio: "5/19/12",
+        fechaFin: "7/19/12",
+        descripcion:
+          "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
       },
     ],
     contactos: [
@@ -722,11 +802,14 @@ export default {
         fechaNacimiento: "9/4/12",
         foto: "https://images.unsplash.com/photo-1483995564125-85915c11dcfe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=641&q=80",
       },
-    ],
+    ],  
   }),
   methods: {
     Detalles: function (vacante) {
       this.vacante = vacante;
+      this.estadoRepublicaEmpresaReclutador =
+        vacante.reclutador.estadoRepublicaEmpresa.nombre;
+      this.nombreEmpresaReclutador = vacante.reclutador.nombreEmpresa;
     },
     ConfirmarCom: function (contacto) {
       this.contacto = contacto;
@@ -735,6 +818,14 @@ export default {
     Compartir: function () {
       this.activeCompartir = false;
       this.activeConfirmarCom = false;
+    },
+    AbrirPostular: function (vacante) {
+      this.postulacion.vacante = vacante;
+      this.activePostular = !this.activePostular;
+    },
+    EnviarPostular: function () {
+      this.active = false;
+      this.activePostular = !this.activePostular;
     },
   },
 };
