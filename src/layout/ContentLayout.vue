@@ -1,16 +1,22 @@
 <template>
   <div>
-    <router-view></router-view>
+    <navigation></navigation>
+    <br>
+    <div class="space-top">
+      <router-view></router-view>
+    </div>
+    
   </div>
 </template>
 
 <script>
+import Navigation from '../components/Navigation.vue';
 export default {
   name: "ContentLayout",
   beforeCreate: function () {
     document.body.className = "default";
   },
-  components: {},
+  components: {Navigation},
 };
 </script>
 

@@ -133,6 +133,12 @@
     border-radius: 6px !important;
 }
 
+.logo-navbar {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px !important;
+}
+
 .con-form {
     width: 100%;
     align-items: center;
