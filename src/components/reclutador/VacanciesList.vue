@@ -22,6 +22,9 @@
                   <template #tooltip> Añadir vacante </template>
                 </vs-tooltip>
               </vs-col>
+              <vs-col lg="3" sm="4" xs="4">
+                <p class="text-start">Gestiona tus vacantes y sus candidatos</p>
+              </vs-col>
               <vs-col lg="4" sm="12" xs="12">
                 <vs-input
                   v-model="search"
@@ -106,35 +109,24 @@
                   </div>
                   <div class="space-top">
                     <vs-row>
-                      <vs-col lg="1" sm="2" xs="2">
-                        <vs-avatar color="#90BFF5">
+                      <vs-col lg="1" class="center-item">
+                        <vs-avatar circle primary>
                           <i class="bx bxs-briefcase"></i>
                         </vs-avatar>
                       </vs-col>
-                      <vs-col lg="10" sm="9" xs="9">
-                        <p>
-                          <b>{{ tr.nombre }}</b>
-                        </p>
-                        <vs-row>
-                          <vs-col w="5">
-                            <p>
-                              Sueldo min:
-                              <span class="badge-pri"
-                                >$ {{ tr.sueldoMin }}</span
-                              >
-                            </p>
-                          </vs-col>
-                          <vs-col w="5">
-                            <p>
-                              Sueldo max:
-                              <span class="badge-sec"
-                                >$ {{ tr.sueldoMax }}</span
-                              >
-                            </p>
-                          </vs-col>
-                        </vs-row>
+                      <vs-col lg="8">
+                        <p class="bold">{{ tr.nombre }}</p>
+                        <small
+                          >{{ tr.reclutador.estadoRepublicaEmpresa.nombre }} ·
+                          Vigencia: {{ tr.fechaFin }}</small
+                        >
                       </vs-col>
-                      <vs-col lg="1">
+                      <vs-col lg="2" class="center-item">
+                        <vs-button success @click="IrSeleccion1()">
+                          Ver candidatos
+                        </vs-button>
+                      </vs-col>
+                      <vs-col lg="1" class="center-item">
                         <vs-tooltip>
                           <vs-button icon animation-type="rotate" warn>
                             <i class="bx bx-edit"></i>
@@ -329,6 +321,9 @@ export default {
     },
     IrAdd: function () {
       this.$router.push("/reclutador/registrarVacante");
+    },
+    IrSeleccion1: function () {
+      this.$router.push("/reclutador/candidatos");
     },
   },
 };

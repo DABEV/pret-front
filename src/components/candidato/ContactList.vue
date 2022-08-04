@@ -256,7 +256,7 @@ export default {
           nombre: "Morelos",
         },
         tituloCurricular:
-          "Grado de estudios: Administradora de base de datos (DBA)",
+          "Administradora de base de datos (DBA)",
         fechaNacimiento: "9/4/12",
         foto: "https://images.unsplash.com/photo-1484186139897-d5fc6b908812?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
       },
@@ -270,7 +270,7 @@ export default {
           nombre: "Morelos",
         },
         tituloCurricular:
-          "Grado de estudios: Administradora de base de datos (DBA)",
+          "Administradora de base de datos (DBA)",
         fechaNacimiento: "9/4/12",
         foto: "https://images.unsplash.com/photo-1518577915332-c2a19f149a75?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=562&q=80",
       },
@@ -284,7 +284,7 @@ export default {
           nombre: "Querétaro",
         },
         tituloCurricular:
-          "Grado de estudios: Administradora de base de datos (DBA)",
+          "Administradora de base de datos (DBA)",
         fechaNacimiento: "9/4/12",
         foto: "https://images.unsplash.com/photo-1529068755536-a5ade0dcb4e8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=581&q=80",
       },
@@ -298,7 +298,7 @@ export default {
           nombre: "Durango",
         },
         tituloCurricular:
-          "Grado de estudios: Administradora de base de datos (DBA)",
+          "Administradora de base de datos (DBA)",
         fechaNacimiento: "9/4/12",
         foto: "https://images.unsplash.com/photo-1485528562718-2ae1c8419ae2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=558&q=80",
       },
@@ -312,7 +312,7 @@ export default {
           nombre: "Tamaulipas",
         },
         tituloCurricular:
-          "Grado de estudios: Administradora de base de datos (DBA)",
+          "Administradora de base de datos (DBA)",
         fechaNacimiento: "9/4/12",
         foto: "https://images.unsplash.com/photo-1485893086445-ed75865251e0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
       },
@@ -326,7 +326,7 @@ export default {
           nombre: "Oaxaca",
         },
         tituloCurricular:
-          "Grado de estudios: Administradora de base de datos (DBA)",
+          "Administradora de base de datos (DBA)",
         fechaNacimiento: "9/4/12",
         foto: "https://images.unsplash.com/photo-1483995564125-85915c11dcfe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=641&q=80",
       },
@@ -342,7 +342,7 @@ export default {
           nombre: "Morelos",
         },
         tituloCurricular:
-          "Grado de estudios: Administradora de base de datos (DBA)",
+          "Administradora de base de datos (DBA)",
         fechaNacimiento: "9/4/12",
         foto: "https://images.unsplash.com/photo-1484186139897-d5fc6b908812?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
       },
@@ -356,7 +356,7 @@ export default {
           nombre: "Morelos",
         },
         tituloCurricular:
-          "Grado de estudios: Administradora de base de datos (DBA)",
+          "Administradora de base de datos (DBA)",
         fechaNacimiento: "9/4/12",
         foto: "https://images.unsplash.com/photo-1518577915332-c2a19f149a75?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=562&q=80",
       },
@@ -370,7 +370,7 @@ export default {
           nombre: "Querétaro",
         },
         tituloCurricular:
-          "Grado de estudios: Administradora de base de datos (DBA)",
+          "Administradora de base de datos (DBA)",
         fechaNacimiento: "9/4/12",
         foto: "https://images.unsplash.com/photo-1529068755536-a5ade0dcb4e8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=581&q=80",
       },
@@ -384,7 +384,7 @@ export default {
           nombre: "Durango",
         },
         tituloCurricular:
-          "Grado de estudios: Administradora de base de datos (DBA)",
+          "Administradora de base de datos (DBA)",
         fechaNacimiento: "9/4/12",
         foto: "https://images.unsplash.com/photo-1485528562718-2ae1c8419ae2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=558&q=80",
       },
@@ -400,7 +400,7 @@ export default {
           nombre: "Morelos",
         },
         tituloCurricular:
-          "Grado de estudios: Administradora de base de datos (DBA)",
+          "Administradora de base de datos (DBA)",
         fechaNacimiento: "9/4/12",
         foto: "https://images.unsplash.com/photo-1484186139897-d5fc6b908812?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
       },
@@ -414,7 +414,7 @@ export default {
           nombre: "Morelos",
         },
         tituloCurricular:
-          "Grado de estudios: Administradora de base de datos (DBA)",
+          "Administradora de base de datos (DBA)",
         fechaNacimiento: "9/4/12",
         foto: "https://images.unsplash.com/photo-1518577915332-c2a19f149a75?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=562&q=80",
       },
@@ -428,7 +428,7 @@ export default {
           nombre: "Querétaro",
         },
         tituloCurricular:
-          "Grado de estudios: Administradora de base de datos (DBA)",
+          "Administradora de base de datos (DBA)",
         fechaNacimiento: "9/4/12",
         foto: "https://images.unsplash.com/photo-1529068755536-a5ade0dcb4e8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=581&q=80",
       },

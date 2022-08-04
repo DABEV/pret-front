@@ -63,7 +63,7 @@
                   </span>
                   <span
                     v-else-if="tr.estadoVacante.nombre == 'Postulado'"
-                    class="badge-pri"
+                    class="badge-def"
                   >
                     {{ tr.estadoVacante.nombre }}
                   </span>
@@ -74,14 +74,26 @@
                     {{ tr.estadoVacante.nombre }}
                   </span>
                   <span
-                    v-else-if="tr.estadoVacante.nombre == 'Cancelado'"
+                    v-else-if="tr.estadoVacante.nombre == 'Rechazado'"
                     class="badge-dan"
                   >
                     {{ tr.estadoVacante.nombre }}
                   </span>
-                  <span v-else class="badge-def">{{
-                    tr.estadoVacante.nombre
-                  }}</span>
+                  <span
+                    v-else-if="tr.estadoVacante.nombre == 'Entrevista'"
+                    class="badge-sec"
+                  >
+                    {{ tr.estadoVacante.nombre }}
+                  </span>
+                  <span
+                    v-else-if="tr.estadoVacante.nombre == 'Contratado'"
+                    class="badge-pri"
+                  >
+                    {{ tr.estadoVacante.nombre }}
+                  </span>
+                  <span v-else class="badge-def"
+                    >{{ tr.estadoVacante.nombre }}
+                  </span>
                 </vs-td>
               </vs-tr>
             </template>
@@ -230,7 +242,7 @@ export default {
       {
         cv: "",
         candidato: {},
-        estadoVacante: { nombre: "Cancelado" },
+        estadoVacante: { nombre: "Rechazado" },
         vacante: {
           nombre: "Desarrollador Full-stack PHP",
           reclutador: {
@@ -415,7 +427,7 @@ export default {
               nombre: "Morelos",
             },
           },
-          
+
           beneficios: [
             {
               nombre: "Ofrecemos sueldo competitivo",
