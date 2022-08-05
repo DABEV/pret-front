@@ -231,7 +231,9 @@
           <small>Ubicado en: {{ estadoRepublicaEmpresaReclutador }}</small>
         </vs-col>
         <vs-col lg="2" sm="12" xs="12">
-          <vs-button success @click="AbrirPostular(vacante)">Postularse</vs-button>
+          <vs-button success @click="AbrirPostular(vacante)"
+            >Postularse</vs-button
+          >
         </vs-col>
       </vs-row>
       <div class="divider space-top">
@@ -403,10 +405,10 @@
         <small class="bg-primary">Agregar CV</small>
         <vs-input
           class="space-top space"
-          v-model="postulacion.cv"
           color="#1e88e5"
           type="file"
           accept=".pdf"
+          @change="ChangePDF($event)"
           block
         >
           <template #icon>
@@ -438,6 +440,9 @@
 </template>
 
 <script>
+import { storage } from "../../firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
 export default {
   name: "VacanciesList",
   data: () => ({
@@ -454,6 +459,7 @@ export default {
     searchCompartir: "",
     nombreEmpresaReclutador: "",
     estadoRepublicaEmpresaReclutador: "",
+    pdf: null,
     vacante: {},
     contacto: {},
     postulacion: {
@@ -802,7 +808,7 @@ export default {
         fechaNacimiento: "9/4/12",
         foto: "https://images.unsplash.com/photo-1483995564125-85915c11dcfe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=641&q=80",
       },
-    ],  
+    ],
   }),
   methods: {
     Detalles: function (vacante) {
@@ -824,8 +830,25 @@ export default {
       this.activePostular = !this.activePostular;
     },
     EnviarPostular: function () {
+      const child = "cv/" + this.pdf.name;
+      const refPdf = ref(storage, child);
+      const fullPath = refPdf.fullPath;
+      const metadata = { contentType: "pdf" };
+      uploadBytes(refPdf, this.pdf, metadata).then(() => {
+        getDownloadURL(ref(storage, fullPath))
+          .then((url) => {
+            this.postulacion.cv = url
+            //petición de guardar
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
       this.active = false;
       this.activePostular = !this.activePostular;
+    },
+    ChangePDF: function (e) {
+      this.pdf = e.target.files[0];
     },
   },
 };
