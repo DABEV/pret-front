@@ -16,7 +16,7 @@
               placeholder="Buscar"
             >
               <template #icon>
-                <em class="bx bx-search"></em>
+                <i class="bx bx-search"></i>
               </template>
             </vs-input>
           </vs-col>
@@ -135,22 +135,22 @@
             <vs-col lg="1" sm="3" xs="3" class="space-top center-item">
               <vs-tooltip v-if="c.estadoVacante.nombre == 'Postulado'">
                 <vs-button
-                  @click="ActualizarEstadoVacante(c.candidato, c.estadoVacante)"
+                  @click="ActualizarEstadoVacante(c, 2, 'CV visto')"
                   icon
                   animation-type="vertical"
                   warn
                 >
-                  <em class="bx bx-show"></em>
-                  <template #animate><em class="bx bxs-show"></em></template>
+                  <i class="bx bx-show"></i>
+                  <template #animate><i class="bx bxs-show"></i></template>
                 </vs-button>
                 <template #tooltip> Marcar CV visto </template>
               </vs-tooltip>
               <vs-tooltip v-else-if="c.estadoVacante.nombre == 'CV visto'">
                 <vs-button
-                  @click="ActualizarEstadoVacante(c.candidato, c.estadoVacante)"
+                  color="#b13cd2"
+                  @click="ActualizarEstadoVacante(c, 3, 'Entrevista')"
                   icon
                   animation-type="rotate"
-                  color="#b13cd2"
                 >
                   <i class="bx bx-file-find"></i>
                   <template #animate>
@@ -161,7 +161,7 @@
               </vs-tooltip>
               <vs-tooltip v-else-if="c.estadoVacante.nombre == 'Entrevista'">
                 <vs-button
-                  @click="ActualizarEstadoVacante(c.candidato, c.estadoVacante)"
+                  @click="ActualizarEstadoVacante(c, 4, 'Idóneo')"
                   icon
                   animation-type="rotate"
                   color="#2ECC71"
@@ -175,10 +175,10 @@
               </vs-tooltip>
               <vs-tooltip v-else-if="c.estadoVacante.nombre == 'Idóneo'">
                 <vs-button
-                  @click="ActualizarEstadoVacante(c.candidato, c.estadoVacante)"
                   icon
                   animation-type="rotate"
                   color="#1e88e5"
+                  @click="AbrirContratar(c)"
                 >
                   <i class="bx bx-briefcase"></i>
                   <template #animate>
@@ -204,12 +204,12 @@
 
     <vs-dialog width="450px" class="text-center" v-model="active">
       <template #header>
-        <h4><strong>Confirmación</strong></h4>
+        <h4>Marcar como {{ sigNivel }}</h4>
       </template>
       <div class="text-gray">
         <p>
           ¿Seguro que desea añadir a <strong>{{ candidato.nombre }}</strong> a
-          la lista de candidatos idóneos?
+          la lista de candidatos <b>{{ sigNivel }} </b>?
         </p>
       </div>
       <template #footer>
@@ -221,6 +221,43 @@
           </vs-col>
           <vs-col w="5">
             <vs-button transparent dark @click="active = !active" block>
+              Cancelar
+            </vs-button>
+          </vs-col>
+        </vs-row>
+      </template>
+    </vs-dialog>
+
+    <vs-dialog width="450px" class="text-center" v-model="activeContratar">
+      <template #header>
+        <h4 class="bg-primary">Contratación</h4>
+      </template>
+      <div class="bg-gray">
+        <p>
+          ¿Seguro que desea <b>Contratar</b> a
+          <strong>{{ candidato.nombre }}</strong>
+          para este puesto?
+        </p>
+        <small>El resto de postulantes se marcarán como rechazados</small>
+      </div>
+      <template #footer>
+        <vs-row justify="space-between">
+          <vs-col w="5">
+            <vs-button
+              primary
+              @click="activeContratar = !activeContratar"
+              block
+            >
+              Contratar
+            </vs-button>
+          </vs-col>
+          <vs-col w="5">
+            <vs-button
+              transparent
+              dark
+              @click="activeContratar = !activeContratar"
+              block
+            >
               Cancelar
             </vs-button>
           </vs-col>
@@ -318,16 +355,20 @@ export default {
     active: false,
     activeDelete: false,
     activeDetalles: false,
+    activeContratar: false,
     page: 1,
     max: 5,
     search: "",
+    sigNivel: "",
     estadoVacante: {
       id: 0,
-      nombre: "",
     },
     candidato: {
       nombre: "",
       estadoRepublica: {},
+    },
+    postulacion: {
+      candidato: {},
     },
     postulaciones: [
       {
@@ -723,9 +764,11 @@ export default {
     ],
   }),
   methods: {
-    ActualizarEstadoVacante: function (candidato, estado) {
-      this.estadoVacante = estado;
-      this.candidato = candidato;
+    ActualizarEstadoVacante: function (postulacion, estadoId, estadoNombre) {
+      this.postulacion = postulacion;
+      this.estadoVacante.id = estadoId;
+      this.sigNivel = estadoNombre;
+      this.candidato = postulacion.candidato;
       this.active = !this.active;
     },
     AbrirEliminar: function (candidato) {
@@ -735,6 +778,10 @@ export default {
     AbrirDetalles: function (candidato) {
       this.candidato = candidato;
       this.activeDetalles = true;
+    },
+    AbrirContratar: function (postulacion) {
+      this.candidato = postulacion.candidato;
+      this.activeContratar = true;
     },
   },
 };
