@@ -33,7 +33,9 @@
               <span class="border"></span>
             </div>
             <div class="center-item space-top">
-              <vs-button color="#1E88E5"> Cambiar foto </vs-button>
+              <vs-button color="#1E88E5" @click="AbrirCambiar()">
+                Cambiar foto
+              </vs-button>
             </div>
           </div>
         </vs-col>
@@ -112,7 +114,7 @@
           </vs-col>
         </vs-row>
         <vs-row justify="space-between" class="space-top">
-          <vs-col lg="6" sm="12" xs="12" >
+          <vs-col lg="6" sm="12" xs="12">
             <vs-input
               class="space-top space padding-y"
               placeholder="Nueva contraseña"
@@ -689,12 +691,55 @@
         </vs-row>
       </template>
     </vs-dialog>
+
+    <vs-dialog width="450px" prevent-close v-model="activeCambiarFoto">
+      <template #header>
+        <h2>Cambiar foto</h2>
+      </template>
+      <div class="margin-xy space space-top text-center">
+        <small class="bg-primary">Cambiar foto</small>
+        <form enctype="multipart/form-data">
+          <vs-input
+            class="space-top space"
+            color="#1e88e5"
+            type="file"
+            @change="changeImg($event)"
+            accept="image/*"
+            block
+          >
+            <template #icon>
+              <i class="bx bxs-file-pdf"></i>
+            </template>
+          </vs-input>
+          <vs-row justify="center">
+            <vs-col lg="5" sm="12" xs="12" class="space-top center-item">
+              <vs-button
+                transparent
+                dark
+                @click="activeCambiarFoto = !activeCambiarFoto"
+                block
+              >
+                Cancelar
+              </vs-button>
+            </vs-col>
+            <vs-col lg="5" sm="12" xs="12" class="space-top center-item">
+              <vs-button success block @click="subirFoto()">
+                Enviar CV
+              </vs-button>
+            </vs-col>
+          </vs-row>
+        </form>
+      </div>
+    </vs-dialog>
   </div>
 </template>
 <script>
+import { storage } from "../../firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 export default {
   name: "EditProfile",
   data: () => ({
+    activeCambiarFoto: false,
     activeCon: false,
     activeHab: false,
     activeEst: false,
@@ -708,7 +753,7 @@ export default {
     pswd2: "",
     conocimiento: "",
     habilidad: "",
-    progress: 0,
+    imagen: null,
     estado: {},
     idioma: {
       nombre: "",
@@ -738,26 +783,6 @@ export default {
       empresa: "",
       numeroHoras: "",
     },
-    estados: [
-      {
-        nombre: "Cohahuila",
-      },
-      {
-        nombre: "Morelos",
-      },
-      {
-        nombre: "Sonora",
-      },
-      {
-        nombre: "Nayarit",
-      },
-      {
-        nombre: "Tamaulipas",
-      },
-      {
-        nombre: "Querétaro",
-      },
-    ],
     candidato: {
       nombre: "Michelle",
       apellidoPaterno: "Rivera",
@@ -772,7 +797,7 @@ export default {
       tituloCurricular: "Administradora de base de datos (DBA)",
       descripcionPerfil:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aenean praesent non donec adipiscing ullamcorper. Tincidunt id suspendisse id sit. Nisi sed diam est.",
-      foto: "https://images.unsplash.com/photo-1609505848912-b7c3b8b4beda?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=465&q=80",
+      foto: "imagen.jpg",
       conocimientosHabilidades: {
         conocimientos: ["Laravel", "PHP", "Java", "MySQL"],
         habilidades: ["Analista", "Trabajo en Equipo"],
@@ -913,6 +938,26 @@ export default {
         },
       ],
     },
+    estados: [
+      {
+        nombre: "Cohahuila",
+      },
+      {
+        nombre: "Morelos",
+      },
+      {
+        nombre: "Sonora",
+      },
+      {
+        nombre: "Nayarit",
+      },
+      {
+        nombre: "Tamaulipas",
+      },
+      {
+        nombre: "Querétaro",
+      },
+    ],
   }),
   methods: {
     enviarCon: function () {
@@ -921,12 +966,10 @@ export default {
       );
       this.activeCon = false;
     },
-
     enviarHab: function () {
       this.candidato.conocimientosHabilidades.habilidades.push(this.habilidad);
       this.activeHab = false;
     },
-
     enviarEst: function () {
       this.activeEst = false;
       this.success = true;
@@ -946,6 +989,29 @@ export default {
     enviarCur: function () {
       this.activeCur = false;
       this.success = true;
+    },
+    changeImg: function (e) {
+      this.imagen = e.target.files[0];
+    },
+    AbrirCambiar: function () {
+      this.activeCambiarFoto = !this.activeCambiarFoto;
+    },
+    subirFoto() {
+      const child = "imagenes/" + this.imagen.name;
+      const refImg = ref(storage, child);
+      const fullPath = refImg.fullPath;
+      const metadata = { contentType: "img/jpeg" };
+      uploadBytes(refImg, this.imagen, metadata).then(() => {
+        getDownloadURL(ref(storage, fullPath))
+          .then((url) => {
+            this.candidato.foto = url
+            //petición de guardar
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+      this.activeCambiarFoto = false;
     },
   },
   computed: {

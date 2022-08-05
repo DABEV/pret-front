@@ -1,0 +1,23 @@
+/*Deben de generar un archivo llamado firebase.js dentro de la carpeta src con este contenido
+  NOTA: Es importante asugurarse que el archivo esté en src y no dentro de otra carpeta
+*/
+
+//importaciones de firebase
+import { initializeApp } from "firebase/app";
+import { getStorage } from "firebase/storage";
+
+//configuración del proyecto
+const firebaseConfig = {
+  apiKey: "",
+  authDomain: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: ""
+};
+
+// Initialize Firebase
+const appFirebase = initializeApp(firebaseConfig);
+const storage = getStorage(appFirebase);
+
+export {appFirebase ,storage};
