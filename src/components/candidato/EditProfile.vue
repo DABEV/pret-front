@@ -724,7 +724,7 @@
             </vs-col>
             <vs-col lg="5" sm="12" xs="12" class="space-top center-item">
               <vs-button success block @click="subirFoto()">
-                Enviar CV
+                Guardar Cambios
               </vs-button>
             </vs-col>
           </vs-row>
