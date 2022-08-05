@@ -112,8 +112,8 @@
                   </p>
                 </div>
                 <vs-row justify="center">
-                  <vs-col lg="5" sm="6" xs="6" class="space">
-                    <vs-button success block @click="IrVacantes()">
+                  <vs-col lg="6" sm="6" xs="6" class="space">
+                    <vs-button primary block @click="IrVacantes()">
                       Ir a las vacantes
                     </vs-button>
                   </vs-col>
@@ -121,6 +121,49 @@
               </div>
             </div>
           </div>
+        </vs-col>
+      </vs-row>
+    </div>
+    <div class="content-data content-card space space-top datos text-start bg-gray">
+      <vs-row justify="space-between">
+        <vs-col lg="5" sm="12" xs="12">
+          <h4 class="bg-gray space-top">Cambiar tu contraseña</h4>
+        </vs-col>
+        <vs-col lg="2" sm="12" xs="12">
+          <vs-button block success> Guardar contraseña </vs-button>
+        </vs-col>
+      </vs-row>
+      <vs-row justify="space-between" class="space-top">
+        <vs-col lg="6" sm="12" xs="12">
+          <vs-input
+            class="space-top space padding-y"
+            placeholder="Nueva contraseña"
+            color="#1e88e5"
+            v-model="pswd"
+            type="password"
+            block
+          >
+            <template #icon>
+              <i class="bx bxs-lock"></i>
+            </template>
+          </vs-input>
+        </vs-col>
+        <vs-col lg="6" sm="12" xs="12">
+          <vs-input
+            class="space-top space padding-x"
+            placeholder="Repite la contraseña"
+            color="#1e88e5"
+            v-model="pswd2"
+            type="password"
+            block
+          >
+            <template #icon>
+              <i class="bx bxs-lock"></i>
+            </template>
+            <template v-if="!samePassword" #message-danger>
+              Las contraseñas no coinciden
+            </template>
+          </vs-input>
         </vs-col>
       </vs-row>
     </div>
@@ -221,7 +264,9 @@
             </vs-button>
           </vs-col>
           <vs-col lg="4" sm="12" xs="12" class="space-top center-item">
-            <vs-button success block @click="Guardar()"> Guardar cambios </vs-button>
+            <vs-button success block @click="Guardar()">
+              Guardar cambios
+            </vs-button>
           </vs-col>
         </vs-row>
       </template>
@@ -233,6 +278,8 @@ export default {
   name: "Profile",
   data: () => ({
     active: false,
+    pswd: "",
+    pswd2: "",
     reclutador: {
       nombre: "Michelle",
       apellidoPaterno: "Rivera",
@@ -438,7 +485,7 @@ export default {
       this.active = !this.active;
     },
     IrVacantes: function () {
-      this.$router.push('/reclutador/vacantes') 
+      this.$router.push("/reclutador/vacantes");
     },
     Guardar: function () {
       this.reclutadorEditado.puesto = this.puesto;
@@ -446,6 +493,11 @@ export default {
     },
     Cancelar: function () {
       this.active = false;
+    },
+  },
+  computed: {
+    samePassword() {
+      return this.pswd == this.pswd2;
     },
   },
 };

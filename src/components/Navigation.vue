@@ -1,12 +1,23 @@
 <template>
   <div>
-    <vs-navbar not-line color="#009ACB" shadow center-collapsed v-model="active">
+    <vs-navbar
+      not-line
+      color="#009ACB"
+      shadow
+      center-collapsed
+      v-model="active"
+    >
       <template #left>
-        <vs-button @click="activeSidebar = !activeSidebar" class="bg-white" transparent icon>
+        <vs-button
+          @click="activeSidebar = !activeSidebar"
+          class="bg-white"
+          transparent
+          icon
+        >
           <i class="bx bx-menu"></i>
         </vs-button>
         &nbsp; &nbsp;
-        <vs-avatar class="logo-navbar">
+        <vs-avatar circle class="logo-navbar">
           <img alt="img" src="../assets/img/logo.svg" />
         </vs-avatar>
         <vs-navbar-item class="bg-white" :active="active == 'guide'" id="guide">
@@ -18,11 +29,16 @@
         &nbsp;
       </template>
     </vs-navbar>
-    <vs-sidebar absolute v-model="active" :open.sync="activeSidebar">
+    <vs-sidebar
+      absolute
+      v-model="active"
+      :open.sync="activeSidebar"
+      class="space-sidebar"
+    >
       <template #logo>
-        <!-- ...img logo -->
+        <img alt="img" src="../assets/img/logo.svg" />
       </template>
-      <vs-sidebar-item id="perfil">
+      <vs-sidebar-item id="perfil" to="/candidato/perfil">
         <template #icon>
           <i class="bx bx-user"></i>
         </template>
@@ -37,34 +53,34 @@
             Vacantes
           </vs-sidebar-item>
         </template>
-        <vs-sidebar-item id="vacantes">
+        <vs-sidebar-item id="vacantes" to="/candidato/buscar">
           <template #icon>
-            <i class='bx bx-bookmarks' ></i>
+            <i class="bx bx-bookmarks"></i>
           </template>
           Vacantes disponibles
         </vs-sidebar-item>
-        <vs-sidebar-item id="postulaciones">
+        <vs-sidebar-item id="postulaciones" to="/candidato/postulaciones">
           <template #icon>
-            <i class='bx bx-bookmark-plus'></i>
+            <i class="bx bx-bookmark-plus"></i>
           </template>
           Listado de postulaciones
         </vs-sidebar-item>
-        <vs-sidebar-item id="favoritos">
+        <vs-sidebar-item id="favoritos" to="/candidato/favoritos">
           <template #icon>
-            <i class='bx bx-bookmark-heart'></i>
+            <i class="bx bx-bookmark-heart"></i>
           </template>
           Favoritos
         </vs-sidebar-item>
       </vs-sidebar-group>
-      <vs-sidebar-item id="contactos">
+      <vs-sidebar-item id="contactos" to="/candidato/contactos">
         <template #icon>
-          <i class='bx bx-user-pin'></i>
+          <i class="bx bx-user-pin"></i>
         </template>
         Contactos
       </vs-sidebar-item>
-      <vs-sidebar-item id="perfilReclutador">
+      <vs-sidebar-item id="perfilReclutador" to="/reclutador/perfil">
         <template #icon>
-          <i class='bx bx-buildings' ></i>
+          <i class="bx bx-buildings"></i>
         </template>
         Perfil
       </vs-sidebar-item>
@@ -77,15 +93,15 @@
             Vacantes
           </vs-sidebar-item>
         </template>
-        <vs-sidebar-item id="vacantesPublicadas">
+        <vs-sidebar-item id="vacantesPublicadas" to="/reclutador/vacantes">
           <template #icon>
-            <i class='bx bx-bookmarks' ></i>
+            <i class="bx bx-bookmarks"></i>
           </template>
           Vacantes publicadas
         </vs-sidebar-item>
-        <vs-sidebar-item id="registroVacante">
+        <vs-sidebar-item id="registroVacante" to="/reclutador/registrarVacante">
           <template #icon>
-            <i class='bx bx-bookmark-plus'></i>
+            <i class="bx bx-bookmark-plus"></i>
           </template>
           Registrar vacante
         </vs-sidebar-item>

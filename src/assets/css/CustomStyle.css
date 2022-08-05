@@ -134,9 +134,13 @@
 }
 
 .logo-navbar {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px !important;
+    width: 35px;
+    height: 35px;
+}
+
+.logo-navbar img {
+    max-width: 70%;
+    border-radius: 0;
 }
 
 .con-form {
@@ -239,6 +243,19 @@
     border-radius: 5px;
 }
 
-.avatar-lg-icon{
+.avatar-lg-icon {
     font-size: 3rem !important;
+}
+
+.vs-sidebar {
+    position: relative !important;
+    box-shadow: none;
+}
+
+.padding-x {
+    padding-left: 5%;
+}
+
+.padding-y {
+    padding-right: 5%;
 }
