@@ -1,0 +1,13 @@
+// el token por el momento es estático, se cambiará al almacenar el inicio de sesión
+
+import axios from 'axios';
+const token = "";
+export default axios.create({
+    baseURL: "http://<ip>:<puerto>/api/candidato",
+    headers: {
+        "Content-type": "application/json",
+        'Accept': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        "Authorization" : `Bearer ${token}`
+    }
+});

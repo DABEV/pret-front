@@ -1,0 +1,9 @@
+//* Crear un archivo llamado AuthApi.js configurando su ip local */
+
+import axios from 'axios';
+export default axios.create({
+    baseURL: "http://<ip>:<puerto>/api/auth",
+    headers: {
+        "Content-type": "application/json",
+    }
+});

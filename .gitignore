@@ -23,3 +23,5 @@ pnpm-debug.log*
 *.sw?
 package-lock.json
 src/firebase.js
+src/service/Auth/AuthApi.js
+src/service/Candidate/CandidateApi.js

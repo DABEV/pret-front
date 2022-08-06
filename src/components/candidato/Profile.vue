@@ -13,8 +13,22 @@
                   </p>
                 </vs-col>
                 <vs-col lg="6" sm="12" xs="12" class="center-item">
-                  <vs-avatar circle size="150" class="avatar-top-card">
+                  <vs-avatar
+                    v-if="candidato.foto != null"
+                    circle
+                    size="150"
+                    class="avatar-top-card"
+                  >
                     <img :src="candidato.foto" alt="" />
+                  </vs-avatar>
+                  <vs-avatar
+                    v-else
+                    circle
+                    size="150"
+                    primary
+                    class="avatar-top-card"
+                  >
+                    <i class="bx bx-user-pin avatar-lg-icon"></i>
                   </vs-avatar>
                 </vs-col>
                 <vs-col lg="3" sm="12" xs="12" class="space-top">
@@ -36,7 +50,11 @@
                   <div class="divider space space-top">
                     <span class="border"></span>
                   </div>
-                  <vs-row justify="space-around" class="space">
+                  <vs-row
+                    justify="space-around"
+                    class="space"
+                    v-if="candidato.tituloCurricular != null"
+                  >
                     <vs-col lg="1" sm="2" xs="2" class="center-item">
                       <vs-avatar color="#b13cd2" size="30">
                         <i class="bx bxs-graduation"></i>
@@ -51,7 +69,10 @@
                       <p>Titulo: {{ candidato.tituloCurricular }}</p>
                     </vs-col>
                   </vs-row>
-                  <div class="divider space space-top">
+                  <div
+                    class="divider space space-top"
+                    v-if="candidato.tituloCurricular != null"
+                  >
                     <span class="border"></span>
                   </div>
                 </div>
@@ -91,7 +112,9 @@
           <div class="content-data space datos text-start bg-gray">
             <vs-row justify="space-between">
               <vs-col lg="6" sm="6" xs="6">
-                <vs-button color="#1E88E5" @click="IrEditar()"> Editar perfil </vs-button>
+                <vs-button color="#1E88E5" @click="IrEditar()">
+                  Editar perfil
+                </vs-button>
               </vs-col>
               <vs-col lg="2" sm="2" xs="2">
                 <vs-tooltip>
@@ -106,52 +129,58 @@
               </vs-col>
             </vs-row>
           </div>
-          <h2 class="space-top">Conocimientos</h2>
-          <div class="space-top content-data space datos text-start bg-gray">
-            <div
-              class="center"
-              v-if="candidato.conocimientosHabilidades.conocimientos.length < 1"
-            >
-              No se encontraron registros
-            </div>
-            <div
-              :key="i"
-              v-for="(hab, i) in $vs.getPage(
-                candidato.conocimientosHabilidades.conocimientos,
-                page3,
-                max2
-              )"
-              :data="hab"
-              class="item"
-            >
-              <vs-row class="space">
-                <vs-col lg="2" sm="3" xs="3" class="text-center space-top">
-                  <i class="bx bx-book-open bg-primary"></i>
-                </vs-col>
-                <vs-col lg="10" sm="9" xs="9" class="space-top">
-                  <p>{{ hab }}</p>
-                </vs-col>
-              </vs-row>
-              <div class="divider">
-                <span class="border"></span>
-              </div>
-            </div>
-            <div class="pagination">
-              <vs-pagination
-                v-model="page3"
-                :length="
-                  $vs.getLength(
-                    candidato.conocimientosHabilidades.conocimientos,
-                    max2
-                  )
+          <div
+            v-if="candidato.conocimientosHabilidades.habilidades.length != 0"
+          >
+            <h2 class="space-top">Conocimientos</h2>
+            <div class="space-top content-data space datos text-start bg-gray">
+              <div
+                class="center"
+                v-if="
+                  candidato.conocimientosHabilidades.conocimientos.length < 1
                 "
-              />
+              >
+                No se encontraron registros
+              </div>
+              <div
+                :key="i"
+                v-for="(hab, i) in $vs.getPage(
+                  candidato.conocimientosHabilidades.conocimientos,
+                  page3,
+                  max2
+                )"
+                :data="hab"
+                class="item"
+              >
+                <vs-row class="space">
+                  <vs-col lg="2" sm="3" xs="3" class="text-center space-top">
+                    <i class="bx bx-book-open bg-primary"></i>
+                  </vs-col>
+                  <vs-col lg="10" sm="9" xs="9" class="space-top">
+                    <p>{{ hab }}</p>
+                  </vs-col>
+                </vs-row>
+                <div class="divider">
+                  <span class="border"></span>
+                </div>
+              </div>
+              <div class="pagination">
+                <vs-pagination
+                  v-model="page3"
+                  :length="
+                    $vs.getLength(
+                      candidato.conocimientosHabilidades.conocimientos,
+                      max2
+                    )
+                  "
+                />
+              </div>
             </div>
           </div>
         </vs-col>
       </vs-row>
     </div>
-    <div class="space space-top long">
+    <div class="space space-top long" v-if="candidato.estudios.length != 0">
       <h2 class="text-center">Estudios</h2>
       <div class="text-center bg-gray">
         <div>
@@ -186,7 +215,10 @@
         </div>
       </div>
     </div>
-    <div class="space space-top content-card">
+    <div
+      class="space space-top content-card"
+      v-if="candidato.experienciasLaborales.length != 0"
+    >
       <h2 class="text-center">Experiencia laboral</h2>
       <div class="space-top content-data space datos text-start bg-gray">
         <div class="center">
@@ -232,7 +264,7 @@
     </div>
     <div class="space space-top content-card">
       <vs-row justify="space-between">
-        <vs-col lg="5" sm="12" xs="12">
+        <vs-col lg="5" sm="12" xs="12" v-if="candidato.idiomas.length != 0">
           <h2>Idiomas de dominio</h2>
           <div class="space-top content-data space datos text-start bg-gray">
             <div
@@ -258,7 +290,12 @@
             </div>
           </div>
         </vs-col>
-        <vs-col lg="6" sm="12" xs="12">
+        <vs-col
+          lg="6"
+          sm="12"
+          xs="12"
+          v-if="candidato.conocimientosHabilidades.habilidades.length != 0"
+        >
           <h2>Habilidades</h2>
           <div class="space-top content-data space datos text-start bg-gray">
             <div
@@ -283,7 +320,10 @@
         </vs-col>
       </vs-row>
     </div>
-    <div class="space space-top content-card">
+    <div
+      class="space space-top content-card"
+      v-if="candidato.certificaciones.length != 0"
+    >
       <h2 class="text-center">Certificaciones</h2>
       <div class="space-top content-data space datos text-start bg-gray">
         <div class="center">
@@ -331,7 +371,7 @@
         </div>
       </div>
     </div>
-    <div class="space space-top long">
+    <div class="space space-top long" v-if="candidato.cursos.length != 0">
       <h2 class="text-center">Cursos realizados</h2>
       <div class="text-start bg-gray">
         <div>
@@ -368,6 +408,7 @@
 </template>
 
 <script>
+import CandidateService from "../../service/Candidate/CandidateService";
 export default {
   name: "Profile",
   data: () => ({
@@ -378,166 +419,50 @@ export default {
     max: 5,
     max2: 3,
     candidato: {
-      nombre: "Michelle",
-      apellidoPaterno: "Rivera",
-      apellidoMaterno: "Solaz",
-      correoElectronico: "michelle.rivera@example.com",
+      nombre: "",
+      apellidoPaterno: "",
+      apellidoMaterno: "",
+      correoElectronico: "",
       habilitado: true,
-      telefono: "(225) 555-0118",
-      fechaNacimiento: "9/4/12",
+      telefono: "",
+      fechaNacimiento: "",
       estadoRepublica: {
-        nombre: "Morelos",
+        id: 0,
       },
-      tituloCurricular: "Administradora de base de datos (DBA)",
-      descripcionPerfil:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aenean praesent non donec adipiscing ullamcorper. Tincidunt id suspendisse id sit. Nisi sed diam est.",
-      foto: "https://images.unsplash.com/photo-1609505848912-b7c3b8b4beda?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=465&q=80",
+      tituloCurricular: "",
+      descripcionPerfil: "",
+      foto: "",
       conocimientosHabilidades: {
-        conocimientos: ["Laravel", "PHP", "Java", "MySQL"],
-        habilidades: ["Analista", "Trabajo en Equipo"],
+        conocimientos: [],
+        habilidades: [],
       },
-      cursos: [
-        {
-          nombre: "Fundamento de bases de datos",
-          fechaObtencion: "12/4/17",
-          empresa: "Platzi",
-          numeroHoras: "12",
-        },
-        {
-          nombre: "Fundamento de bases de datos",
-          fechaObtencion: "12/4/17",
-          empresa: "Platzi",
-          numeroHoras: "12",
-        },
-        {
-          nombre: "Fundamento de bases de datos",
-          fechaObtencion: "12/4/17",
-          empresa: "Platzi",
-          numeroHoras: "12",
-        },
-        {
-          nombre: "Fundamento de bases de datos",
-          fechaObtencion: "12/4/17",
-          empresa: "Platzi",
-          numeroHoras: "12",
-        },
-      ],
-      experienciasLaborales: [
-        {
-          puesto: "Analista de datos",
-          fechaInicio: "2 años",
-          fechaFin: "",
-          actividadesRealizadas: "Análisis y manejo de Bigdata",
-        },
-        {
-          puesto: "Administrador de BD",
-          fechaInicio: "11 meses",
-          fechaFin: "",
-          actividadesRealizadas: "Mantenimiento de BD",
-        },
-        {
-          puesto: "Gerente de BD en la nube",
-          fechaInicio: "1 año",
-          fechaFin: "",
-          actividadesRealizadas: "Monitoreo de bases en la nube",
-        },
-        {
-          puesto: "Diseñador de BD relacionales",
-          fechaInicio: "6 meses",
-          fechaFin: "",
-          actividadesRealizadas: "Maquetado y análisis de relaciones",
-        },
-        {
-          puesto: "Analista de datos",
-          fechaInicio: "2 años",
-          fechaFin: "",
-          actividadesRealizadas: "Análisis y manejo de Bigdata",
-        },
-        {
-          puesto: "Analista de datos",
-          fechaInicio: "2 años",
-          actividadesRealizadas: "Análisis y manejo de Bigdata",
-        },
-        {
-          puesto: "Analista de datos",
-          fechaInicio: "2 años",
-          actividadesRealizadas: "Análisis y manejo de Bigdata",
-        },
-      ],
-      estudios: [
-        {
-          universidad: "Universidad del estado de Morelos",
-          carrera: "Ingeniería en Manejo de Datos Computacionales",
-          gradoAcademico: "Ingeniería en TI y Data Cience",
-          fechaInicio: "2015",
-          fechaFin: "2020",
-        },
-        {
-          universidad: "Universidad Tecnológica Emiliano Zapata",
-          carrera: "Ingeniería en Tecnologías de la comunicación",
-          gradoAcademico: "Ingeniería en TI y Data Cience",
-          fechaInicio: "2019",
-          fechaFin: "2024",
-        },
-        {
-          universidad: "Universidad del estado de Morelos",
-          carrera: "Ingeniería en Manejo de Datos Computacionales",
-          gradoAcademico: "Ingeniería en TI y Data Cience",
-          fechaInicio: "2015",
-          fechaFin: "2020",
-        },
-      ],
-      idiomas: [
-        {
-          nombre: "Español",
-          nivel: "Avanzado",
-        },
-        {
-          nombre: "Inglés (USA)",
-          nivel: "Medio",
-        },
-        {
-          nombre: "Portugués",
-          nivel: "Básico",
-        },
-        {
-          nombre: "Alemán",
-          nivel: "Básico",
-        },
-      ],
-      certificaciones: [
-        {
-          nombre: "Analista de datos",
-          empresa: "Microsoft",
-          fechaObtencion: "8/15/17",
-          fechaCaducidad: "8/15/20",
-        },
-        {
-          nombre: "Administrador de BD",
-          empresa: "Oracle",
-          fechaObtencion: "8/21/17",
-          fechaCaducidad: "8/21/20",
-        },
-        {
-          nombre: "Industria 2.0",
-          empresa: "Cisco",
-          fechaObtencion: "8/15/17",
-          fechaCaducidad: "8/15/20",
-        },
-        {
-          nombre: "Manejo de AWS",
-          empresa: "Amazon Web Services",
-          fechaObtencion: "6/19/14",
-          fechaCaducidad: "6/19/20",
-        },
-      ],
+      cursos: [],
+      experienciasLaborales: [],
+      estudios: [],
+      idiomas: [],
+      certificaciones: [],
+      vacantesFavoritas: [],
     },
   }),
   methods: {
     IrEditar: function () {
-      this.$router.push('/candidato/editarPerfil') 
-    }
-  }
+      this.$router.push("/candidato/editarPerfil");
+    },
+    cargarPerfil: function () {
+      CandidateService.getProfile()
+        .then((response) => {
+          this.candidato = response.data.data;
+          console.log(response.data);
+        })
+        .catch((e) => {
+          console.log(e);
+          //Toast de error al obtener datos
+        });
+    },
+  },
+  mounted() {
+    this.cargarPerfil();
+  },
 };
 </script>
 
