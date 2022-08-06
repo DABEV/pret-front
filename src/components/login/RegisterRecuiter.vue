@@ -121,7 +121,7 @@
         <div class="new">
           Ya dispones de una cuenta?
           <br />
-          <a href="#">Inicia sesión</a>
+          <a href="#/acceso/login">Inicia sesión</a>
         </div>
         <br />
       </div>

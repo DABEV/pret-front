@@ -44,21 +44,81 @@
         </vs-row>
         <vs-row class="space-top" justify="space-around">
           <vs-col w="5">
-            <vs-button transparent block> Crear cuenta</vs-button>
+            <vs-button transparent block @click="active = !active">
+              Crear cuenta</vs-button
+            >
           </vs-col>
           <vs-col w="5">
-            <vs-button primary block> Iniciar sesión </vs-button>
+            <vs-button
+              @click="
+                openNotification(
+                  'primary',
+                  'Notificación de prueba',
+                  'Mensaje genérico'
+                )
+              "
+              primary
+              block
+            >
+              Iniciar sesión
+            </vs-button>
           </vs-col>
         </vs-row>
       </div>
     </vs-col>
+    <vs-dialog prevent-close v-model="active">
+      <template #header>
+        <h4 class="not-margin">
+          <b>Elige el tipo de cuenta a crear</b>
+        </h4>
+      </template>
+      <div class="center">
+        <vs-row justify="space-around">
+          <vs-col lg="5" sm="12" xs="12" class="text-center center-item">
+            <div class="content-selection padding-xy space content-card center-item">
+              <vs-button icon class="logo" @click="IrCandidato()">
+                <i class='bx bx-user'></i>
+              </vs-button>
+              <vs-button transparent block @click="IrCandidato()">Cuenta candidato</vs-button>
+            </div>
+          </vs-col>
+          <vs-col lg="5" sm="12" xs="12" class="text-center center-item">
+            <div class="content-selection padding-xy space content-card center-item">
+              <vs-button icon class="logo" @click="IrReclutador()">
+                <i class='bx bx-buildings'></i>
+              </vs-button>
+              <vs-button transparent block @click="IrReclutador()">Cuenta reclutador</vs-button>
+            </div>
+          </vs-col>
+        </vs-row>
+      </div>
+    </vs-dialog>
   </div>
 </template>
 <script>
 export default {
   name: "Login",
   option: true,
+  methods: {
+    openNotification(border_, title_, text_) {
+      this.$vs.notification({
+        progress: "auto",
+        position: null,
+        title: title_,
+        text: text_,
+        border: border_,
+        icon: `<i class='bx bxs-time'></i>`,
+      });
+    },
+    IrCandidato: function () {
+      this.$router.push("/acceso/registroCandidato");
+    },
+    IrReclutador: function () {
+      this.$router.push("/acceso/registroReclutador");
+    },
+  },
+  data: () => ({
+    active: false,
+  }),
 };
 </script>
-
-
