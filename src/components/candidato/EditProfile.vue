@@ -10,8 +10,8 @@
               </vs-avatar>
             </div>
             <h3 class="space-top text-center">
-              {{ candidato.nombre }} {{ candidato.apellidoMaterno }}
-              {{ candidato.apellidoPaterno }}
+              {{ candidato.nombre }} {{ candidato.apellidoPaterno }}
+              {{ candidato.apellidoMaterno }}
             </h3>
             <p class="bg-gray text-center">{{ candidato.correoElectronico }}</p>
             <div class="divider space space-top">
@@ -125,6 +125,10 @@
             >
               <template #icon>
                 <i class="bx bxs-lock"></i>
+              </template>
+              <template v-if="!validPassword && pswd != ''" #message-danger>
+                Tamaño min 6, incluir al menos un número, mayúscula y un
+                caracter especial
               </template>
             </vs-input>
           </vs-col>
@@ -784,6 +788,7 @@ export default {
       numeroHoras: "",
     },
     candidato: {
+      id: 1,
       nombre: "Michelle",
       apellidoPaterno: "Rivera",
       apellidoMaterno: "Solaz",
@@ -997,14 +1002,15 @@ export default {
       this.activeCambiarFoto = !this.activeCambiarFoto;
     },
     subirFoto() {
-      const child = "imagenes/" + this.imagen.name;
+      const child = "imagenes/perfil_candidato" + this.candidato.id;
       const refImg = ref(storage, child);
       const fullPath = refImg.fullPath;
       const metadata = { contentType: "img/jpeg" };
       uploadBytes(refImg, this.imagen, metadata).then(() => {
         getDownloadURL(ref(storage, fullPath))
           .then((url) => {
-            this.candidato.foto = url
+            this.candidato.foto = url;
+            console.log(url)
             //petición de guardar
           })
           .catch((error) => {
@@ -1017,6 +1023,11 @@ export default {
   computed: {
     samePassword() {
       return this.pswd == this.pswd2;
+    },
+    validPassword() {
+      return /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s)(?=^.{6,}$).*$/g.test(
+        this.pswd
+      );
     },
   },
 };

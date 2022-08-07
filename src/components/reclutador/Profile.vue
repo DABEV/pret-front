@@ -29,8 +29,8 @@
                 </vs-col>
               </vs-row>
               <h3 class="space-top">
-                {{ reclutador.nombre }} {{ reclutador.apellidoMaterno }}
-                {{ reclutador.apellidoPaterno }}
+                {{ reclutador.nombre }} {{ reclutador.apellidoPaterno }}
+                {{ reclutador.apellidoMaterno }}
               </h3>
               <p class="bg-gray">{{ reclutador.correoElectronico }}</p>
               <div class="center-item space">
@@ -124,7 +124,9 @@
         </vs-col>
       </vs-row>
     </div>
-    <div class="content-data content-card space space-top datos text-start bg-gray">
+    <div
+      class="content-data content-card space space-top datos text-start bg-gray"
+    >
       <vs-row justify="space-between">
         <vs-col lg="5" sm="12" xs="12">
           <h4 class="bg-gray space-top">Cambiar tu contraseña</h4>
@@ -145,6 +147,9 @@
           >
             <template #icon>
               <i class="bx bxs-lock"></i>
+            </template>
+            <template v-if="!validPassword && pswd != ''" #message-danger>
+              Tamaño min 6, incluir al menos un número, mayúscula y un caracter especial
             </template>
           </vs-input>
         </vs-col>
@@ -498,6 +503,9 @@ export default {
   computed: {
     samePassword() {
       return this.pswd == this.pswd2;
+    },
+    validPassword() {
+      return /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s)(?=^.{6,}$).*$/g.test(this.pswd);
     },
   },
 };

@@ -4,6 +4,13 @@
     background: rgba(var(--vs-background), 1);
 }
 
+.content-selection {
+    border-radius: 20px;
+    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, var(--vs-shadow-opacity));
+    background: rgba(var(--vs-background), 1);
+    padding: 10px;
+}
+
 .content-card {
     overflow: hidden;
     width: 90%;
