@@ -43,7 +43,9 @@
           <div class="content-data margin-top-avatar">
             <vs-row justify="flex-end">
               <vs-col lg="4" sm="12" xs="12" class="space-top center-item">
-                <vs-button success> Guardar cambios </vs-button>
+                <vs-button success @click="actualizar()">
+                  Guardar cambios
+                </vs-button>
               </vs-col>
             </vs-row>
             <div class="margin-xy space">
@@ -83,6 +85,12 @@
                     >
                       <option
                         class="select-option"
+                        :value="candidato.estadoRepublica"
+                      >
+                        {{ candidato.estadoRepublica.nombre }}
+                      </option>
+                      <option
+                        class="select-option"
                         v-for="(edo, i) in estados"
                         :key="i"
                         :value="edo"
@@ -110,23 +118,48 @@
             <h4 class="bg-gray space-top">Cambiar tu contraseña</h4>
           </vs-col>
           <vs-col lg="2" sm="12" xs="12">
-            <vs-button block success> Guardar contraseña </vs-button>
+            <vs-button block success @click="actualizarContrasena()">
+              Guardar contraseña
+            </vs-button>
           </vs-col>
         </vs-row>
-        <vs-row justify="space-between" class="space-top">
+        <vs-row justify="center" class="space-top">
           <vs-col lg="6" sm="12" xs="12">
             <vs-input
               class="space-top space padding-y"
-              placeholder="Nueva contraseña"
+              placeholder="Actual contraseña"
               color="#1e88e5"
-              v-model="pswd"
+              v-model="cambioContra.contrasena"
               type="password"
               block
             >
               <template #icon>
                 <i class="bx bxs-lock"></i>
               </template>
-              <template v-if="!validPassword && pswd != ''" #message-danger>
+            </vs-input>
+          </vs-col>
+        </vs-row>
+        <vs-row
+          justify="space-between"
+          class="space-top"
+          v-if="cambioContra.contrasena != ''"
+        >
+          <vs-col lg="6" sm="12" xs="12">
+            <vs-input
+              class="space-top space padding-y"
+              placeholder="Nueva contraseña"
+              color="#1e88e5"
+              v-model="cambioContra.nuevaContrasena"
+              type="password"
+              block
+            >
+              <template #icon>
+                <i class="bx bxs-lock"></i>
+              </template>
+              <template
+                v-if="!validPassword && cambioContra.nuevaContrasena != ''"
+                #message-danger
+              >
                 Tamaño min 6, incluir al menos un número, mayúscula y un
                 caracter especial
               </template>
@@ -137,7 +170,7 @@
               class="space-top space padding-x"
               placeholder="Repite la contraseña"
               color="#1e88e5"
-              v-model="pswd2"
+              v-model="cambioContra.repetirContrasena"
               type="password"
               block
             >
@@ -740,6 +773,9 @@
 <script>
 import { storage } from "../../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import CandidateService from "../../service/Candidate/CandidateService";
+import AuthService from "../../service/Auth/AuthService";
+
 export default {
   name: "EditProfile",
   data: () => ({
@@ -753,12 +789,15 @@ export default {
     activeCur: false,
     success: false,
     error: false,
-    pswd: "",
-    pswd2: "",
     conocimiento: "",
     habilidad: "",
     imagen: null,
     estado: {},
+    cambioContra: {
+      contrasena: "",
+      nuevaContrasena: "",
+      repetirContrasena: "",
+    },
     idioma: {
       nombre: "",
     },
@@ -788,183 +827,73 @@ export default {
       numeroHoras: "",
     },
     candidato: {
-      id: 1,
-      nombre: "Michelle",
-      apellidoPaterno: "Rivera",
-      apellidoMaterno: "Solaz",
-      correoElectronico: "michelle.rivera@example.com",
+      id: 0,
+      nombre: "",
+      apellidoPaterno: "",
+      apellidoMaterno: "",
+      correoElectronico: "",
       habilitado: true,
-      telefono: "(225) 555-0118",
-      fechaNacimiento: "9/4/12",
+      telefono: "",
+      fechaNacimiento: "",
       estadoRepublica: {
-        nombre: "Morelos",
+        id: 0,
       },
-      tituloCurricular: "Administradora de base de datos (DBA)",
-      descripcionPerfil:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aenean praesent non donec adipiscing ullamcorper. Tincidunt id suspendisse id sit. Nisi sed diam est.",
-      foto: "imagen.jpg",
+      tituloCurricular: "",
+      descripcionPerfil: "",
+      foto: "",
       conocimientosHabilidades: {
-        conocimientos: ["Laravel", "PHP", "Java", "MySQL"],
-        habilidades: ["Analista", "Trabajo en Equipo"],
+        conocimientos: [],
+        habilidades: [],
       },
-      cursos: [
-        {
-          nombre: "Fundamento de bases de datos",
-          fechaObtencion: "12/4/17",
-          empresa: "Platzi",
-          numeroHoras: "12",
-        },
-        {
-          nombre: "Fundamento de bases de datos",
-          fechaObtencion: "12/4/17",
-          empresa: "Platzi",
-          numeroHoras: "12",
-        },
-        {
-          nombre: "Fundamento de bases de datos",
-          fechaObtencion: "12/4/17",
-          empresa: "Platzi",
-          numeroHoras: "12",
-        },
-        {
-          nombre: "Fundamento de bases de datos",
-          fechaObtencion: "12/4/17",
-          empresa: "Platzi",
-          numeroHoras: "12",
-        },
-      ],
-      experienciasLaborales: [
-        {
-          puesto: "Analista de datos",
-          fechaInicio: "2 años",
-          fechaFin: "",
-          actividadesRealizadas: "Análisis y manejo de Bigdata",
-        },
-        {
-          puesto: "Administrador de BD",
-          fechaInicio: "11 meses",
-          fechaFin: "",
-          actividadesRealizadas: "Mantenimiento de BD",
-        },
-        {
-          puesto: "Gerente de BD en la nube",
-          fechaInicio: "1 año",
-          fechaFin: "",
-          actividadesRealizadas: "Monitoreo de bases en la nube",
-        },
-        {
-          puesto: "Diseñador de BD relacionales",
-          fechaInicio: "6 meses",
-          fechaFin: "",
-          actividadesRealizadas: "Maquetado y análisis de relaciones",
-        },
-        {
-          puesto: "Analista de datos",
-          fechaInicio: "2 años",
-          fechaFin: "",
-          actividadesRealizadas: "Análisis y manejo de Bigdata",
-        },
-        {
-          puesto: "Analista de datos",
-          fechaInicio: "2 años",
-          actividadesRealizadas: "Análisis y manejo de Bigdata",
-        },
-        {
-          puesto: "Analista de datos",
-          fechaInicio: "2 años",
-          actividadesRealizadas: "Análisis y manejo de Bigdata",
-        },
-      ],
-      estudios: [
-        {
-          universidad: "Universidad del estado de Morelos",
-          carrera: "Ingeniería en Manejo de Datos Computacionales",
-          gradoAcademico: "Ingeniería en TI y Data Cience",
-          fechaInicio: "2015",
-          fechaFin: "2020",
-        },
-        {
-          universidad: "Universidad Tecnológica Emiliano Zapata",
-          carrera: "Ingeniería en Tecnologías de la comunicación",
-          gradoAcademico: "Ingeniería en TI y Data Cience",
-          fechaInicio: "2019",
-          fechaFin: "2024",
-        },
-        {
-          universidad: "Universidad del estado de Morelos",
-          carrera: "Ingeniería en Manejo de Datos Computacionales",
-          gradoAcademico: "Ingeniería en TI y Data Cience",
-          fechaInicio: "2015",
-          fechaFin: "2020",
-        },
-      ],
-      idiomas: [
-        {
-          nombre: "Español",
-          nivel: "Avanzado",
-        },
-        {
-          nombre: "Inglés (USA)",
-          nivel: "Medio",
-        },
-        {
-          nombre: "Portugués",
-          nivel: "Básico",
-        },
-        {
-          nombre: "Alemán",
-          nivel: "Básico",
-        },
-      ],
-      certificaciones: [
-        {
-          nombre: "Analista de datos",
-          empresa: "Microsoft",
-          fechaObtencion: "8/15/17",
-          fechaCaducidad: "8/15/20",
-        },
-        {
-          nombre: "Administrador de BD",
-          empresa: "Oracle",
-          fechaObtencion: "8/21/17",
-          fechaCaducidad: "8/21/20",
-        },
-        {
-          nombre: "Industria 2.0",
-          empresa: "Cisco",
-          fechaObtencion: "8/15/17",
-          fechaCaducidad: "8/15/20",
-        },
-        {
-          nombre: "Manejo de AWS",
-          empresa: "Amazon Web Services",
-          fechaObtencion: "6/19/14",
-          fechaCaducidad: "6/19/20",
-        },
-      ],
+      cursos: [],
+      experienciasLaborales: [],
+      estudios: [],
+      idiomas: [],
+      certificaciones: [],
+      vacantesFavoritas: [],
     },
     estados: [
       {
-        nombre: "Cohahuila",
-      },
-      {
+        id: 1,
         nombre: "Morelos",
       },
       {
+        id: 2,
         nombre: "Sonora",
-      },
-      {
-        nombre: "Nayarit",
-      },
-      {
-        nombre: "Tamaulipas",
-      },
-      {
-        nombre: "Querétaro",
       },
     ],
   }),
   methods: {
+    openNotification(border_, title_, text_) {
+      let tipo = "";
+      let icon_ = "";
+      switch (border_) {
+        case 1:
+          tipo = "success";
+          icon_ = `<i class='bx bx-check-circle' ></i>`;
+          break;
+        case 2:
+          tipo = "primary";
+          icon_ = `<i class='bx bx-info-circle'></i>`;
+          break;
+        case 3:
+          tipo = "warning";
+          icon_ = `<i class='bx bx-error'></i>`;
+          break;
+        case 4:
+          tipo = "danger";
+          icon_ = `<i class='bx bx-x-circle'></i>`;
+          break;
+      }
+      this.$vs.notification({
+        progress: "auto",
+        position: null,
+        title: title_,
+        text: text_,
+        border: tipo,
+        icon: icon_,
+      });
+    },
     enviarCon: function () {
       this.candidato.conocimientosHabilidades.conocimientos.push(
         this.conocimiento
@@ -1010,8 +939,6 @@ export default {
         getDownloadURL(ref(storage, fullPath))
           .then((url) => {
             this.candidato.foto = url;
-            console.log(url)
-            //petición de guardar
           })
           .catch((error) => {
             console.log(error);
@@ -1019,16 +946,84 @@ export default {
       });
       this.activeCambiarFoto = false;
     },
+    cargarPerfil: function () {
+      CandidateService.getProfile()
+        .then((response) => {
+          this.candidato = response.data.data;
+          this.candidato.contrasena = "Ninguna1*";
+          console.log(response.data);
+        })
+        .catch((e) => {
+          console.log(e);
+          //Toast de error al obtener datos
+        });
+    },
+    actualizar: function () {
+      this.candidato.contrasena = "Ninguna1*";
+      CandidateService.updateProfile(this.candidato)
+        .then((response) => {
+          if (response.data) {
+            this.candidato = response.data.data;
+            this.openNotification(
+              1,
+              response.data.title,
+              response.data.message
+            );
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          this.openNotification(
+            4,
+            e.response.data.title,
+            e.response.data.message
+          );
+        });
+    },
+    actualizarContrasena: function () {
+      if (this.pswdOld != "" && this.validPassword && this.samePassword) {
+        AuthService.cambiarContrasena(this.cambioContra)
+          .then((response) => {
+            if (response.data) {
+              this.openNotification(
+                1,
+                response.data.title,
+                response.data.message
+              );
+              this.cambioContra = {
+                contrasena: "",
+                nuevaContrasena: "",
+                repetirContrasena: "",
+              };
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+            this.openNotification(
+              4,
+              e.response.data.title,
+              e.response.data.message
+            );
+          });
+      } else {
+        this.openNotification(2, "Atencion", "Ingrese correctamente los datos");
+      }
+    },
   },
   computed: {
     samePassword() {
-      return this.pswd == this.pswd2;
+      return (
+        this.cambioContra.nuevaContrasena == this.cambioContra.repetirContrasena
+      );
     },
     validPassword() {
       return /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s)(?=^.{6,}$).*$/g.test(
-        this.pswd
+        this.cambioContra.nuevaContrasena
       );
     },
+  },
+  mounted() {
+    this.cargarPerfil();
   },
 };
 </script>
