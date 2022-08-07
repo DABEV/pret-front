@@ -462,6 +462,7 @@ export default {
     pdf: null,
     vacante: {},
     contacto: {},
+    candidato: { id: 1 },
     postulacion: {
       id: 0,
       cv: "",
@@ -473,6 +474,7 @@ export default {
     },
     vacantes: [
       {
+        id: 1,
         nombre: "Desarrollador Full-stack Java",
         reclutador: {
           nombre: "Roberto",
@@ -511,6 +513,7 @@ export default {
         ],
       },
       {
+        id: 2,
         nombre: "Desarrollador Full-stack PHP",
         reclutador: {
           nombre: "Roberto",
@@ -532,6 +535,7 @@ export default {
           "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
       },
       {
+        id: 3,
         nombre: "President of Sales",
         reclutador: {
           nombre: "Roberto",
@@ -570,6 +574,7 @@ export default {
           "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
       },
       {
+        id: 4,
         nombre: "Web Designer",
         reclutador: {
           nombre: "Roberto",
@@ -609,6 +614,7 @@ export default {
           "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
       },
       {
+        id: 5,
         nombre: "Desarrollador Full-stack PHP",
         reclutador: {
           nombre: "Roberto",
@@ -647,6 +653,7 @@ export default {
           "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
       },
       {
+        id: 6,
         nombre: "Desarrollador Full-stack PHP",
         reclutador: {
           nombre: "Roberto",
@@ -685,6 +692,7 @@ export default {
           "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
       },
       {
+        id: 7,
         nombre: "Marketing Coordinator",
         reclutador: {
           nombre: "Roberto",
@@ -830,14 +838,15 @@ export default {
       this.activePostular = !this.activePostular;
     },
     EnviarPostular: function () {
-      const child = "cv/" + this.pdf.name;
+      const child =
+        "cv/vacante" + this.vacante.id + "_candidato" + this.candidato.id;
       const refPdf = ref(storage, child);
       const fullPath = refPdf.fullPath;
       const metadata = { contentType: "pdf" };
       uploadBytes(refPdf, this.pdf, metadata).then(() => {
         getDownloadURL(ref(storage, fullPath))
           .then((url) => {
-            this.postulacion.cv = url
+            this.postulacion.cv = url;
             //petición de guardar
           })
           .catch((error) => {
