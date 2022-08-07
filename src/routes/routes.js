@@ -47,7 +47,7 @@ const routes = [
         component: RegisterRecuiter,
       },
       {
-        path: "registroReclutador",
+        path: "registroCandidato",
         name: "Register User",
         component: RegisterUser,
       },
