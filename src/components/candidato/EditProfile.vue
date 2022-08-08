@@ -930,7 +930,7 @@ export default {
     AbrirCambiar: function () {
       this.activeCambiarFoto = !this.activeCambiarFoto;
     },
-    subirFoto() {
+    subirFoto: function () {
       const child = "imagenes/perfil_candidato" + this.candidato.id;
       const refImg = ref(storage, child);
       const fullPath = refImg.fullPath;

@@ -132,24 +132,50 @@
           <h4 class="bg-gray space-top">Cambiar tu contraseña</h4>
         </vs-col>
         <vs-col lg="2" sm="12" xs="12">
-          <vs-button block success> Guardar contraseña </vs-button>
+          <vs-button block success @click="actualizarContrasena()">
+            Guardar contraseña
+          </vs-button>
         </vs-col>
       </vs-row>
-      <vs-row justify="space-between" class="space-top">
+      <vs-row justify="center" class="space-top">
         <vs-col lg="6" sm="12" xs="12">
           <vs-input
             class="space-top space padding-y"
-            placeholder="Nueva contraseña"
+            placeholder="Actual contraseña"
             color="#1e88e5"
-            v-model="pswd"
+            v-model="cambioContra.contrasena"
             type="password"
             block
           >
             <template #icon>
               <i class="bx bxs-lock"></i>
             </template>
-            <template v-if="!validPassword && pswd != ''" #message-danger>
-              Tamaño min 6, incluir al menos un número, mayúscula y un caracter especial
+          </vs-input>
+        </vs-col>
+      </vs-row>
+      <vs-row
+        justify="space-between"
+        class="space-top"
+        v-if="cambioContra.contrasena != ''"
+      >
+        <vs-col lg="6" sm="12" xs="12">
+          <vs-input
+            class="space-top space padding-y"
+            placeholder="Nueva contraseña"
+            color="#1e88e5"
+            v-model="cambioContra.nuevaContrasena"
+            type="password"
+            block
+          >
+            <template #icon>
+              <i class="bx bxs-lock"></i>
+            </template>
+            <template
+              v-if="!validPassword && cambioContra.nuevaContrasena != ''"
+              #message-danger
+            >
+              Tamaño min 6, incluir al menos un número, mayúscula y un caracter
+              especial
             </template>
           </vs-input>
         </vs-col>
@@ -158,7 +184,7 @@
             class="space-top space padding-x"
             placeholder="Repite la contraseña"
             color="#1e88e5"
-            v-model="pswd2"
+            v-model="cambioContra.repetirContrasena"
             type="password"
             block
           >
@@ -214,6 +240,12 @@
               >
                 <option
                   class="select-option"
+                  :value="reclutadorEditado.estadoRepublica"
+                >
+                  {{ reclutadorEditado.estadoRepublica.nombre }}
+                </option>
+                <option
+                  class="select-option"
                   v-for="(edo, i) in estados"
                   :key="i"
                   :value="edo"
@@ -249,6 +281,12 @@
               >
                 <option
                   class="select-option"
+                  :value="reclutadorEditado.estadoRepublicaEmpresa"
+                >
+                  {{ reclutadorEditado.estadoRepublicaEmpresa.nombre }}
+                </option>
+                <option
+                  class="select-option"
                   v-for="(edo, i) in estados"
                   :key="i"
                   :value="edo"
@@ -269,7 +307,7 @@
             </vs-button>
           </vs-col>
           <vs-col lg="4" sm="12" xs="12" class="space-top center-item">
-            <vs-button success block @click="Guardar()">
+            <vs-button success block @click="actualizar()">
               Guardar cambios
             </vs-button>
           </vs-col>
@@ -279,12 +317,13 @@
   </div>
 </template>
 <script>
+import RecruiterService from "../../service/Recruiter/RecruiterService";
+import AuthService from "../../service/Auth/AuthService";
+
 export default {
   name: "Profile",
   data: () => ({
     active: false,
-    pswd: "",
-    pswd2: "",
     reclutador: {
       nombre: "Michelle",
       apellidoPaterno: "Rivera",
@@ -367,23 +406,28 @@ export default {
       ],
     },
     puesto: {},
+    cambioContra: {
+      contrasena: "",
+      nuevaContrasena: "",
+      repetirContrasena: "",
+    },
     reclutadorEditado: {
-      tnombre: "Michelle",
-      apellidoPaterno: "Rivera",
-      apellidoMaterno: "Solaz",
-      correoElectronico: "michelle.rivera@example.com",
+      tnombre: "",
+      apellidoPaterno: "",
+      apellidoMaterno: "",
+      correoElectronico: "",
       habilitado: true,
-      telefono: "(225) 555-0118",
-      fechaNacimiento: "9/4/12",
+      telefono: "",
+      fechaNacimiento: "",
       estadoRepublica: {
-        nombre: "Morelos",
+        nombre: "",
       },
       puesto: {
         nombre: "Gerente de Recursos humanos",
       },
-      nombreEmpresa: "Oracle",
+      nombreEmpresa: "",
       estadoRepublicaEmpresa: {
-        nombre: "Morelos",
+        nombre: "",
       },
       vacantes: [
         {
@@ -450,22 +494,12 @@ export default {
     },
     estados: [
       {
-        nombre: "Cohahuila",
-      },
-      {
+        id: 1,
         nombre: "Morelos",
       },
       {
+        id: 2,
         nombre: "Sonora",
-      },
-      {
-        nombre: "Nayarit",
-      },
-      {
-        nombre: "Tamaulipas",
-      },
-      {
-        nombre: "Querétaro",
       },
     ],
     vacio: {
@@ -484,29 +518,135 @@ export default {
     },
   }),
   methods: {
+    openNotification(border_, title_, text_) {
+      let tipo = "";
+      let icon_ = "";
+      switch (border_) {
+        case 1:
+          tipo = "success";
+          icon_ = `<i class='bx bx-check-circle' ></i>`;
+          break;
+        case 2:
+          tipo = "primary";
+          icon_ = `<i class='bx bx-info-circle'></i>`;
+          break;
+        case 3:
+          tipo = "warning";
+          icon_ = `<i class='bx bx-error'></i>`;
+          break;
+        case 4:
+          tipo = "danger";
+          icon_ = `<i class='bx bx-x-circle'></i>`;
+          break;
+      }
+      this.$vs.notification({
+        progress: "auto",
+        position: null,
+        title: title_,
+        text: text_,
+        border: tipo,
+        icon: icon_,
+      });
+    },
+    cargarPerfil: function () {
+      RecruiterService.getProfile()
+        .then((response) => {
+          this.reclutador = response.data.data;
+          this.reclutador.contrasena = "Ninguna1*";
+          console.log(response.data);
+        })
+        .catch((e) => {
+          console.log(e);
+          //Toast de error al obtener datos
+        });
+    },
     IrEditar: function () {
-      //petición por id
+      RecruiterService.getProfile()
+        .then((response) => {
+          this.reclutadorEditado = response.data.data;
+          this.reclutadorEditado.contrasena = "Ninguna1*";
+          console.log(response.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
       this.puesto = this.reclutadorEditado.puesto;
       this.active = !this.active;
     },
     IrVacantes: function () {
       this.$router.push("/reclutador/vacantes");
     },
-    Guardar: function () {
-      this.reclutadorEditado.puesto = this.puesto;
+    Cancelar: function () {
       this.active = false;
     },
-    Cancelar: function () {
+    actualizarContrasena: function () {
+      if (this.pswdOld != "" && this.validPassword && this.samePassword) {
+        AuthService.cambiarContrasena(this.cambioContra)
+          .then((response) => {
+            if (response.data) {
+              this.openNotification(
+                1,
+                response.data.title,
+                response.data.message
+              );
+              this.cambioContra = {
+                contrasena: "",
+                nuevaContrasena: "",
+                repetirContrasena: "",
+              };
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+            this.openNotification(
+              4,
+              e.response.data.title,
+              e.response.data.message
+            );
+          });
+      } else {
+        this.openNotification(2, "Atencion", "Ingrese correctamente los datos");
+      }
+    },
+    actualizar: function () {
+      this.reclutadorEditado.contrasena = "Ninguna1*";
+      RecruiterService.updateProfile(this.reclutadorEditado)
+        .then((response) => {
+          if (response.data) {
+            this.candidato = response.data.data;
+            this.openNotification(
+              1,
+              response.data.title,
+              response.data.message
+            );
+            this.cargarPerfil()
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          this.openNotification(
+            4,
+            e.response.data.title,
+            e.response.data.message
+          );
+        });
       this.active = false;
     },
   },
   computed: {
     samePassword() {
-      return this.pswd == this.pswd2;
+      return (
+        this.cambioContra.nuevaContrasena == this.cambioContra.repetirContrasena
+      );
     },
     validPassword() {
-      return /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s)(?=^.{6,}$).*$/g.test(this.pswd);
+      return /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s)(?=^.{6,}$).*$/g.test(
+        this.cambioContra.nuevaContrasena
+      );
     },
+  },
+  mounted() {
+    this.cargarPerfil();
   },
 };
 </script>
