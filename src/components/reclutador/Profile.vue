@@ -77,7 +77,11 @@
                   </vs-row>
                 </div>
                 <vs-col lg="2" sm="6" xs="6" class="space">
-                  <vs-button color="#b13cd2" block @click="IrEditar()">
+                  <vs-button
+                    color="#b13cd2"
+                    block
+                    @click="IrEditar(), (active = !active)"
+                  >
                     Editar perfil
                   </vs-button>
                 </vs-col>
@@ -106,9 +110,13 @@
                   <span class="border"></span>
                 </div>
                 <div class="callout-seccess">
-                  <p>
+                  <p v-if="reclutador.vacantes != null">
                     Vacantes:
                     <small>{{ reclutador.vacantes.length }} publicadas</small>
+                  </p>
+                  <p v-else>
+                    Vacantes:
+                    <small>0 publicadas</small>
                   </p>
                 </div>
                 <vs-row justify="center">
@@ -240,6 +248,7 @@
               >
                 <option
                   class="select-option"
+                  disabled
                   :value="reclutadorEditado.estadoRepublica"
                 >
                   {{ reclutadorEditado.estadoRepublica.nombre }}
@@ -281,6 +290,7 @@
               >
                 <option
                   class="select-option"
+                  disabled
                   :value="reclutadorEditado.estadoRepublicaEmpresa"
                 >
                   {{ reclutadorEditado.estadoRepublicaEmpresa.nombre }}
@@ -319,28 +329,31 @@
 <script>
 import RecruiterService from "../../service/Recruiter/RecruiterService";
 import AuthService from "../../service/Auth/AuthService";
+import CatalogueService from "../../service/Catalogues/CatalogueService";
 
 export default {
   name: "Profile",
   data: () => ({
     active: false,
     reclutador: {
-      nombre: "Michelle",
-      apellidoPaterno: "Rivera",
-      apellidoMaterno: "Solaz",
-      correoElectronico: "michelle.rivera@example.com",
+      nombre: "",
+      apellidoPaterno: "",
+      apellidoMaterno: "",
+      correoElectronico: "",
       habilitado: true,
-      telefono: "(225) 555-0118",
-      fechaNacimiento: "9/4/12",
+      telefono: "",
+      fechaNacimiento: "",
       estadoRepublica: {
-        nombre: "Morelos",
+        id: 0,
+        nombre: "",
       },
       puesto: {
-        nombre: "Gerente de Recursos humanos",
+        nombre: "",
       },
-      nombreEmpresa: "Oracle",
+      nombreEmpresa: "",
       estadoRepublicaEmpresa: {
-        nombre: "Morelos",
+        id: 0,
+        nombre: "",
       },
       vacantes: [
         {
@@ -420,6 +433,7 @@ export default {
       telefono: "",
       fechaNacimiento: "",
       estadoRepublica: {
+        id: 0,
         nombre: "",
       },
       puesto: {
@@ -494,12 +508,8 @@ export default {
     },
     estados: [
       {
-        id: 1,
-        nombre: "Morelos",
-      },
-      {
-        id: 2,
-        nombre: "Sonora",
+        id: 0,
+        nombre: "",
       },
     ],
     vacio: {
@@ -553,7 +563,6 @@ export default {
         .then((response) => {
           this.reclutador = response.data.data;
           this.reclutador.contrasena = "Ninguna1*";
-          console.log(response.data);
         })
         .catch((e) => {
           console.log(e);
@@ -565,13 +574,11 @@ export default {
         .then((response) => {
           this.reclutadorEditado = response.data.data;
           this.reclutadorEditado.contrasena = "Ninguna1*";
-          console.log(response.data);
         })
         .catch((e) => {
           console.log(e);
         });
       this.puesto = this.reclutadorEditado.puesto;
-      this.active = !this.active;
     },
     IrVacantes: function () {
       this.$router.push("/reclutador/vacantes");
@@ -613,13 +620,12 @@ export default {
       RecruiterService.updateProfile(this.reclutadorEditado)
         .then((response) => {
           if (response.data) {
-            this.candidato = response.data.data;
+            this.reclutador = response.data.data;
             this.openNotification(
               1,
               response.data.title,
               response.data.message
             );
-            this.cargarPerfil()
           }
         })
         .catch((e) => {
@@ -630,7 +636,16 @@ export default {
             e.response.data.message
           );
         });
-      this.active = false;
+      this.Cancelar();
+    },
+    cargarEstados: function () {
+      CatalogueService.listarEstados()
+        .then((response) => {
+          this.estados = response.data.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     },
   },
   computed: {
@@ -647,6 +662,7 @@ export default {
   },
   mounted() {
     this.cargarPerfil();
+    this.cargarEstados();
   },
 };
 </script>

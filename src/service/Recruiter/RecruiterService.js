@@ -1,5 +1,5 @@
 import API from "../TokenApi";
-class AuthService {
+class RecruiterService {
     getProfile() {
         return API.get("reclutador/perfil");
     }
@@ -8,4 +8,4 @@ class AuthService {
         return API.post("reclutador/actualizar", candidato);
     }
 }
-export default new AuthService();
+export default new RecruiterService();

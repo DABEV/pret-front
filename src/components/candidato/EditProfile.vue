@@ -6,7 +6,7 @@
           <div class="content-data space datos text-start bg-gray">
             <div class="center-item">
               <vs-avatar circle size="150" class="avatar-top-card">
-                <img :src="candidato.foto" alt="" />
+                <img :src="candidato.foto" alt="perfil" />
               </vs-avatar>
             </div>
             <h3 class="space-top text-center">
@@ -85,6 +85,7 @@
                     >
                       <option
                         class="select-option"
+                        disabled
                         :value="candidato.estadoRepublica"
                       >
                         {{ candidato.estadoRepublica.nombre }}
@@ -195,10 +196,15 @@
                   </vs-avatar>
                 </div>
                 <h4 class="space-top">Conocimientos</h4>
-                <small>
+                <small
+                  v-if="
+                    candidato.conocimientosHabilidades.conocimientos != null
+                  "
+                >
                   Guardados:
                   {{ candidato.conocimientosHabilidades.conocimientos.length }}
                 </small>
+                <small v-else> Guardados: 0 </small>
                 <div class="center-item">
                   <vs-button success @click="activeCon = !activeCon">
                     Añadir conocimiento
@@ -214,10 +220,13 @@
                   </vs-avatar>
                 </div>
                 <h4 class="space-top">Habilidades</h4>
-                <small>
+                <small
+                  v-if="candidato.conocimientosHabilidades.habilidades != null"
+                >
                   Guardados:
                   {{ candidato.conocimientosHabilidades.habilidades.length }}
                 </small>
+                <small v-else> Guardados: 0 </small>
                 <div class="center-item">
                   <vs-button success @click="activeHab = !activeHab">
                     Añadir habilidad
@@ -233,12 +242,16 @@
                   </vs-avatar>
                 </div>
                 <h4 class="space-top">Estudios</h4>
-                <small>
+                <small v-if="candidato.estudios != null">
                   Guardados:
                   {{ candidato.estudios.length }}
                 </small>
+                <small v-else> Guardados: 0 </small>
                 <div class="center-item">
-                  <vs-button success @click="activeEst = !activeEst">
+                  <vs-button
+                    success
+                    @click="cargarUniversidades(), (activeEst = !activeEst)"
+                  >
                     Añadir estudio
                   </vs-button>
                 </div>
@@ -252,10 +265,11 @@
                   </vs-avatar>
                 </div>
                 <h4 class="space-top">Experiencia</h4>
-                <small>
+                <small v-if="candidato.experienciasLaborales != null">
                   Guardados:
                   {{ candidato.experienciasLaborales.length }}
                 </small>
+                <small v-else> Guardados: 0 </small>
                 <div class="center-item">
                   <vs-button success @click="activeExp = !activeExp">
                     Añadir experiencia
@@ -271,10 +285,11 @@
                   </vs-avatar>
                 </div>
                 <h4 class="space-top">Certificación</h4>
-                <small>
+                <small v-if="candidato.certificaciones != null">
                   Guardados:
                   {{ candidato.certificaciones.length }}
                 </small>
+                <small v-else> Guardados: 0 </small>
                 <div class="center-item">
                   <vs-button success @click="activeCer = !activeCer">
                     Añadir certificación
@@ -290,10 +305,11 @@
                   </vs-avatar>
                 </div>
                 <h4 class="space-top">Idiomas</h4>
-                <small>
+                <small v-if="candidato.idiomas != null">
                   Guardados:
                   {{ candidato.idiomas.length }}
                 </small>
+                <small v-else> Guardados: 0 </small>
                 <div class="center-item">
                   <vs-button success @click="activeIdi = !activeIdi">
                     Añadir idioma
@@ -309,10 +325,11 @@
                   </vs-avatar>
                 </div>
                 <h4 class="space-top">Curso</h4>
-                <small>
+                <small v-if="candidato.cursos != null">
                   Guardados:
                   {{ candidato.cursos.length }}
                 </small>
+                <small v-else> Guardados: 0 </small>
                 <div class="center-item">
                   <vs-button success @click="activeCur = !activeCur">
                     Añadir curso
@@ -407,17 +424,27 @@
             <i class="bx bxs-book-bookmark"></i>
           </template>
         </vs-input>
-        <vs-input
-          class="space-top space"
-          placeholder="Universidad"
-          v-model="estudio.universidad"
-          color="#1e88e5"
-          block
-        >
-          <template #icon>
-            <i class="bx bxs-buildings"></i>
-          </template>
-        </vs-input>
+        <div class="input-icon">
+          <span><i class="bx bxs-buildings"></i></span>
+          <select
+            class="select-custom space-top space"
+            placeholder="Estado"
+            v-model="estudio.universidad"
+          >
+            <option class="select-option" disabled :value="estudio.universidad">
+              {{ estudio.universidad.siglas }} -
+              {{ estudio.universidad.nombre }}
+            </option>
+            <option
+              class="select-option"
+              v-for="(uni, i) in universidades"
+              :key="i"
+              :value="uni"
+            >
+              {{ uni.siglas }} - {{ uni.nombre }}
+            </option>
+          </select>
+        </div>
         <vs-input
           class="space-top space"
           placeholder="Grado académico"
@@ -775,6 +802,7 @@ import { storage } from "../../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import CandidateService from "../../service/Candidate/CandidateService";
 import AuthService from "../../service/Auth/AuthService";
+import CatalogueService from "../../service/Catalogues/CatalogueService";
 
 export default {
   name: "EditProfile",
@@ -802,7 +830,13 @@ export default {
       nombre: "",
     },
     estudio: {
-      universidad: "",
+      universidad: {
+        nombre: "Selecciona -",
+        siglas: "",
+        estadoRepublica: {
+          id: 0,
+        },
+      },
       carrera: "",
       gradoAcademico: "",
       fechaInicio: "",
@@ -854,12 +888,14 @@ export default {
     },
     estados: [
       {
-        id: 1,
-        nombre: "Morelos",
+        id: 0,
+        nombre: "",
       },
+    ],
+    universidades: [
       {
-        id: 2,
-        nombre: "Sonora",
+        id: 0,
+        nombre: "",
       },
     ],
   }),
@@ -951,7 +987,6 @@ export default {
         .then((response) => {
           this.candidato = response.data.data;
           this.candidato.contrasena = "Ninguna1*";
-          console.log(response.data);
         })
         .catch((e) => {
           console.log(e);
@@ -1009,6 +1044,24 @@ export default {
         this.openNotification(2, "Atencion", "Ingrese correctamente los datos");
       }
     },
+    cargarEstados: function () {
+      CatalogueService.listarEstados()
+        .then((response) => {
+          this.estados = response.data.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    cargarUniversidades: function () {
+      CatalogueService.listarUniversidades()
+        .then((response) => {
+          this.universidades = response.data.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
   },
   computed: {
     samePassword() {
@@ -1024,6 +1077,7 @@ export default {
   },
   mounted() {
     this.cargarPerfil();
+    this.cargarEstados();
   },
 };
 </script>
