@@ -92,7 +92,7 @@
                       class="center-item text-start"
                     >
                       <p>
-                        Fecha de nacimiento: {{ candidato.fechaNacimiento }}
+                        Fecha de nacimiento: {{ candidato.fechaNacimiento.slice(0, 10) }}
                       </p>
                     </vs-col>
                   </vs-row>
@@ -452,7 +452,6 @@ export default {
       CandidateService.getProfile()
         .then((response) => {
           this.candidato = response.data.data;
-          console.log(response.data);
         })
         .catch((e) => {
           console.log(e);

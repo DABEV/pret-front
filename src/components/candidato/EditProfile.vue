@@ -6,7 +6,7 @@
           <div class="content-data space datos text-start bg-gray">
             <div class="center-item">
               <vs-avatar circle size="150" class="avatar-top-card">
-                <img :src="candidato.foto" alt="" />
+                <img :src="candidato.foto" alt="perfil" />
               </vs-avatar>
             </div>
             <h3 class="space-top text-center">
@@ -25,7 +25,7 @@
               </vs-col>
               <vs-col lg="7" sm="8" xs="8" class="text-start">
                 <small>
-                  Fecha de nacimiento: {{ candidato.fechaNacimiento }}
+                  Fecha de nacimiento: {{ candidato.fechaNacimiento.slice(0, 10) }}
                 </small>
               </vs-col>
             </vs-row>
@@ -43,7 +43,9 @@
           <div class="content-data margin-top-avatar">
             <vs-row justify="flex-end">
               <vs-col lg="4" sm="12" xs="12" class="space-top center-item">
-                <vs-button success> Guardar cambios </vs-button>
+                <vs-button success @click="actualizar()">
+                  Guardar cambios
+                </vs-button>
               </vs-col>
             </vs-row>
             <div class="margin-xy space">
@@ -83,6 +85,13 @@
                     >
                       <option
                         class="select-option"
+                        disabled
+                        :value="candidato.estadoRepublica"
+                      >
+                        {{ candidato.estadoRepublica.nombre }}
+                      </option>
+                      <option
+                        class="select-option"
                         v-for="(edo, i) in estados"
                         :key="i"
                         :value="edo"
@@ -110,23 +119,48 @@
             <h4 class="bg-gray space-top">Cambiar tu contraseña</h4>
           </vs-col>
           <vs-col lg="2" sm="12" xs="12">
-            <vs-button block success> Guardar contraseña </vs-button>
+            <vs-button block success @click="actualizarContrasena()">
+              Guardar contraseña
+            </vs-button>
           </vs-col>
         </vs-row>
-        <vs-row justify="space-between" class="space-top">
+        <vs-row justify="center" class="space-top">
           <vs-col lg="6" sm="12" xs="12">
             <vs-input
               class="space-top space padding-y"
-              placeholder="Nueva contraseña"
+              placeholder="Actual contraseña"
               color="#1e88e5"
-              v-model="pswd"
+              v-model="cambioContra.contrasena"
               type="password"
               block
             >
               <template #icon>
                 <i class="bx bxs-lock"></i>
               </template>
-              <template v-if="!validPassword && pswd != ''" #message-danger>
+            </vs-input>
+          </vs-col>
+        </vs-row>
+        <vs-row
+          justify="space-between"
+          class="space-top"
+          v-if="cambioContra.contrasena != ''"
+        >
+          <vs-col lg="6" sm="12" xs="12">
+            <vs-input
+              class="space-top space padding-y"
+              placeholder="Nueva contraseña"
+              color="#1e88e5"
+              v-model="cambioContra.nuevaContrasena"
+              type="password"
+              block
+            >
+              <template #icon>
+                <i class="bx bxs-lock"></i>
+              </template>
+              <template
+                v-if="!validPassword && cambioContra.nuevaContrasena != ''"
+                #message-danger
+              >
                 Tamaño min 6, incluir al menos un número, mayúscula y un
                 caracter especial
               </template>
@@ -137,7 +171,7 @@
               class="space-top space padding-x"
               placeholder="Repite la contraseña"
               color="#1e88e5"
-              v-model="pswd2"
+              v-model="cambioContra.repetirContrasena"
               type="password"
               block
             >
@@ -162,10 +196,15 @@
                   </vs-avatar>
                 </div>
                 <h4 class="space-top">Conocimientos</h4>
-                <small>
+                <small
+                  v-if="
+                    candidato.conocimientosHabilidades.conocimientos != null
+                  "
+                >
                   Guardados:
                   {{ candidato.conocimientosHabilidades.conocimientos.length }}
                 </small>
+                <small v-else> Guardados: 0 </small>
                 <div class="center-item">
                   <vs-button success @click="activeCon = !activeCon">
                     Añadir conocimiento
@@ -181,10 +220,13 @@
                   </vs-avatar>
                 </div>
                 <h4 class="space-top">Habilidades</h4>
-                <small>
+                <small
+                  v-if="candidato.conocimientosHabilidades.habilidades != null"
+                >
                   Guardados:
                   {{ candidato.conocimientosHabilidades.habilidades.length }}
                 </small>
+                <small v-else> Guardados: 0 </small>
                 <div class="center-item">
                   <vs-button success @click="activeHab = !activeHab">
                     Añadir habilidad
@@ -200,12 +242,16 @@
                   </vs-avatar>
                 </div>
                 <h4 class="space-top">Estudios</h4>
-                <small>
+                <small v-if="candidato.estudios != null">
                   Guardados:
                   {{ candidato.estudios.length }}
                 </small>
+                <small v-else> Guardados: 0 </small>
                 <div class="center-item">
-                  <vs-button success @click="activeEst = !activeEst">
+                  <vs-button
+                    success
+                    @click="cargarUniversidades(), (activeEst = !activeEst)"
+                  >
                     Añadir estudio
                   </vs-button>
                 </div>
@@ -219,10 +265,11 @@
                   </vs-avatar>
                 </div>
                 <h4 class="space-top">Experiencia</h4>
-                <small>
+                <small v-if="candidato.experienciasLaborales != null">
                   Guardados:
                   {{ candidato.experienciasLaborales.length }}
                 </small>
+                <small v-else> Guardados: 0 </small>
                 <div class="center-item">
                   <vs-button success @click="activeExp = !activeExp">
                     Añadir experiencia
@@ -238,10 +285,11 @@
                   </vs-avatar>
                 </div>
                 <h4 class="space-top">Certificación</h4>
-                <small>
+                <small v-if="candidato.certificaciones != null">
                   Guardados:
                   {{ candidato.certificaciones.length }}
                 </small>
+                <small v-else> Guardados: 0 </small>
                 <div class="center-item">
                   <vs-button success @click="activeCer = !activeCer">
                     Añadir certificación
@@ -257,10 +305,11 @@
                   </vs-avatar>
                 </div>
                 <h4 class="space-top">Idiomas</h4>
-                <small>
+                <small v-if="candidato.idiomas != null">
                   Guardados:
                   {{ candidato.idiomas.length }}
                 </small>
+                <small v-else> Guardados: 0 </small>
                 <div class="center-item">
                   <vs-button success @click="activeIdi = !activeIdi">
                     Añadir idioma
@@ -276,10 +325,11 @@
                   </vs-avatar>
                 </div>
                 <h4 class="space-top">Curso</h4>
-                <small>
+                <small v-if="candidato.cursos != null">
                   Guardados:
                   {{ candidato.cursos.length }}
                 </small>
+                <small v-else> Guardados: 0 </small>
                 <div class="center-item">
                   <vs-button success @click="activeCur = !activeCur">
                     Añadir curso
@@ -374,17 +424,27 @@
             <i class="bx bxs-book-bookmark"></i>
           </template>
         </vs-input>
-        <vs-input
-          class="space-top space"
-          placeholder="Universidad"
-          v-model="estudio.universidad"
-          color="#1e88e5"
-          block
-        >
-          <template #icon>
-            <i class="bx bxs-buildings"></i>
-          </template>
-        </vs-input>
+        <div class="input-icon">
+          <span><i class="bx bxs-buildings"></i></span>
+          <select
+            class="select-custom space-top space"
+            placeholder="Estado"
+            v-model="estudio.universidad"
+          >
+            <option class="select-option" disabled :value="estudio.universidad">
+              {{ estudio.universidad.siglas }} -
+              {{ estudio.universidad.nombre }}
+            </option>
+            <option
+              class="select-option"
+              v-for="(uni, i) in universidades"
+              :key="i"
+              :value="uni"
+            >
+              {{ uni.siglas }} - {{ uni.nombre }}
+            </option>
+          </select>
+        </div>
         <vs-input
           class="space-top space"
           placeholder="Grado académico"
@@ -740,6 +800,10 @@
 <script>
 import { storage } from "../../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import CandidateService from "../../service/Candidate/CandidateService";
+import AuthService from "../../service/Auth/AuthService";
+import CatalogueService from "../../service/Catalogues/CatalogueService";
+
 export default {
   name: "EditProfile",
   data: () => ({
@@ -753,17 +817,26 @@ export default {
     activeCur: false,
     success: false,
     error: false,
-    pswd: "",
-    pswd2: "",
     conocimiento: "",
     habilidad: "",
     imagen: null,
     estado: {},
+    cambioContra: {
+      contrasena: "",
+      nuevaContrasena: "",
+      repetirContrasena: "",
+    },
     idioma: {
       nombre: "",
     },
     estudio: {
-      universidad: "",
+      universidad: {
+        nombre: "Selecciona -",
+        siglas: "",
+        estadoRepublica: {
+          id: 0,
+        },
+      },
       carrera: "",
       gradoAcademico: "",
       fechaInicio: "",
@@ -788,183 +861,75 @@ export default {
       numeroHoras: "",
     },
     candidato: {
-      id: 1,
-      nombre: "Michelle",
-      apellidoPaterno: "Rivera",
-      apellidoMaterno: "Solaz",
-      correoElectronico: "michelle.rivera@example.com",
+      id: 0,
+      nombre: "",
+      apellidoPaterno: "",
+      apellidoMaterno: "",
+      correoElectronico: "",
       habilitado: true,
-      telefono: "(225) 555-0118",
-      fechaNacimiento: "9/4/12",
+      telefono: "",
+      fechaNacimiento: "",
       estadoRepublica: {
-        nombre: "Morelos",
+        id: 0,
       },
-      tituloCurricular: "Administradora de base de datos (DBA)",
-      descripcionPerfil:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aenean praesent non donec adipiscing ullamcorper. Tincidunt id suspendisse id sit. Nisi sed diam est.",
-      foto: "imagen.jpg",
+      tituloCurricular: "",
+      descripcionPerfil: "",
+      foto: "",
       conocimientosHabilidades: {
-        conocimientos: ["Laravel", "PHP", "Java", "MySQL"],
-        habilidades: ["Analista", "Trabajo en Equipo"],
+        conocimientos: [],
+        habilidades: [],
       },
-      cursos: [
-        {
-          nombre: "Fundamento de bases de datos",
-          fechaObtencion: "12/4/17",
-          empresa: "Platzi",
-          numeroHoras: "12",
-        },
-        {
-          nombre: "Fundamento de bases de datos",
-          fechaObtencion: "12/4/17",
-          empresa: "Platzi",
-          numeroHoras: "12",
-        },
-        {
-          nombre: "Fundamento de bases de datos",
-          fechaObtencion: "12/4/17",
-          empresa: "Platzi",
-          numeroHoras: "12",
-        },
-        {
-          nombre: "Fundamento de bases de datos",
-          fechaObtencion: "12/4/17",
-          empresa: "Platzi",
-          numeroHoras: "12",
-        },
-      ],
-      experienciasLaborales: [
-        {
-          puesto: "Analista de datos",
-          fechaInicio: "2 años",
-          fechaFin: "",
-          actividadesRealizadas: "Análisis y manejo de Bigdata",
-        },
-        {
-          puesto: "Administrador de BD",
-          fechaInicio: "11 meses",
-          fechaFin: "",
-          actividadesRealizadas: "Mantenimiento de BD",
-        },
-        {
-          puesto: "Gerente de BD en la nube",
-          fechaInicio: "1 año",
-          fechaFin: "",
-          actividadesRealizadas: "Monitoreo de bases en la nube",
-        },
-        {
-          puesto: "Diseñador de BD relacionales",
-          fechaInicio: "6 meses",
-          fechaFin: "",
-          actividadesRealizadas: "Maquetado y análisis de relaciones",
-        },
-        {
-          puesto: "Analista de datos",
-          fechaInicio: "2 años",
-          fechaFin: "",
-          actividadesRealizadas: "Análisis y manejo de Bigdata",
-        },
-        {
-          puesto: "Analista de datos",
-          fechaInicio: "2 años",
-          actividadesRealizadas: "Análisis y manejo de Bigdata",
-        },
-        {
-          puesto: "Analista de datos",
-          fechaInicio: "2 años",
-          actividadesRealizadas: "Análisis y manejo de Bigdata",
-        },
-      ],
-      estudios: [
-        {
-          universidad: "Universidad del estado de Morelos",
-          carrera: "Ingeniería en Manejo de Datos Computacionales",
-          gradoAcademico: "Ingeniería en TI y Data Cience",
-          fechaInicio: "2015",
-          fechaFin: "2020",
-        },
-        {
-          universidad: "Universidad Tecnológica Emiliano Zapata",
-          carrera: "Ingeniería en Tecnologías de la comunicación",
-          gradoAcademico: "Ingeniería en TI y Data Cience",
-          fechaInicio: "2019",
-          fechaFin: "2024",
-        },
-        {
-          universidad: "Universidad del estado de Morelos",
-          carrera: "Ingeniería en Manejo de Datos Computacionales",
-          gradoAcademico: "Ingeniería en TI y Data Cience",
-          fechaInicio: "2015",
-          fechaFin: "2020",
-        },
-      ],
-      idiomas: [
-        {
-          nombre: "Español",
-          nivel: "Avanzado",
-        },
-        {
-          nombre: "Inglés (USA)",
-          nivel: "Medio",
-        },
-        {
-          nombre: "Portugués",
-          nivel: "Básico",
-        },
-        {
-          nombre: "Alemán",
-          nivel: "Básico",
-        },
-      ],
-      certificaciones: [
-        {
-          nombre: "Analista de datos",
-          empresa: "Microsoft",
-          fechaObtencion: "8/15/17",
-          fechaCaducidad: "8/15/20",
-        },
-        {
-          nombre: "Administrador de BD",
-          empresa: "Oracle",
-          fechaObtencion: "8/21/17",
-          fechaCaducidad: "8/21/20",
-        },
-        {
-          nombre: "Industria 2.0",
-          empresa: "Cisco",
-          fechaObtencion: "8/15/17",
-          fechaCaducidad: "8/15/20",
-        },
-        {
-          nombre: "Manejo de AWS",
-          empresa: "Amazon Web Services",
-          fechaObtencion: "6/19/14",
-          fechaCaducidad: "6/19/20",
-        },
-      ],
+      cursos: [],
+      experienciasLaborales: [],
+      estudios: [],
+      idiomas: [],
+      certificaciones: [],
+      vacantesFavoritas: [],
     },
     estados: [
       {
-        nombre: "Cohahuila",
+        id: 0,
+        nombre: "",
       },
+    ],
+    universidades: [
       {
-        nombre: "Morelos",
-      },
-      {
-        nombre: "Sonora",
-      },
-      {
-        nombre: "Nayarit",
-      },
-      {
-        nombre: "Tamaulipas",
-      },
-      {
-        nombre: "Querétaro",
+        id: 0,
+        nombre: "",
       },
     ],
   }),
   methods: {
+    openNotification(border_, title_, text_) {
+      let tipo = "";
+      let icon_ = "";
+      switch (border_) {
+        case 1:
+          tipo = "success";
+          icon_ = `<i class='bx bx-check-circle' ></i>`;
+          break;
+        case 2:
+          tipo = "primary";
+          icon_ = `<i class='bx bx-info-circle'></i>`;
+          break;
+        case 3:
+          tipo = "warning";
+          icon_ = `<i class='bx bx-error'></i>`;
+          break;
+        case 4:
+          tipo = "danger";
+          icon_ = `<i class='bx bx-x-circle'></i>`;
+          break;
+      }
+      this.$vs.notification({
+        progress: "auto",
+        position: null,
+        title: title_,
+        text: text_,
+        border: tipo,
+        icon: icon_,
+      });
+    },
     enviarCon: function () {
       this.candidato.conocimientosHabilidades.conocimientos.push(
         this.conocimiento
@@ -1001,7 +966,7 @@ export default {
     AbrirCambiar: function () {
       this.activeCambiarFoto = !this.activeCambiarFoto;
     },
-    subirFoto() {
+    subirFoto: function () {
       const child = "imagenes/perfil_candidato" + this.candidato.id;
       const refImg = ref(storage, child);
       const fullPath = refImg.fullPath;
@@ -1010,8 +975,7 @@ export default {
         getDownloadURL(ref(storage, fullPath))
           .then((url) => {
             this.candidato.foto = url;
-            console.log(url)
-            //petición de guardar
+            this.actualizarFoto();
           })
           .catch((error) => {
             console.log(error);
@@ -1019,16 +983,122 @@ export default {
       });
       this.activeCambiarFoto = false;
     },
+    cargarPerfil: function () {
+      CandidateService.getProfile()
+        .then((response) => {
+          this.candidato = response.data.data;
+          this.candidato.contrasena = "Ninguna1*";
+        })
+        .catch((e) => {
+          console.log(e);
+          //Toast de error al obtener datos
+        });
+    },
+    actualizar: function () {
+      this.candidato.contrasena = "Ninguna1*";
+      CandidateService.updateProfile(this.candidato)
+        .then((response) => {
+          if (response.data) {
+            this.candidato = response.data.data;
+            this.openNotification(
+              1,
+              response.data.title,
+              response.data.message
+            );
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          this.openNotification(
+            4,
+            e.response.data.title,
+            e.response.data.message
+          );
+        });
+    },
+    actualizarFoto: function () {
+      CandidateService.updatePhoto(this.candidato.foto)
+        .then((response) => {
+          if (response.data) {
+            this.openNotification(
+              1,
+              response.data.title,
+              response.data.message
+            );
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          this.openNotification(
+            4,
+            e.response.data.title,
+            e.response.data.message
+          );
+        });
+    },
+    actualizarContrasena: function () {
+      if (this.pswdOld != "" && this.validPassword && this.samePassword) {
+        AuthService.cambiarContrasena(this.cambioContra)
+          .then((response) => {
+            if (response.data) {
+              this.openNotification(
+                1,
+                response.data.title,
+                response.data.message
+              );
+              this.cambioContra = {
+                contrasena: "",
+                nuevaContrasena: "",
+                repetirContrasena: "",
+              };
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+            this.openNotification(
+              4,
+              e.response.data.title,
+              e.response.data.message
+            );
+          });
+      } else {
+        this.openNotification(2, "Atencion", "Ingrese correctamente los datos");
+      }
+    },
+    cargarEstados: function () {
+      CatalogueService.listarEstados()
+        .then((response) => {
+          this.estados = response.data.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    cargarUniversidades: function () {
+      CatalogueService.listarUniversidades()
+        .then((response) => {
+          this.universidades = response.data.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
   },
   computed: {
     samePassword() {
-      return this.pswd == this.pswd2;
+      return (
+        this.cambioContra.nuevaContrasena == this.cambioContra.repetirContrasena
+      );
     },
     validPassword() {
       return /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s)(?=^.{6,}$).*$/g.test(
-        this.pswd
+        this.cambioContra.nuevaContrasena
       );
     },
+  },
+  mounted() {
+    this.cargarPerfil();
+    this.cargarEstados();
   },
 };
 </script>
