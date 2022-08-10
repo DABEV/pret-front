@@ -7,5 +7,9 @@ class CandidateService {
     updateProfile(candidato) {
         return API.post("candidato/actualizar", candidato);
     }
+
+    updatePhoto(foto){
+        return API.post("candidato/actualizar-foto", foto)
+    }
 }
 export default new CandidateService();

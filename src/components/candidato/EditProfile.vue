@@ -25,7 +25,7 @@
               </vs-col>
               <vs-col lg="7" sm="8" xs="8" class="text-start">
                 <small>
-                  Fecha de nacimiento: {{ candidato.fechaNacimiento }}
+                  Fecha de nacimiento: {{ candidato.fechaNacimiento.slice(0, 10) }}
                 </small>
               </vs-col>
             </vs-row>
@@ -975,6 +975,7 @@ export default {
         getDownloadURL(ref(storage, fullPath))
           .then((url) => {
             this.candidato.foto = url;
+            this.actualizarFoto();
           })
           .catch((error) => {
             console.log(error);
@@ -999,6 +1000,26 @@ export default {
         .then((response) => {
           if (response.data) {
             this.candidato = response.data.data;
+            this.openNotification(
+              1,
+              response.data.title,
+              response.data.message
+            );
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          this.openNotification(
+            4,
+            e.response.data.title,
+            e.response.data.message
+          );
+        });
+    },
+    actualizarFoto: function () {
+      CandidateService.updatePhoto(this.candidato.foto)
+        .then((response) => {
+          if (response.data) {
             this.openNotification(
               1,
               response.data.title,

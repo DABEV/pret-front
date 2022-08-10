@@ -14,8 +14,22 @@
                     }}</small>
                   </p>
                 </vs-col>
-                <vs-col lg="4" sm="12" xs="12" class="center-item">
-                  <vs-avatar primary circle size="100" class="avatar-top-card">
+                <vs-col lg="6" sm="12" xs="12" class="center-item">
+                  <vs-avatar
+                    v-if="reclutador.foto != null"
+                    circle
+                    size="150"
+                    class="avatar-top-card"
+                  >
+                    <img :src="reclutador.foto" alt="" />
+                  </vs-avatar>
+                  <vs-avatar
+                    v-else
+                    circle
+                    size="150"
+                    primary
+                    class="avatar-top-card"
+                  >
                     <i class="bx bx-user-pin avatar-lg-icon"></i>
                   </vs-avatar>
                 </vs-col>
@@ -44,12 +58,7 @@
                         <i class="bx bxs-graduation"></i>
                       </vs-avatar>
                     </vs-col>
-                    <vs-col
-                      lg="10"
-                      sm="9"
-                      xs="9"
-                      class="center-item text-start"
-                    >
+                    <vs-col lg="10" sm="9" xs="9" class="text-start">
                       <p>Puesto: {{ reclutador.puesto.nombre }}</p>
                     </vs-col>
                   </vs-row>
@@ -64,26 +73,35 @@
                         <i class="bx bxs-cake"></i>
                       </vs-avatar>
                     </vs-col>
-                    <vs-col
-                      lg="10"
-                      sm="9"
-                      xs="9"
-                      class="center-item text-start"
-                    >
+                    <vs-col lg="10" sm="9" xs="9" class="text-start">
                       <p>
-                        Fecha de nacimiento: {{ reclutador.fechaNacimiento }}
+                        Fecha de nacimiento: {{ reclutador.fechaNacimiento.slice(0, 10) }}
                       </p>
                     </vs-col>
                   </vs-row>
                 </div>
-                <vs-col lg="2" sm="6" xs="6" class="space">
-                  <vs-button
-                    color="#b13cd2"
-                    block
-                    @click="IrEditar(), (active = !active)"
-                  >
-                    Editar perfil
-                  </vs-button>
+                <vs-col lg="6" sm="6" xs="6" class="space">
+                  <vs-row justify="space-between">
+                    <vs-col lg="5" sm="12" xs="12">
+                      <vs-button
+                        color="#b13cd2"
+                        transparent
+                        block
+                        @click="AbrirCambiar()"
+                      >
+                        Cambiar foto
+                      </vs-button>
+                    </vs-col>
+                    <vs-col lg="5" sm="12" xs="12">
+                      <vs-button
+                        color="#b13cd2"
+                        block
+                        @click="IrEditar(), (active = !active)"
+                      >
+                        Editar perfil
+                      </vs-button>
+                    </vs-col>
+                  </vs-row>
                 </vs-col>
               </div>
             </div>
@@ -324,17 +342,60 @@
         </vs-row>
       </template>
     </vs-dialog>
+
+    <vs-dialog width="450px" prevent-close v-model="activeCambiarFoto">
+      <template #header>
+        <h2>Cambiar foto</h2>
+      </template>
+      <div class="margin-xy space space-top text-center">
+        <small class="bg-primary">Cambiar foto</small>
+        <form enctype="multipart/form-data">
+          <vs-input
+            class="space-top space"
+            color="#1e88e5"
+            type="file"
+            @change="changeImg($event)"
+            accept="image/*"
+            block
+          >
+            <template #icon>
+              <i class="bx bxs-file-pdf"></i>
+            </template>
+          </vs-input>
+          <vs-row justify="center">
+            <vs-col lg="5" sm="12" xs="12" class="space-top center-item">
+              <vs-button
+                transparent
+                dark
+                @click="activeCambiarFoto = !activeCambiarFoto"
+                block
+              >
+                Cancelar
+              </vs-button>
+            </vs-col>
+            <vs-col lg="5" sm="12" xs="12" class="space-top center-item">
+              <vs-button success block @click="subirFoto()">
+                Guardar Cambios
+              </vs-button>
+            </vs-col>
+          </vs-row>
+        </form>
+      </div>
+    </vs-dialog>
   </div>
 </template>
 <script>
 import RecruiterService from "../../service/Recruiter/RecruiterService";
 import AuthService from "../../service/Auth/AuthService";
 import CatalogueService from "../../service/Catalogues/CatalogueService";
+import { storage } from "../../firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export default {
   name: "Profile",
   data: () => ({
     active: false,
+    activeCambiarFoto: false,
     reclutador: {
       nombre: "",
       apellidoPaterno: "",
@@ -645,6 +706,49 @@ export default {
         })
         .catch((e) => {
           console.log(e);
+        });
+    },
+    changeImg: function (e) {
+      this.imagen = e.target.files[0];
+    },
+    AbrirCambiar: function () {
+      this.activeCambiarFoto = !this.activeCambiarFoto;
+    },
+    subirFoto: function () {
+      const child = "imagenes/perfil_reclutador" + this.reclutador.id;
+      const refImg = ref(storage, child);
+      const fullPath = refImg.fullPath;
+      const metadata = { contentType: "img/jpeg" };
+      uploadBytes(refImg, this.imagen, metadata).then(() => {
+        getDownloadURL(ref(storage, fullPath))
+          .then((url) => {
+            this.reclutador.foto = url;
+            this.actualizarFoto();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+      this.activeCambiarFoto = false;
+    },
+    actualizarFoto: function () {
+      RecruiterService.updatePhoto(this.reclutador.foto)
+        .then((response) => {
+          if (response.data) {
+            this.openNotification(
+              1,
+              response.data.title,
+              response.data.message
+            );
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          this.openNotification(
+            4,
+            e.response.data.title,
+            e.response.data.message
+          );
         });
     },
   },
