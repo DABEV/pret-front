@@ -1,4 +1,4 @@
-import API from "../NoTokenApi";
+import API from "../Auth/ApiAuth";
 class AuthService {
     login(data) {
         return API.post("auth/login", data);

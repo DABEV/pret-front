@@ -18,7 +18,7 @@
               <vs-input
                 block
                 primary
-                v-model="email"
+                v-model="correoElectronico"
                 class="space"
                 placeholder="Correo"
               >
@@ -28,7 +28,7 @@
                 primary
                 block
                 type="password"
-                v-model="password"
+                v-model="contrasena"
                 placeholder="Contraseña"
               >
                 <template #icon>
@@ -49,7 +49,7 @@
             >
           </vs-col>
           <vs-col w="5">
-            <vs-button @click="llamarNotificacion()" primary block>
+            <vs-button @click="acceder()" primary block>
               Iniciar sesión
             </vs-button>
           </vs-col>
@@ -94,15 +94,34 @@
   </div>
 </template>
 <script>
+import AuthService from "../../service/Auth/AuthService";
 export default {
   name: "Login",
   option: true,
   methods: {
-    llamarNotificacion: function () {
+    async acceder(){
+      try{
+        let sessionData = { correoElectronico: this.correoElectronico, contrasena: this.contrasena };
+        AuthService.login(sessionData)
+        .then((response) =>{
+          if(response){
+            location.href = "#/";
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          this.llamarNotificacion(4, "Hubo un error!", "a");
+        });
+      }catch(e){
+        console.log(e);
+        this.llamarNotificacion(4, "Hubo un error!", e);
+      }
+    },
+    llamarNotificacion: function (color, titulo, mensaje) {
       this.openNotification(
-        1,
-        "Notificación de prueba",
-        "Mensaje genérico"
+        color,
+        titulo,
+        mensaje
       );
     },
     openNotification(border_, title_, text_) {
@@ -144,6 +163,8 @@ export default {
   },
   data: () => ({
     active: false,
+    correoElectronico: "",
+    contrasena: "",
   }),
 };
 </script>

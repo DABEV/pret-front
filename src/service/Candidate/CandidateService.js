@@ -1,7 +1,7 @@
-import API from "../TokenApi";
+/*import API from "../TokenApi";
 class AuthService {
     getProfile() {
         return API.get("candidato/perfil");
     }
 }
-export default new AuthService();
+export default new AuthService();*/

@@ -70,16 +70,30 @@
             >
               <template #icon><em class="bx bxs-graduation"></em></template>
             </vs-input>
-            <vs-select
-              class="space"
-              block
-              placeholder="Estado de recidencia"
-              v-model="value"
-            >
-              <vs-option label="Morelos" value="1"> Morelos </vs-option>
-              <vs-option label="Puebla" value="2"> Puebla </vs-option>
-              <vs-option label="Sonora" value="3"> Sonora </vs-option>
-            </vs-select>
+            <div class="input-icon-register">
+              <span><i class="bx bxs-map"></i> </span>
+              <select
+                      class="select-custom space"
+                      placeholder="Estado"
+                      v-model="candidato.estadoRepublica"
+                    >
+                      <option
+                        class="select-option"
+                        disabled
+                        :value="candidato.estadoRepublica"
+                      >
+                        {{ candidato.estadoRepublica.nombre }}
+                      </option>
+                      <option
+                        class="select-option"
+                        v-for="(edo, i) in estados"
+                        :key="i"
+                        :value="edo"
+                      >
+                        {{ edo.nombre }}
+                      </option>
+              </select>
+            </div>
             <vs-input
               block
               class="space"
@@ -139,6 +153,7 @@
 </template>
 
 <script>
+import CatalogueService from "../../service/Catalogues/CatalogueService";
 export default {
   name: "RegisterUser",
   data: () => ({
@@ -165,7 +180,32 @@ export default {
     estudios: [],
     idiomas: [],
     certificaciones: [],
+    candidato: {
+      estadoRepublica: {
+        id: 0,
+      },
+    },
+    estados: [
+      {
+        id: 0,
+        nombre: "",
+      },
+    ],
   }),
+  methods: {
+    cargarEstados: function () {
+      CatalogueService.listarEstados()
+        .then((response) => {
+          this.estados = response.data.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+  },
+  mounted() {
+    this.cargarEstados();
+  },
 };
 </script>
 
