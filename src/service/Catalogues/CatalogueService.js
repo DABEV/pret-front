@@ -7,5 +7,8 @@ class CatalogueService {
     listarUniversidades() {
         return API.get("universidad/obtener", );
     }
+    listarPuestos() {
+        return API.get("puesto/obtener", );
+    }
 }
 export default new CatalogueService();
