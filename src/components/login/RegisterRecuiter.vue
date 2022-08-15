@@ -255,6 +255,7 @@ export default {
         .then((response) =>{
           if(response){
             this.llamarNotificacion(1, response.data.title, response.data.message);
+            setTimeout(location.href = "#/acceso/login",4000);
           }
         })
         .catch((e) => {
