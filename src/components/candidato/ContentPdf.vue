@@ -123,15 +123,13 @@
                 No se encontraron registros
               </div>
               <div
-              
-                 :key="i"
+                :key="i"
                 v-for="(hab, i) in $vs.getPage(
                   candidato.conocimientosHabilidades.conocimientos,
-                  page3,
-                 
+                  page3
                 )"
                 :data="hab"
-                class="item" 
+                class="item"
               >
                 <vs-row class="space">
                   <vs-col lg="2" sm="3" xs="3" class="text-center space-top">
@@ -152,36 +150,44 @@
     </div>
     <div class="space space-top long" v-if="candidato.estudios.length != 0">
       <h2 class="text-center">Estudios</h2>
-      <div class="text-center bg-gray">
-        <div>
-          <vs-card-group>
-            <vs-card :key="i" :data="c" v-for="(c, i) in candidato.estudios">
-              <template #text>
-                <vs-row>
-                  <vs-col lg="2" sm="3" xs="3" class="space-top">
-                    <vs-avatar primary size="35">
-                      <i class="bx bx-book"></i>
-                    </vs-avatar>
-                  </vs-col>
-                  <vs-col lg="10" sm="9" xs="9" class="text-start space-top">
-                    <h4>{{ c.gradoAcademico }}</h4>
-                    <small>{{ c.universidad }}</small>
-                  </vs-col>
-                </vs-row>
-                <small class="bold"> {{ c.carrera }}</small>
-                <vs-row justify="space-between">
-                  <vs-col w="4" class="space-top">
-                    Inicio:
-                    <span class="badge-sec"> {{ c.fechaInicio }}</span>
-                  </vs-col>
-                  <vs-col w="4" class="space-top">
-                    Fin:
-                    <span class="badge-sec"> {{ c.fechaFin }}</span>
-                  </vs-col>
-                </vs-row>
-              </template>
-            </vs-card>
-          </vs-card-group>
+      <div class="space-top content-data space datos text-start bg-gray">
+        <div class="center">
+          <vs-table>
+            <template #thead>
+              <vs-tr>
+                <vs-th> Grado académico </vs-th>
+                <vs-th> Universidad </vs-th>
+                <vs-th> Carrera </vs-th>
+                <vs-th> Fecha inicio </vs-th>
+                <vs-th>Fecha fin </vs-th>
+              </vs-tr>
+            </template>
+            <template #tbody>
+              <vs-tr
+                :key="i"
+                v-for="(c, i) in $vs.getPage(candidato.estudios, page2)"
+                :data="c"
+              >
+                <vs-td>
+                  {{ c.gradoAcademico }}
+                </vs-td>
+                <vs-td>
+                  {{ c.universidad }}
+                </vs-td>
+                <vs-td>
+                  {{ c.carrera }}
+                </vs-td>
+                <vs-td>
+                  {{ c.fechaInicio }}
+                </vs-td>
+                <vs-td>
+                  {{ c.fechaFin }}
+                </vs-td>
+              </vs-tr>
+            </template>
+            <template #footer> </template>
+            <template #notFound> No se encontraron registros </template>
+          </vs-table>
         </div>
       </div>
     </div>
@@ -205,8 +211,7 @@
                 :key="i"
                 v-for="(tr, i) in $vs.getPage(
                   candidato.experienciasLaborales,
-                  page,
-                
+                  page
                 )"
                 :data="tr"
               >
@@ -297,17 +302,13 @@
                 <vs-th> Nombre </vs-th>
                 <vs-th> Empresa </vs-th>
                 <vs-th> Obtención </vs-th>
-                <vs-th> Caaducidad </vs-th>
+                <vs-th> Caducidad </vs-th>
               </vs-tr>
             </template>
             <template #tbody>
               <vs-tr
                 :key="i"
-                v-for="(tr, i) in $vs.getPage(
-                  candidato.certificaciones,
-                  page2,
-                 
-                )"
+                v-for="(tr, i) in $vs.getPage(candidato.certificaciones, page2)"
                 :data="tr"
               >
                 <vs-td>
@@ -324,8 +325,7 @@
                 </vs-td>
               </vs-tr>
             </template>
-            <template #footer>
-            </template>
+            <template #footer> </template>
             <template #notFound> No se encontraron registros </template>
           </vs-table>
         </div>
@@ -333,7 +333,7 @@
     </div>
     <div class="space space-top long" v-if="candidato.cursos.length != 0">
       <h2 class="text-center">Cursos realizados</h2>
-        <div class="space-top content-data space datos text-start bg-gray">
+      <div class="space-top content-data space datos text-start bg-gray">
         <div class="center">
           <vs-table>
             <template #thead>
@@ -347,11 +347,7 @@
             <template #tbody>
               <vs-tr
                 :key="i"
-                v-for="(tr, i) in $vs.getPage(
-                  candidato.cursos,
-                  page2,
-                 
-                )"
+                v-for="(tr, i) in $vs.getPage(candidato.cursos, page2)"
                 :data="tr"
               >
                 <vs-td>
@@ -368,42 +364,11 @@
                 </vs-td>
               </vs-tr>
             </template>
-            <template #footer>
-            </template>
+            <template #footer> </template>
             <template #notFound> No se encontraron registros </template>
           </vs-table>
         </div>
       </div>
-      <!-- <div class="text-start bg-gray">
-        <div>
-          <vs-card-group>
-            <vs-card :key="i" :data="c" v-for="(c, i) in candidato.cursos" style="margin-bottom: 50px;">
-              <template #title>
-                <vs-row>
-                  <vs-col lg="2" sm="3" xs="3">
-                    <vs-avatar primary>
-                      <i class="bx bxs-hot"></i>
-                    </vs-avatar>
-                  </vs-col>
-                  <vs-col lg="10" sm="9" xs="9">
-                    <h3>{{ c.nombre }}</h3>
-                  </vs-col>
-                </vs-row>
-              </template>
-              <template #text>
-                <vs-row>
-                  <vs-col w="8">
-                    <p>Fecha: {{ c.fechaObtencion }}</p>
-                  </vs-col>
-                  <vs-col w="4" class="text-end">
-                    <span class="badge-sec">{{ c.numeroHoras }}hrs</span>
-                  </vs-col>
-                </vs-row>
-              </template>
-            </vs-card>
-          </vs-card-group>
-        </div>
-      </div> -->
     </div>
   </div>
 </template>
@@ -420,12 +385,12 @@ export default {
     max: 5,
     max2: 3,
     candidato: {
-       nombre: "Michelle",
+      nombre: "Michelle",
       apellidoPaterno: "Rivera",
       apellidoMaterno: "Solaz",
       correoElectronico: "michelle.rivera@example.com",
       habilitado: true,
-        telefono: "(225) 555-0118",
+      telefono: "(225) 555-0118",
       fechaNacimiento: "9/4/12",
       estadoRepublica: {
         nombre: "Morelos",
@@ -439,7 +404,7 @@ export default {
         conocimientos: ["Laravel", "PHP", "Java", "MySQL"],
         habilidades: ["Analista", "Trabajo en Equipo"],
       },
-       cursos: [
+      cursos: [
         {
           nombre: "Fundamento de bases de datos",
           fechaObtencion: "12/4/17",
@@ -529,7 +494,7 @@ export default {
           fechaInicio: "2015",
           fechaFin: "2020",
         },
-         {
+        {
           universidad: "xxxxxxxxxxxxxxxx",
           carrera: "Ingeniería en Manejo de Datos Computacionales",
           gradoAcademico: "Ingeniería en TI y Data Cience",
