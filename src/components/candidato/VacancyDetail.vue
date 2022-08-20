@@ -28,7 +28,7 @@
             </vs-tooltip>
           </vs-col>
           <vs-col lg="2" sm="12" xs="12" class="center-item">
-            <ShareDialog :idCandidato="vacante.id"/>
+            <ShareDialog :idVacante="vacante.id"/>
           </vs-col>
         </vs-row>
         <div class="divider space-top">

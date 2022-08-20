@@ -173,9 +173,13 @@ export default {
           });
       });
       this.activePostular = false;
+      this.CloseDetails();
     },
     ChangePDF: function (e) {
       this.pdf = e.target.files[0];
+    },
+    CloseDetails: function () {
+      this.$emit('CloseDetails')
     },
   },
   props: {

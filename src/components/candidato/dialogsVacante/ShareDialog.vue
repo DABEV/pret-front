@@ -5,7 +5,7 @@
         icon
         animation-type="vertical"
         color="#009ACB"
-        @click="activeCompartir = !activeCompartir"
+        @click="AbrirCompartir()"
       >
         <i class="bx bx-share-alt"></i>
         <template #animate>
@@ -84,18 +84,49 @@
         />
       </div>
     </vs-dialog>
+    <vs-dialog width="450px" class="text-center" v-model="activeConfirmarCom">
+      <template #header>
+        <h4>Confirmación</h4>
+      </template>
+      <div class="text-gray">
+        <p>
+          Seguro de compartir a <b>{{ contacto.nombre }}</b
+          >?
+        </p>
+      </div>
+      <template #footer>
+        <vs-row justify="space-between">
+          <vs-col w="5">
+            <vs-button
+              dark
+              transparent
+              @click="activeConfirmarCom = !activeConfirmarCom"
+              block
+            >
+              Cancelar
+            </vs-button>
+          </vs-col>
+          <vs-col w="5">
+            <vs-button success @click="Compartir()" block>
+              Compartir
+            </vs-button>
+          </vs-col>
+        </vs-row>
+      </template>
+    </vs-dialog>
   </div>
 </template>
 
 <script>
-
 export default {
   name: "ShareDialog",
   data: () => ({
     activeCompartir: false,
+    activeConfirmarCom: false,
     searchCompartir: "",
     pageCompartir: 1,
     maxCompartir: 4,
+    contacto: {},
     contactos: [
       {
         nombre: "Cameron",
@@ -184,15 +215,22 @@ export default {
     ],
   }),
   methods: {
-    CargarContactos: function () {
-      console.log("candidato: " + this.idCandidato);
+    AbrirCompartir: function () {
+      this.activeCompartir = !this.activeCompartir;
+      console.log("vacante: " + this.idVacante);
+    },
+    CargarContactos: function () {},
+    ConfirmarCom: function (contacto) {
+      this.contacto = contacto;
+      this.activeConfirmarCom = true;
+    },
+    Compartir: function () {
+      this.activeCompartir = false;
+      this.activeConfirmarCom = false;
     },
   },
   props: {
-    idCandidato: Number,
-  },
-  mounted() {
-    this.CargarContactos();
+    idVacante: Number,
   },
 };
 </script>
