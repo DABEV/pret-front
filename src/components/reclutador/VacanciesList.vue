@@ -6,24 +6,31 @@
         <div class="center">
           <div class="header-table">
             <vs-row justify="space-between">
-              <vs-col lg="1" sm="4" xs="4">
-                <vs-tooltip>
-                  <vs-button
-                    icon
-                    animation-type="rotate"
-                    color="#B13CD2"
-                    @click="IrAdd()"
-                  >
-                    <i class="bx bx-folder-plus"></i>
-                    <template #animate>
-                      <i class="bx bxs-folder-plus"></i>
-                    </template>
-                  </vs-button>
-                  <template #tooltip> Añadir vacante </template>
-                </vs-tooltip>
-              </vs-col>
-              <vs-col lg="3" sm="4" xs="4">
-                <p class="text-start">Gestiona tus vacantes y sus candidatos</p>
+              <vs-col lg="5" sm="12" xs="12">
+                <vs-row>
+                  <vs-col lg="2" sm="4" xs="4">
+                    <vs-tooltip not-hover>
+                      <vs-button
+                        icon
+                        animation-type="rotate"
+                        color="#B13CD2"
+                        to="/reclutador/registrarVacante"
+                      >
+                        <i class="bx bx-folder-plus"></i>
+                        <template #animate>
+                          <i class="bx bxs-folder-plus"></i>
+                        </template>
+                      </vs-button>
+                      <template #tooltip> Añadir vacante </template>
+                    </vs-tooltip>
+                  </vs-col>
+                  <vs-col lg="10" sm="4" xs="4">
+                    <p class="text-start bold">
+                      Gestiona la información de tus vacantes
+                    </p>
+                    <small>Visualiza a los candidatos postulados</small>
+                  </vs-col>
+                </vs-row>
               </vs-col>
               <vs-col lg="4" sm="12" xs="12">
                 <vs-input
@@ -318,9 +325,6 @@ export default {
   methods: {
     Confirmar: function (contacto) {
       this.contacto = contacto;
-    },
-    IrAdd: function () {
-      this.$router.push("/reclutador/registrarVacante");
     },
     IrSeleccion1: function () {
       this.$router.push("/reclutador/candidatos");

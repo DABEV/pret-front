@@ -1,4 +1,5 @@
-import API from "../Auth/ApiAuth";
+
+import API from "../NoTokenApi";
 
 class CatalogueService {
     listarEstados() {
@@ -9,6 +10,9 @@ class CatalogueService {
     }
     listarPuestos() {
         return API.get("puesto/obtener", );
+    
+    listarBeneficios() {
+        return API.get("beneficio/obtener", );
     }
 }
 export default new CatalogueService();
