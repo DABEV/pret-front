@@ -1,7 +1,12 @@
+
 import API from "../TokenApi";
 class RecruiterService {
     getProfile() {
         return API.get("reclutador/perfil");
+    }
+    
+    registrar(data){
+        return API.post("reclutador/registrar", data);
     }
 
     updateProfile(candidato) {

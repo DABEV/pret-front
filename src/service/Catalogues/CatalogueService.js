@@ -1,3 +1,4 @@
+
 import API from "../NoTokenApi";
 
 class CatalogueService {
@@ -7,6 +8,8 @@ class CatalogueService {
     listarUniversidades() {
         return API.get("universidad/obtener", );
     }
+    listarPuestos() {
+        return API.get("puesto/obtener", );
     
     listarBeneficios() {
         return API.get("beneficio/obtener", );

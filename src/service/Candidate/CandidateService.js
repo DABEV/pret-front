@@ -1,3 +1,4 @@
+
 import API from "../TokenApi";
 class CandidateService {
     getProfile() {

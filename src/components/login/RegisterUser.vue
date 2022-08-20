@@ -70,16 +70,30 @@
             >
               <template #icon><em class="bx bxs-graduation"></em></template>
             </vs-input>
-            <vs-select
-              class="space"
-              block
-              placeholder="Estado de recidencia"
-              v-model="value"
-            >
-              <vs-option label="Morelos" value="1"> Morelos </vs-option>
-              <vs-option label="Puebla" value="2"> Puebla </vs-option>
-              <vs-option label="Sonora" value="3"> Sonora </vs-option>
-            </vs-select>
+            <div class="input-icon-register">
+              <span><i class="bx bxs-map"></i> </span>
+              <select
+                      class="select-custom space"
+                      placeholder="Estado"
+                      v-model="candidato.estadoRepublica"
+                    >
+                      <option
+                        class="select-option"
+                        disabled
+                        :value="candidato.estadoRepublica"
+                      >
+                        {{ candidato.estadoRepublica.nombre }}
+                      </option>
+                      <option
+                        class="select-option"
+                        v-for="(edo, i) in estados"
+                        :key="i"
+                        :value="edo"
+                      >
+                        {{ edo.nombre }}
+                      </option>
+              </select>
+            </div>
             <vs-input
               block
               class="space"
@@ -119,7 +133,7 @@
         </vs-row>
         <vs-row justify="space-around" class="space-top">
           <vs-col w="4">
-            <vs-button block animation-type="vertical">
+            <vs-button @click="registrar()" block animation-type="vertical">
               Crear cuenta
               <template #animate>
                 <em class="bx bx-log-in-circle"></em>&nbsp;Registrarse
@@ -139,6 +153,8 @@
 </template>
 
 <script>
+import CatalogueService from "../../service/Catalogues/CatalogueService";
+import CandidateNoTokenService from "../../service/Candidate/CandidateNoTokenService";
 export default {
   name: "RegisterUser",
   data: () => ({
@@ -152,7 +168,7 @@ export default {
     habilitado: true,
     tituloCurricular: "",
     telefono: "",
-    fechaNacimiento: "9/4/12",
+    fechaNacimiento: "",
     correoElectronico: "",
     contrasena: "",
     descripcionPerfil: "",
@@ -165,7 +181,100 @@ export default {
     estudios: [],
     idiomas: [],
     certificaciones: [],
+    candidato: {
+      estadoRepublica: {
+        id: 0,
+      },
+    },
+    estados: [
+      {
+        id: 0,
+        nombre: "",
+      },
+    ],
   }),
+  methods: {
+    cargarEstados: function () {
+      CatalogueService.listarEstados()
+        .then((response) => {
+          this.estados = response.data.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        }); 
+    },
+    async registrar(){
+      try{
+        let candidateData = { 
+          nombre: this.nombre, 
+          apellidoPaterno: this.apellidoPaterno, 
+          apellidoMaterno: this.apellidoMaterno,
+          correoElectronico: this.correoElectronico,
+          contrasena: this.contrasena,
+          telefono: this.telefono,
+          fechaNacimiento: this.fechaNacimiento,
+          estadoRepublica: this.candidato.estadoRepublica,
+          descripcionPerfil: this.descripcionPerfil,
+          tituloCurricular: this.tituloCurricular,
+           };
+        CandidateNoTokenService.registrar(candidateData)
+        .then((response) =>{
+          if(response){
+            this.llamarNotificacion(1, response.data.title, response.data.message);
+            setTimeout(location.href = "#/acceso/login",4000);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          this.llamarNotificacion(4, "Hubo un error!", "Verifica los datos, puede que te haya faltado ingresar uno");
+        });
+      }catch(e){
+        console.log(e);
+        this.llamarNotificacion(4, "Hubo un error!");
+      }
+    },
+    llamarNotificacion: function (color, titulo, mensaje) {
+      this.openNotification(
+        color,
+        titulo,
+        mensaje
+      );
+    },
+    openNotification(border_, title_, text_) {
+      let tipo = "";
+      let icon_ = "";
+      switch (border_) {
+        case 1:
+          tipo = 'success';
+          icon_ = `<i class='bx bx-check-circle' ></i>`;
+          break;
+        case 2:
+          tipo = 'primary';
+          icon_ = `<i class='bx bx-info-circle'></i>`;
+          break;
+        case 3:
+          tipo = 'warning';
+          icon_ = `<i class='bx bx-error'></i>`;
+          break;
+        case 4:
+          tipo = 'danger';
+          icon_ = `<i class='bx bx-x-circle'></i>`;
+          break;
+      }
+      this.$vs.notification({
+        progress: "auto",
+        position: null,
+        title: title_,
+        text: text_,
+        border: tipo,
+        icon: icon_,
+      });
+    },
+  },
+  
+  mounted() {
+    this.cargarEstados();
+  },
 };
 </script>
 

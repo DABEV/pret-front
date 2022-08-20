@@ -45,23 +45,63 @@
               block
               class="space"
               primary
-              v-model="nombreEmpresa"
-              placeholder="Empresa"
+              v-model="telefono"
+              placeholder="Télefono"
             >
-              <template #icon><em class="bx bxs-buildings"></em></template>
+              <template #icon><em class="bx bxs-phone"></em></template>
             </vs-input>
+            <div class="input-icon-register">
+              <span><i class="bx bxs-briefcase"></i> </span>
+              <select
+                      class="select-custom space"
+                      placeholder="Puesto de trabajo"
+                      v-model="reclutador.puesto"
+                    >
+                      <option
+                        class="select-option"
+                        v-for="(pues, i) in puestos"
+                        :key="i"
+                        :value="pues"
+                      >
+                        {{ pues.nombre }}
+                      </option>
+              </select>
+            </div>
           </vs-col>
           <vs-col lg="5" sm="12" xs="12">
-            <vs-select
-              class="space"
+            <vs-input
               block
-              placeholder="Estado"
-              v-model="value"
+              class="space input-date"
+              type="date"
+              primary
+              v-model="fechaNacimiento"
             >
-              <vs-option label="Morelos" value="1"> Morelos </vs-option>
-              <vs-option label="Puebla" value="2"> Puebla </vs-option>
-              <vs-option label="Sonora" value="3"> Sonora </vs-option>
-            </vs-select>
+              <template #icon><em class="bx bxs-calendar"></em></template>
+            </vs-input>
+            <div class="input-icon-register">
+              <span><i class="bx bxs-map"></i> </span>
+              <select
+                      class="select-custom space"
+                      placeholder="Estado"
+                      v-model="candidato.estadoRepublica"
+                    >
+                      <option
+                        class="select-option"
+                        disabled
+                        :value="candidato.estadoRepublica"
+                      >
+                        {{ candidato.estadoRepublica.nombre }}
+                      </option>
+                      <option
+                        class="select-option"
+                        v-for="(edo, i) in estados"
+                        :key="i"
+                        :value="edo"
+                      >
+                        {{ edo.nombre }}
+                      </option>
+              </select>
+            </div>
             <vs-input
               block
               class="space"
@@ -76,7 +116,7 @@
               block
               class="space"
               type="password"
-              v-model="value"
+              v-model="contrasena"
               placeholder="Contraseña"
             >
               <template #icon><em class="bx bxs-lock-alt"></em></template>
@@ -86,7 +126,7 @@
               block
               class="space"
               type="password"
-              v-model="contrasena"
+              v-model="value"
               placeholder="Repetir contraseña"
             >
               <template #icon><em class="bx bxs-lock-alt"></em></template>
@@ -98,18 +138,19 @@
           <vs-col lg="11" sm="12" xs="12">
             <vs-input
               block
+              class="space"
               primary
-              v-model="puesto"
-              placeholder="Puesto de trabajo"
+              v-model="nombreEmpresa"
+              placeholder="Empresa"
             >
-              <template #icon><em class="bx bxs-briefcase"></em></template>
+              <template #icon><em class="bx bxs-buildings"></em></template>
             </vs-input>
           </vs-col>
         </vs-row>
         <br />
         <vs-row justify="space-around">
           <vs-col w="4">
-            <vs-button block animation-type="vertical">
+            <vs-button @click="registrar()" block animation-type="vertical">
               Crear cuenta
               <template #animate>
                 <em class="bx bx-log-in-circle"></em>&nbsp;Registrarse
@@ -129,6 +170,8 @@
   </div>
 </template>
 <script>
+import CatalogueService from "../../service/Catalogues/CatalogueService";
+import RecruiterService from "../../service/Recruiter/RecruiterService";
 export default {
   name: "RegisterRecuiter",
   data: () => ({
@@ -151,7 +194,122 @@ export default {
     nombreEmpresa: "",
     correoElectronico: "",
     contrasena: "",
+    candidato: {
+      estadoRepublica: {
+        id: 0,
+      },
+    },
+    reclutador: {
+      puesto: {
+        id: 0,
+      }
+    },
+    estados: [
+      {
+        id: 0,
+        nombre: "",
+      },
+    ],
+    puestos: [
+      {
+        id: 0,
+        nombre: "",
+      }
+    ],
   }),
+  methods: {
+    cargarEstados: function () {
+      CatalogueService.listarEstados()
+        .then((response) => {
+          this.estados = response.data.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    cargarPuestos: function () {
+      CatalogueService.listarPuestos()
+        .then((response) => {
+          this.puestos = response.data.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    async registrar(){
+      try{
+        let recruiterData = { 
+          nombre: this.nombre, 
+          apellidoPaterno: this.apellidoPaterno, 
+          apellidoMaterno: this.apellidoMaterno,
+          correoElectronico: this.correoElectronico,
+          contrasena: this.contrasena,
+          telefono: this.telefono,
+          fechaNacimiento: this.fechaNacimiento,
+          estadoRepublica: this.candidato.estadoRepublica,
+          puesto: this.reclutador.puesto,
+          nombreEmpresa: this.nombreEmpresa,
+          estadoRepublicaEmpresa: this.candidato.estadoRepublica,
+           };
+        RecruiterService.registrar(recruiterData)
+        .then((response) =>{
+          if(response){
+            this.llamarNotificacion(1, response.data.title, response.data.message);
+            setTimeout(location.href = "#/acceso/login",4000);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          this.llamarNotificacion(4, "Hubo un error!", "Verifica los datos, puede que te haya faltado ingresar uno");
+        });
+      }catch(e){
+        console.log(e);
+        this.llamarNotificacion(4, "Hubo un error!", e);
+      }
+    },
+    llamarNotificacion: function (color, titulo, mensaje) {
+      this.openNotification(
+        color,
+        titulo,
+        mensaje
+      );
+    },
+    openNotification(border_, title_, text_) {
+      let tipo = "";
+      let icon_ = "";
+      switch (border_) {
+        case 1:
+          tipo = 'success';
+          icon_ = `<i class='bx bx-check-circle' ></i>`;
+          break;
+        case 2:
+          tipo = 'primary';
+          icon_ = `<i class='bx bx-info-circle'></i>`;
+          break;
+        case 3:
+          tipo = 'warning';
+          icon_ = `<i class='bx bx-error'></i>`;
+          break;
+        case 4:
+          tipo = 'danger';
+          icon_ = `<i class='bx bx-x-circle'></i>`;
+          break;
+      }
+      this.$vs.notification({
+        progress: "auto",
+        position: null,
+        title: title_,
+        text: text_,
+        border: tipo,
+        icon: icon_,
+      });
+    },
+  },
+  mounted() {
+    this.cargarPuestos();
+    this.cargarEstados();
+    
+  },
 };
 </script>
 
