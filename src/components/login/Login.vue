@@ -110,7 +110,7 @@ export default {
         })
         .catch((e) => {
           console.log(e);
-          this.llamarNotificacion(4, "Hubo un error!", "a");
+          this.llamarNotificacion(4, "Hubo un error!", "Correo y/o contraseña incorrectos");
         });
       }catch(e){
         console.log(e);

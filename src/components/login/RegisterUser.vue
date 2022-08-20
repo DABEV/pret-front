@@ -226,11 +226,11 @@ export default {
         })
         .catch((e) => {
           console.log(e);
-          this.llamarNotificacion(4, "Hubo un error!", "Error de prueba");
+          this.llamarNotificacion(4, "Hubo un error!", "Verifica los datos, puede que te haya faltado ingresar uno");
         });
       }catch(e){
         console.log(e);
-        this.llamarNotificacion(4, "Hubo un error!", e);
+        this.llamarNotificacion(4, "Hubo un error!");
       }
     },
     llamarNotificacion: function (color, titulo, mensaje) {
