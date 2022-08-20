@@ -18,6 +18,8 @@ import Favorites from "@/components/candidato/Favorites.vue"
 import EditProfile from "@/components/candidato/EditProfile.vue"
 import ProfileRec from "@/components/reclutador/Profile.vue"
 
+import VacancyDetail from "@/components/candidato/VacancyDetail.vue"
+
 const routes = [
   {
     path: "/",
@@ -115,6 +117,11 @@ const routes = [
         path: "favoritos",
         name: "Favoritos",
         component: Favorites,
+      },
+      {
+        path: "vacanteDetalle/:id",
+        name: "Detalle de Vacante",
+        component: VacancyDetail,
       },
     ],
   },
