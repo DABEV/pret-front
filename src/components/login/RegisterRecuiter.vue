@@ -53,18 +53,18 @@
             <div class="input-icon-register">
               <span><i class="bx bxs-briefcase"></i> </span>
               <select
-                      class="select-custom space"
-                      placeholder="Puesto de trabajo"
-                      v-model="reclutador.puesto"
-                    >
-                      <option
-                        class="select-option"
-                        v-for="(pues, i) in puestos"
-                        :key="i"
-                        :value="pues"
-                      >
-                        {{ pues.nombre }}
-                      </option>
+                class="select-custom space"
+                placeholder="Puesto de trabajo"
+                v-model="reclutador.puesto"
+              >
+                <option
+                  class="select-option"
+                  v-for="(pues, i) in puestos"
+                  :key="i"
+                  :value="pues"
+                >
+                  {{ pues.nombre }}
+                </option>
               </select>
             </div>
           </vs-col>
@@ -81,25 +81,25 @@
             <div class="input-icon-register">
               <span><i class="bx bxs-map"></i> </span>
               <select
-                      class="select-custom space"
-                      placeholder="Estado"
-                      v-model="candidato.estadoRepublica"
-                    >
-                      <option
-                        class="select-option"
-                        disabled
-                        :value="candidato.estadoRepublica"
-                      >
-                        {{ candidato.estadoRepublica.nombre }}
-                      </option>
-                      <option
-                        class="select-option"
-                        v-for="(edo, i) in estados"
-                        :key="i"
-                        :value="edo"
-                      >
-                        {{ edo.nombre }}
-                      </option>
+                class="select-custom space"
+                placeholder="Estado"
+                v-model="candidato.estadoRepublica"
+              >
+                <option
+                  class="select-option"
+                  disabled
+                  :value="candidato.estadoRepublica"
+                >
+                  {{ candidato.estadoRepublica.nombre }}
+                </option>
+                <option
+                  class="select-option"
+                  v-for="(edo, i) in estados"
+                  :key="i"
+                  :value="edo"
+                >
+                  {{ edo.nombre }}
+                </option>
               </select>
             </div>
             <vs-input
@@ -132,7 +132,6 @@
               <template #icon><em class="bx bxs-lock-alt"></em></template>
             </vs-input>
           </vs-col>
-            
         </vs-row>
         <vs-row justify="space-around">
           <vs-col lg="11" sm="12" xs="12">
@@ -202,7 +201,7 @@ export default {
     reclutador: {
       puesto: {
         id: 0,
-      }
+      },
     },
     estados: [
       {
@@ -214,7 +213,7 @@ export default {
       {
         id: 0,
         nombre: "",
-      }
+      },
     ],
   }),
   methods: {
@@ -236,11 +235,11 @@ export default {
           console.log(e);
         });
     },
-    async registrar(){
-      try{
-        let recruiterData = { 
-          nombre: this.nombre, 
-          apellidoPaterno: this.apellidoPaterno, 
+    async registrar() {
+      try {
+        let recruiterData = {
+          nombre: this.nombre,
+          apellidoPaterno: this.apellidoPaterno,
           apellidoMaterno: this.apellidoMaterno,
           correoElectronico: this.correoElectronico,
           contrasena: this.contrasena,
@@ -250,48 +249,52 @@ export default {
           puesto: this.reclutador.puesto,
           nombreEmpresa: this.nombreEmpresa,
           estadoRepublicaEmpresa: this.candidato.estadoRepublica,
-           };
+        };
         RecruiterService.registrar(recruiterData)
-        .then((response) =>{
-          if(response){
-            this.llamarNotificacion(1, response.data.title, response.data.message);
-            setTimeout(location.href = "#/acceso/login",4000);
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-          this.llamarNotificacion(4, "Hubo un error!", "Verifica los datos, puede que te haya faltado ingresar uno");
-        });
-      }catch(e){
+          .then((response) => {
+            if (response) {
+              this.llamarNotificacion(
+                1,
+                response.data.title,
+                response.data.message
+              );
+              setTimeout((location.href = "#/acceso/login"), 4000);
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+            this.llamarNotificacion(
+              4,
+              e.response.data.title,
+              e.response.data.message
+            );
+          });
+      } catch (e) {
         console.log(e);
         this.llamarNotificacion(4, "Hubo un error!", e);
       }
     },
     llamarNotificacion: function (color, titulo, mensaje) {
-      this.openNotification(
-        color,
-        titulo,
-        mensaje
-      );
+      this.openNotification(color, titulo, mensaje);
     },
     openNotification(border_, title_, text_) {
       let tipo = "";
       let icon_ = "";
       switch (border_) {
         case 1:
-          tipo = 'success';
+          tipo = "success";
           icon_ = `<i class='bx bx-check-circle' ></i>`;
           break;
         case 2:
-          tipo = 'primary';
+          tipo = "primary";
           icon_ = `<i class='bx bx-info-circle'></i>`;
           break;
         case 3:
-          tipo = 'warning';
+          tipo = "warning";
           icon_ = `<i class='bx bx-error'></i>`;
           break;
         case 4:
-          tipo = 'danger';
+          tipo = "danger";
           icon_ = `<i class='bx bx-x-circle'></i>`;
           break;
       }
@@ -308,10 +311,8 @@ export default {
   mounted() {
     this.cargarPuestos();
     this.cargarEstados();
-    
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

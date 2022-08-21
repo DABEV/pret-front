@@ -2,6 +2,7 @@ import Vue from "vue";
 import App from "./App.vue";
 import Vuesax from "vuesax";
 import VueRouter from "vue-router";
+import store from "../src/store/store";
 import "vuesax/dist/vuesax.css";
 import "boxicons";
 
@@ -16,10 +17,22 @@ const router = new VueRouter({
   linkExactActiveClass: "nav-item active",
 });
 
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth) {
+    if (!store.getters.getStatusLogin) {
+      next({ name: "Login" });
+    }
+  } else {
+    next();
+  }
+  next();
+})
+
 Vue.use(VueRouter);
 Vue.use(Vuesax);
 
 new Vue({
-  render: (h) => h(App),
   router,
+  store,
+  render: (h) => h(App),
 }).$mount("#app");

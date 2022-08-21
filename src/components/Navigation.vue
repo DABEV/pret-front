@@ -10,6 +10,7 @@
       <template #left>
         <vs-button
           @click="activeSidebar = !activeSidebar"
+          v-if="isAuth"
           class="bg-white"
           transparent
           icon
@@ -25,7 +26,8 @@
         </vs-navbar-item>
       </template>
       <template #right>
-        <vs-button transparent class="bg-white">Acceso</vs-button>
+        <vs-button v-if="!isAuth" transparent class="bg-white">Acceso</vs-button>
+        <vs-button @click="cerrarSesion()" v-else transparent class="bg-white">Cerrar sesión</vs-button>
         &nbsp;
       </template>
     </vs-navbar>
@@ -130,5 +132,19 @@ export default {
     active: "home",
     activeSidebar: false,
   }),
+  methods: {
+    async cerrarSesion() {
+      try {
+        await this.$store.dispatch("logout");
+      } catch (e) {
+        console.log(e);
+      }
+    },
+  },
+  computed: {
+    isAuth(){
+      return localStorage.getItem("token");
+    }
+  }
 };
 </script>

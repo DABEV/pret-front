@@ -94,53 +94,42 @@
   </div>
 </template>
 <script>
-import AuthService from "../../service/Auth/AuthService";
 export default {
   name: "Login",
   option: true,
   methods: {
-    async acceder(){
-      try{
-        let sessionData = { correoElectronico: this.correoElectronico, contrasena: this.contrasena };
-        AuthService.login(sessionData)
-        .then((response) =>{
-          if(response){
-            location.href = "#/";
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-          this.llamarNotificacion(4, "Hubo un error!", "Correo y/o contraseña incorrectos");
-        });
-      }catch(e){
+    async acceder() {
+      try {
+        let sessionData = {
+          correoElectronico: this.correoElectronico,
+          contrasena: this.contrasena,
+        };
+        await this.$store.dispatch("doLogin", sessionData);
+      } catch (e) {
         console.log(e);
       }
     },
     llamarNotificacion: function (color, titulo, mensaje) {
-      this.openNotification(
-        color,
-        titulo,
-        mensaje
-      );
+      this.openNotification(color, titulo, mensaje);
     },
     openNotification(border_, title_, text_) {
       let tipo = "";
       let icon_ = "";
       switch (border_) {
         case 1:
-          tipo = 'success';
+          tipo = "success";
           icon_ = `<i class='bx bx-check-circle' ></i>`;
           break;
         case 2:
-          tipo = 'primary';
+          tipo = "primary";
           icon_ = `<i class='bx bx-info-circle'></i>`;
           break;
         case 3:
-          tipo = 'warning';
+          tipo = "warning";
           icon_ = `<i class='bx bx-error'></i>`;
           break;
         case 4:
-          tipo = 'danger';
+          tipo = "danger";
           icon_ = `<i class='bx bx-x-circle'></i>`;
           break;
       }

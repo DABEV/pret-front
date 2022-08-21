@@ -24,7 +24,6 @@ const routes = [
   {
     path: "/",
     component: ContentLayout,
-    redirect: "/",
     children: [
       {
         path: "",
@@ -65,23 +64,39 @@ const routes = [
         path: "vacantes",
         name: "Vacantes",
         component: VacanciesList,
+        meta: {
+          requiresAuth: true
+        },
       },
       {
         path: "registrarVacante",
         name: "Registro Vacante",
         component: RegisterVacancy,
+        meta: {
+          requiresAuth: true
+        },
       },
       {
         path: "candidatos",
-        name: "Lista de Candidaos",
+        name: "Lista de Candidatos",
         component: CandidatesList,
+        meta: {
+          requiresAuth: true
+        },
       },
       {
         path: "perfil",
         name: "Perfil reclutador",
         component: ProfileRec,
+        meta: {
+          requiresAuth: true
+        },
       },
+      
     ],
+    meta: {
+      requiresAuth: true
+    },
   },
 
   {
@@ -92,38 +107,62 @@ const routes = [
         path: "buscar",
         name: "Vacantes disponibles",
         component: Vacancies,
+        meta: {
+          requiresAuth: true
+        },
       },
       {
         path: "perfil",
         name: "Perfil de usuario",
         component: Profile,
+        meta: {
+          requiresAuth: true
+        },
       },
       {
         path: "editarPerfil",
         name: "Editar Perfil",
         component: EditProfile,
+        meta: {
+          requiresAuth: true
+        },
       },
       {
         path: "contactos",
         name: "Contactos",
         component: ContactList,
+        meta: {
+          requiresAuth: true
+        },
       },
       {
         path: "postulaciones",
         name: "Postulaciones",
         component: Status,
+        meta: {
+          requiresAuth: true
+        },
       },
       {
         path: "favoritos",
         name: "Favoritos",
         component: Favorites,
+        meta: {
+          requiresAuth: true
+        },
       },
       {
         path: "vacanteDetalle/:id",
         name: "Detalle de Vacante",
         component: VacancyDetail,
+        meta: {
+          requiresAuth: true
+        },
       },
     ],
+    meta: {
+      requiresAuth: true
+    },
   },
 
   {
