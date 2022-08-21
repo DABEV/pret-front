@@ -154,7 +154,7 @@
 
 <script>
 import CatalogueService from "../../service/Catalogues/CatalogueService";
-import CandidateNoTokenService from "../../service/Candidate/CandidateNoTokenService";
+import CandidateService from "../../service/Candidate/CandidateService";
 export default {
   name: "RegisterUser",
   data: () => ({
@@ -217,7 +217,7 @@ export default {
           descripcionPerfil: this.descripcionPerfil,
           tituloCurricular: this.tituloCurricular,
            };
-        CandidateNoTokenService.registrar(candidateData)
+        CandidateService.registrar(candidateData)
         .then((response) =>{
           if(response){
             this.llamarNotificacion(1, response.data.title, response.data.message);

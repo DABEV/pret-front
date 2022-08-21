@@ -10,6 +10,7 @@ class CatalogueService {
     }
     listarPuestos() {
         return API.get("puesto/obtener", );
+    }
     
     listarBeneficios() {
         return API.get("beneficio/obtener", );

@@ -1,16 +1,20 @@
-
-import API from "../TokenApi";
+import API from "../NoTokenApi";
+import API_TOKEN from "../TokenApi";
 class CandidateService {
     getProfile() {
-        return API.get("candidato/perfil");
+        return API_TOKEN.get("candidato/perfil");
     }
 
     updateProfile(candidato) {
-        return API.post("candidato/actualizar", candidato);
+        return API_TOKEN.post("candidato/actualizar", candidato);
+    }
+
+    registrar(data){
+        return API.post("candidato/registrar", data);
     }
 
     updatePhoto(foto){
-        return API.post("candidato/actualizar-foto", foto)
+        return API_TOKEN.post("candidato/actualizar-foto", foto)
     }
 }
 export default new CandidateService();

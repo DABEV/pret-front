@@ -1,8 +1,8 @@
-
-import API from "../TokenApi";
+import API from "../NoTokenApi";
+import API_TOKEN from "../TokenApi";
 class RecruiterService {
     getProfile() {
-        return API.get("reclutador/perfil");
+        return API_TOKEN.get("reclutador/perfil");
     }
     
     registrar(data){
@@ -10,11 +10,11 @@ class RecruiterService {
     }
 
     updateProfile(candidato) {
-        return API.post("reclutador/actualizar", candidato);
+        return API_TOKEN.post("reclutador/actualizar", candidato);
     }
 
     updatePhoto(foto){
-        return API.post("reclutador/actualizar-foto", foto)
+        return API_TOKEN.post("reclutador/actualizar-foto", foto)
     }
 }
 export default new RecruiterService();

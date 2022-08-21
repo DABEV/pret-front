@@ -114,7 +114,6 @@ export default {
         });
       }catch(e){
         console.log(e);
-        this.llamarNotificacion(4, "Hubo un error!", e);
       }
     },
     llamarNotificacion: function (color, titulo, mensaje) {
