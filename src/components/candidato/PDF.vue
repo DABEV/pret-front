@@ -1,6 +1,19 @@
 <template>
   <div>
-    <button @click="exportToPDF">Export to PDF</button>
+    <vs-tooltip>
+      <vs-button
+        @click="exportToPDF"
+        icon
+        animation-type="rotate"
+        color="#B13CD2"
+      >
+        <i class="bx bx-download"></i>
+        <template #animate>
+          <i class="bx bx-import"></i>
+        </template>
+      </vs-button>
+      <template #tooltip> Descargar CV </template>
+    </vs-tooltip>
     <vue-html2pdf
       :show-layout="false"
       :float-layout="true"
