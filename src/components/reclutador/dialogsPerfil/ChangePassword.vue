@@ -166,17 +166,25 @@ export default {
       AuthService.cambiarContrasena(this.cambioContra)
         .then((response) => {
           if (response.data) {
-            this.openNotification(
-              1,
-              response.data.title,
-              response.data.message
-            );
+            if (response.data.data) {
+              this.openNotification(
+                1,
+                response.data.title,
+                response.data.message
+              );
+              this.cerrarSesion();
+            } else {
+              this.openNotification(
+                4,
+                response.data.title,
+                response.data.message
+              );
+            }
             this.cambioContra = {
               contrasena: "",
               nuevaContrasena: "",
               repetirContrasena: "",
             };
-            this.cerrarSesion()
           }
         })
         .catch((e) => {
