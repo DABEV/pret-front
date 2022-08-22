@@ -10,6 +10,7 @@ import Profile from "@/components/candidato/Profile.vue";
 import Status from "@/components/candidato/Status.vue";
 import ContactList from "@/components/candidato/ContactList.vue";
 import VacanciesList from "@/components/reclutador/VacanciesList.vue";
+import PDF from "@/components/candidato/PDF.vue";
 
 import Vacancies from "@/components/candidato/Vacancies.vue";
 import ErrorLayout from "@/layout/ErrorLayout.vue"
@@ -103,6 +104,11 @@ const routes = [
     path: "/candidato",
     component: ContentLayout,
     children: [
+      {
+        path: "pdfconvert",
+        name: "Generate",
+        component: PDF,
+      },
       {
         path: "buscar",
         name: "Vacantes disponibles",
