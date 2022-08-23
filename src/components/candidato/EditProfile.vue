@@ -25,7 +25,8 @@
               </vs-col>
               <vs-col lg="7" sm="8" xs="8" class="text-start">
                 <small>
-                  Fecha de nacimiento: {{ candidato.fechaNacimiento.slice(0, 10) }}
+                  Fecha de nacimiento:
+                  {{ candidato.fechaNacimiento.slice(0, 10) }}
                 </small>
               </vs-col>
             </vs-row>
@@ -113,78 +114,9 @@
           </div>
         </vs-col>
       </vs-row>
-      <div class="content-data space space-top datos text-start bg-gray">
-        <vs-row justify="space-between">
-          <vs-col lg="5" sm="12" xs="12">
-            <h4 class="bg-gray space-top">Cambiar tu contraseña</h4>
-          </vs-col>
-          <vs-col lg="2" sm="12" xs="12">
-            <vs-button block success @click="actualizarContrasena()">
-              Guardar contraseña
-            </vs-button>
-          </vs-col>
-        </vs-row>
-        <vs-row justify="center" class="space-top">
-          <vs-col lg="6" sm="12" xs="12">
-            <vs-input
-              class="space-top space padding-y"
-              placeholder="Actual contraseña"
-              color="#1e88e5"
-              v-model="cambioContra.contrasena"
-              type="password"
-              block
-            >
-              <template #icon>
-                <i class="bx bxs-lock"></i>
-              </template>
-            </vs-input>
-          </vs-col>
-        </vs-row>
-        <vs-row
-          justify="space-between"
-          class="space-top"
-          v-if="cambioContra.contrasena != ''"
-        >
-          <vs-col lg="6" sm="12" xs="12">
-            <vs-input
-              class="space-top space padding-y"
-              placeholder="Nueva contraseña"
-              color="#1e88e5"
-              v-model="cambioContra.nuevaContrasena"
-              type="password"
-              block
-            >
-              <template #icon>
-                <i class="bx bxs-lock"></i>
-              </template>
-              <template
-                v-if="!validPassword && cambioContra.nuevaContrasena != ''"
-                #message-danger
-              >
-                Tamaño min 6, incluir al menos un número, mayúscula y un
-                caracter especial
-              </template>
-            </vs-input>
-          </vs-col>
-          <vs-col lg="6" sm="12" xs="12">
-            <vs-input
-              class="space-top space padding-x"
-              placeholder="Repite la contraseña"
-              color="#1e88e5"
-              v-model="cambioContra.repetirContrasena"
-              type="password"
-              block
-            >
-              <template #icon>
-                <i class="bx bxs-lock"></i>
-              </template>
-              <template v-if="!samePassword" #message-danger>
-                Las contraseñas no coinciden
-              </template>
-            </vs-input>
-          </vs-col>
-        </vs-row>
-      </div>
+    </div>
+    <ChangePassword />
+    <div class="space content-card">
       <div class="text-center bg-gray">
         <div>
           <vs-card-group>
@@ -801,8 +733,8 @@
 import { storage } from "../../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import CandidateService from "../../service/Candidate/CandidateService";
-import AuthService from "../../service/Auth/AuthService";
 import CatalogueService from "../../service/Catalogues/CatalogueService";
+import ChangePassword from "../reclutador/dialogsPerfil/ChangePassword.vue";
 
 export default {
   name: "EditProfile",
@@ -821,11 +753,6 @@ export default {
     habilidad: "",
     imagen: null,
     estado: {},
-    cambioContra: {
-      contrasena: "",
-      nuevaContrasena: "",
-      repetirContrasena: "",
-    },
     idioma: {
       nombre: "",
     },
@@ -1036,35 +963,6 @@ export default {
           );
         });
     },
-    actualizarContrasena: function () {
-      if (this.pswdOld != "" && this.validPassword && this.samePassword) {
-        AuthService.cambiarContrasena(this.cambioContra)
-          .then((response) => {
-            if (response.data) {
-              this.openNotification(
-                1,
-                response.data.title,
-                response.data.message
-              );
-              this.cambioContra = {
-                contrasena: "",
-                nuevaContrasena: "",
-                repetirContrasena: "",
-              };
-            }
-          })
-          .catch((e) => {
-            console.log(e);
-            this.openNotification(
-              4,
-              e.response.data.title,
-              e.response.data.message
-            );
-          });
-      } else {
-        this.openNotification(2, "Atencion", "Ingrese correctamente los datos");
-      }
-    },
     cargarEstados: function () {
       CatalogueService.listarEstados()
         .then((response) => {
@@ -1084,21 +982,10 @@ export default {
         });
     },
   },
-  computed: {
-    samePassword() {
-      return (
-        this.cambioContra.nuevaContrasena == this.cambioContra.repetirContrasena
-      );
-    },
-    validPassword() {
-      return /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s)(?=^.{6,}$).*$/g.test(
-        this.cambioContra.nuevaContrasena
-      );
-    },
-  },
   mounted() {
     this.cargarPerfil();
     this.cargarEstados();
   },
+  components: { ChangePassword },
 };
 </script>
