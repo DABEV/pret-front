@@ -20,6 +20,7 @@ import EditProfile from "@/components/candidato/EditProfile.vue"
 import ProfileRec from "@/components/reclutador/Profile.vue"
 
 import VacancyDetail from "@/components/candidato/VacancyDetail.vue"
+import pdf from "@/components/candidato/ContentPdf.vue"
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
         path: "",
         name: "Buscar",
         component: Vacancies,
+      },
+      {
+        path: "pdf",
+        name: "pdf",
+        component: pdf,
       },
     ],
   },
