@@ -27,8 +27,17 @@
     color: #b13cd2;
 }
 
+.bg-light {
+    color: white;
+}
+
 .text-start {
     text-align: start;
+}
+
+.text-middle {
+    display:inline-block;
+    vertical-align: middle;
 }
 
 .text-center {
