@@ -10,7 +10,7 @@
           <small>Ubicado en: {{ estadoRepublicaEmpresaReclutador }}</small>
         </vs-col>
         <vs-col lg="2" sm="12" xs="12">
-          <ApplyDialog :vacante="vacante" @CloseDetails="CloseDetails" />
+          <ApplyDialog v-if="isAuth" :vacante="vacante" @CloseDetails="CloseDetails" />
         </vs-col>
       </vs-row>
       <div class="divider space-top">
@@ -18,7 +18,7 @@
       </div>
       <vs-row justify="space-around" class="space-top">
         <vs-col lg="9" sm="10" xs="12">
-          <small class="bg-primary"> Vigencia: {{ vacante.fechaFin }} </small>
+          <small class="bg-primary"> Vigencia: {{ vacante.fechaVigencia }} </small>
         </vs-col>
         <vs-col lg="2" sm="12" xs="12" class="text-end">
           <small class="badge-sec">{{ vacante.modalidad }}</small>
@@ -90,6 +90,11 @@ export default {
     estadoRepublicaEmpresaReclutador: String,
     vacante: Object,
   },
+  computed: {
+    isAuth(){
+      return localStorage.getItem("token");
+    }
+  }
 };
 </script>
 

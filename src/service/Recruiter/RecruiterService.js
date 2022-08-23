@@ -16,5 +16,14 @@ class RecruiterService {
     updatePhoto(foto){
         return API_TOKEN.post("reclutador/actualizar-foto", foto)
     }
+
+    listarVacantes(){
+        return API_TOKEN.get("vacante/obtener/reclutador", );
+    }
+
+    registrarVacante(data){
+        return API_TOKEN.post("vacante/registrar", data);
+    }
+    
 }
 export default new RecruiterService();

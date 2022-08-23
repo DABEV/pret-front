@@ -6,7 +6,7 @@
         <div class="center">
           <vs-row justify="center">
             <vs-col lg="2">
-              <vs-button success block animation-type="vertical">
+              <vs-button @click="registrarVacante()" success block animation-type="vertical">
                 Publicar vacante
                 <template #animate>
                   <i class="bx bxs-save"></i>&nbsp;Guardar
@@ -21,7 +21,7 @@
                 primary
                 block
                 class="space"
-                v-model="nombre"
+                v-model="vacante.nombre"
                 placeholder="Título de la postulación"
               >
                 <template #icon><em class="bx bxs-notepad"></em></template>
@@ -31,7 +31,7 @@
                 primary
                 block
                 class="space"
-                v-model="tipo"
+                v-model="vacante.tipo"
                 placeholder="Horario de trabajo"
               >
                 <template #icon><em class="bx bxs-time-five"></em></template>
@@ -42,7 +42,7 @@
                 block
                 class="space"
                 type="number"
-                v-model="sueldoMin"
+                v-model="vacante.sueldoMin"
                 placeholder="1000"
               >
                 <template #icon><em class="bx bx-money"></em></template>
@@ -53,31 +53,26 @@
                 block
                 class="space input-date"
                 primary
-                v-model="fechaInicio"
+                v-model="vacante.fechaInicio"
               >
                 <template #icon><em class="bx bxs-calendar"></em></template>
               </vs-input>
             </vs-col>
             <vs-col lg="5" sm="12" xs="12">
               Modalidad
-              <vs-select
-                class="space"
-                block
+              <vs-input
+                primary
+                v-model="vacante.modalidad"
                 placeholder="Modalidad de trabajo"
-                v-model="modalidad"
+                block
+                class="space"
               >
-                <vs-option label="Home Office" value="1">
-                  Home Office
-                </vs-option>
-                <vs-option label="Planta" value="2"> Planta </vs-option>
-                <vs-option label="Modalidad mixta" value="3">
-                  Modalidad mixta
-                </vs-option>
-              </vs-select>
+                <template #icon><em class="bx bxs-briefcase"></em></template>
+              </vs-input>
               Periodo de pago
               <vs-input
                 primary
-                v-model="periodoPago"
+                v-model="vacante.periodoPago"
                 placeholder="Lapso de pago"
                 block
                 class="space"
@@ -90,7 +85,7 @@
                 block
                 class="space"
                 primary
-                v-model="sueldoMax"
+                v-model="vacante.sueldoMax"
                 placeholder="1000.99"
               >
                 <template #icon><em class="bx bx-money"></em></template>
@@ -101,14 +96,14 @@
                 block
                 class="space input-date"
                 primary
-                v-model="fechaVigencia"
+                v-model="vacante.fechaVigencia"
               >
                 <template #icon><em class="bx bxs-calendar"></em></template>
               </vs-input>
             </vs-col>
             <vs-col lg="11" sm="12" xs="12">
               Descripción
-              <textarea v-model="descripcion" placeholder="Breve descripción">
+              <textarea v-model="vacante.descripcion" placeholder="Breve descripción">
               </textarea>
             </vs-col>
           </vs-row>
@@ -217,6 +212,7 @@
 
 <script>
 import CatalogueService from "../../service/Catalogues/CatalogueService";
+import RecruiterService from "../../service/Recruiter/RecruiterService";
 
 export default {
   name: "RegisterVacancy",
@@ -246,6 +242,23 @@ export default {
     beneficiosLista: [],
   }),
   methods: {
+    async registrarVacante(){
+      try{
+        RecruiterService.registrarVacante(this.vacante)
+        .then((response) =>{
+          if(response.data){
+            this.openNotification(1, response.data.title, response.data.message);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          this.openNotification(4, e.response.data.title, e.response.data.message);
+        });
+      }catch(e){
+        console.log(e);
+        this.openNotification(4, "Hubo un error!", "Espera a que soporte técnico repare el problema");
+      }
+    },
     openNotification(border_, title_, text_) {
       let tipo = "";
       let icon_ = "";

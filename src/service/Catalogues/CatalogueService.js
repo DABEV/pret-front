@@ -19,5 +19,9 @@ class CatalogueService {
     listarIdiomas() {
         return API.get("idioma/obtener", );
     }
+
+    listarVacantes() {
+        return API.get("vacante/obtener", );
+    }
 }
 export default new CatalogueService();

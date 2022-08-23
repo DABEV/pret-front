@@ -125,7 +125,7 @@
                         <p class="bold">{{ tr.nombre }}</p>
                         <small
                           >{{ tr.reclutador.estadoRepublicaEmpresa.nombre }} ·
-                          Vigencia: {{ tr.fechaFin }}</small
+                          Vigencia: {{ tr.fechaVigencia }}</small
                         >
                       </vs-col>
                       <vs-col lg="2" class="center-item">
@@ -164,6 +164,8 @@
 </template>
 
 <script>
+import RecruiterService from "../../service/Recruiter/RecruiterService";
+
 export default {
   name: "VacanciesList",
   data: () => ({
@@ -173,162 +175,47 @@ export default {
     search: "",
     vacantes: [
       {
-        nombre: "Desarrollador Full-stack PHP",
+        nombre: "",
         reclutador: {
-          nombre: "Roberto",
-          apellidoPaterno: "Miramontes",
-          apellidoMaterno: "Ruiseñor",
-          nombreEmpresa: "Sony",
+          nombre: "",
+          apellidoPaterno: "",
+          apellidoMaterno: "",
+          nombreEmpresa: "",
           estadoRepublicaEmpresa: {
-            nombre: "Morelos",
+            nombre: "",
           },
         },
-        tipo: "Medio tiempo",
-        modalidad: "Híbrido",
-        periodoPago: "Quincenal",
-        sueldoMin: 20000,
-        sueldoMax: 50000,
-        fechaInicio: "5/19/12",
-        fechaFin: "7/19/12",
+        tipo: "",
+        modalidad: "",
+        periodoPago: "",
+        sueldoMin: 0,
+        sueldoMax: 0,
+        fechaInicio: "",
+        fechaVigencia: "",
         descripcion:
-          "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
-      },
-      {
-        nombre: "Desarrollador Full-stack PHP",
-        reclutador: {
-          nombre: "Roberto",
-          apellidoPaterno: "Miramontes",
-          apellidoMaterno: "Ruiseñor",
-          nombreEmpresa: "Sony",
-          estadoRepublicaEmpresa: {
-            nombre: "Morelos",
-          },
-        },
-        tipo: "Medio tiempo",
-        modalidad: "Híbrido",
-        periodoPago: "Quincenal",
-        sueldoMin: 20000,
-        sueldoMax: 50000,
-        fechaInicio: "5/19/12",
-        fechaFin: "7/19/12",
-        descripcion:
-          "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
-      },
-      {
-        nombre: "President of Sales",
-        reclutador: {
-          nombre: "Roberto",
-          apellidoPaterno: "Miramontes",
-          apellidoMaterno: "Ruiseñor",
-          nombreEmpresa: "Sony",
-          estadoRepublicaEmpresa: {
-            nombre: "Morelos",
-          },
-        },
-        tipo: "Medio tiempo",
-        modalidad: "Híbrido",
-        periodoPago: "Quincenal",
-        sueldoMin: 20000,
-        sueldoMax: 50000,
-        fechaInicio: "5/19/12",
-        fechaFin: "7/19/12",
-        descripcion:
-          "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
-      },
-      {
-        nombre: "Web Designer",
-        reclutador: {
-          nombre: "Roberto",
-          apellidoPaterno: "Miramontes",
-          apellidoMaterno: "Ruiseñor",
-          nombreEmpresa: "Sony",
-          estadoRepublicaEmpresa: {
-            nombre: "Morelos",
-          },
-        },
-        tipo: "Medio tiempo",
-        empresa: "Sony",
-        modalidad: "Híbrido",
-        periodoPago: "Quincenal",
-        sueldoMin: 20000,
-        sueldoMax: 50000,
-        fechaInicio: "5/19/12",
-        fechaFin: "7/19/12",
-        descripcion:
-          "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
-      },
-      {
-        nombre: "Desarrollador Full-stack PHP",
-        reclutador: {
-          nombre: "Roberto",
-          apellidoPaterno: "Miramontes",
-          apellidoMaterno: "Ruiseñor",
-          nombreEmpresa: "Sony",
-          estadoRepublicaEmpresa: {
-            nombre: "Morelos",
-          },
-        },
-        tipo: "Medio tiempo",
-        modalidad: "Híbrido",
-        periodoPago: "Quincenal",
-        sueldoMin: 20000,
-        sueldoMax: 50000,
-        fechaInicio: "5/19/12",
-        fechaFin: "7/19/12",
-        descripcion:
-          "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
-      },
-      {
-        nombre: "Desarrollador Full-stack PHP",
-        reclutador: {
-          nombre: "Roberto",
-          apellidoPaterno: "Miramontes",
-          apellidoMaterno: "Ruiseñor",
-          nombreEmpresa: "Sony",
-          estadoRepublicaEmpresa: {
-            nombre: "Morelos",
-          },
-        },
-        tipo: "Medio tiempo",
-        modalidad: "Híbrido",
-        periodoPago: "Quincenal",
-        sueldoMin: 20000,
-        sueldoMax: 50000,
-        fechaInicio: "5/19/12",
-        fechaFin: "7/19/12",
-        descripcion:
-          "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
-      },
-      {
-        nombre: "Marketing Coordinator",
-        reclutador: {
-          nombre: "Roberto",
-          apellidoPaterno: "Miramontes",
-          apellidoMaterno: "Ruiseñor",
-          nombreEmpresa: "Sony",
-          estadoRepublicaEmpresa: {
-            nombre: "Morelos",
-          },
-        },
-        tipo: "Medio tiempo",
-        modalidad: "Híbrido",
-        periodoPago: "Quincenal",
-        sueldoMin: 20000,
-        sueldoMax: 50000,
-        fechaInicio: "5/19/12",
-        fechaFin: "7/19/12",
-        descripcion:
-          "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
+          "",
       },
     ],
   }),
   methods: {
+    listarVacantes (){
+      RecruiterService.listarVacantes()
+      .then((response) => {
+        console.log(response.data.data);
+        this.vacantes = response.data.data;
+      }).catch((e) => {
+        console.log(e);
+      });
+    },
     Confirmar: function (contacto) {
       this.contacto = contacto;
     },
     IrSeleccion1: function () {
       this.$router.push("/reclutador/candidatos");
     },
+  },
+  mounted(){
+    this.listarVacantes();
   },
 };
 </script>
