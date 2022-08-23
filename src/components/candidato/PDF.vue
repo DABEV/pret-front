@@ -2,6 +2,7 @@
   <div>
     <vs-tooltip>
       <vs-button
+        v-if="!charge"
         @click="exportToPDF"
         icon
         animation-type="rotate"
@@ -14,22 +15,24 @@
       </vs-button>
       <template #tooltip> Descargar CV </template>
     </vs-tooltip>
-    <vue-html2pdf
-      :show-layout="false"
-      :float-layout="true"
-      :enable-download="true"
-      :preview-modal="true"
-      :paginate-elements-by-height="1100"
-      :pdf-quality="2"
-      :manual-pagination="false"
-      pdf-format="a4"
-      pdf-orientation="portrait"
-      pdf-content-width="800px"
-      ref="html2Pdf"
-      :margin="20"
-    >
-      <ContentPdf slot="pdf-content" />
-    </vue-html2pdf>
+    <div v-show="showLayout">
+      <vue-html2pdf
+        :show-layout="showLayout"
+        :float-layout="floatLayout"
+        :enable-download="enableDownload"
+        :preview-modal="previewModal"
+        paginate-elements-by-height="1100"
+        pdf-quality="1"
+        :manual-pagination="manualPagination"
+        pdf-format="a4"
+        pdf-orientation="portrait"
+        pdf-content-width="800px"
+        ref="html2Pdf"
+        :margin="margin"
+      >
+        <ContentPdf slot="pdf-content" />
+      </vue-html2pdf>
+    </div>
   </div>
 </template>
 <script>
@@ -37,12 +40,29 @@ import ContentPdf from "./ContentPdf";
 import html2pdf from "html2pdf.js";
 
 export default {
-  name: "App",
+  name: "PDF",
+  data: () => ({
+    showLayout: false,
+    floatLayout: false,
+    enableDownload: true,
+    previewModal: false,
+    manualPagination: false,
+    charge: false,
+    margin: 0,
+  }),
   methods: {
     exportToPDF() {
+      this.charge = true;
       html2pdf(this.$refs.html2Pdf, {
-        margin: 0.5,
-        filename: "CV.pdf",
+        margin: 0,
+        filename:
+          "CV_" +
+          this.nombre +
+          "_" +
+          this.apellido1 +
+          "_" +
+          this.apellido2 +
+          ".pdf",
         image: { type: "jpg", quality: 0.98 },
         html2canvas: {
           dpi: 192,
@@ -52,7 +72,13 @@ export default {
         },
         jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
       });
+      this.charge = false;
     },
+  },
+  props: {
+    nombre: String,
+    apellido1: String,
+    apellido2: String,
   },
   components: {
     ContentPdf,
