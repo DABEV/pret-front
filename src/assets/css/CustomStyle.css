@@ -123,6 +123,11 @@
     border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
+.border-light {
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
 .pagination {
     padding: 8px 10px;
     background: rgba(var(--vs-gray-2), 1);
@@ -189,6 +194,8 @@
 .item:last-child>.divider>.border {
     border-top: 0px solid rgba(0, 0, 0, 0.1);
 }
+
+
 
 .item:hover {
     background: rgba(var(--vs-gray-1), 1) !important;
@@ -265,4 +272,12 @@
 
 .padding-y {
     padding-right: 5%;
+}
+
+.cv-side {
+    background-color: #106ec0;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 20px 2px 20px 2px;
+    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, var(--vs-shadow-opacity));
 }

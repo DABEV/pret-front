@@ -15,5 +15,9 @@ class CatalogueService {
     listarBeneficios() {
         return API.get("beneficio/obtener", );
     }
+
+    listarIdiomas() {
+        return API.get("idioma/obtener", );
+    }
 }
 export default new CatalogueService();

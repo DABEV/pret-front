@@ -41,8 +41,8 @@
                 </vs-col>
               </vs-row>
               <h3 class="space-top">
-                {{ candidato.nombre }} {{ candidato.apellidoMaterno }}
-                {{ candidato.apellidoPaterno }}
+                {{ candidato.nombre }} {{ candidato.apellidoPaterno }}
+                {{ candidato.apellidoMaterno }}
               </h3>
               <p class="bg-gray">{{ candidato.correoElectronico }}</p>
               <div class="center-item">
@@ -92,7 +92,8 @@
                       class="center-item text-start"
                     >
                       <p>
-                        Fecha de nacimiento: {{ candidato.fechaNacimiento.slice(0, 10) }}
+                        Fecha de nacimiento:
+                        {{ candidato.fechaNacimiento.slice(0, 10) }}
                       </p>
                     </vs-col>
                   </vs-row>
@@ -117,21 +118,15 @@
                 </vs-button>
               </vs-col>
               <vs-col lg="2" sm="2" xs="2">
-                <vs-tooltip>
-                  <vs-button icon animation-type="rotate" color="#B13CD2">
-                    <i class="bx bx-download"></i>
-                    <template #animate>
-                      <i class="bx bx-import"></i>
-                    </template>
-                  </vs-button>
-                  <template #tooltip> Descargar CV </template>
-                </vs-tooltip>
+                <PDF
+                  :nombre="candidato.nombre"
+                  :apellido1="candidato.apellidoPaterno"
+                  :apellido2="candidato.apellidoMaterno"
+                />
               </vs-col>
             </vs-row>
           </div>
-          <div
-            v-if="candidato.conocimientosHabilidades.habilidades.length != 0"
-          >
+          <div v-if="candidato.conocimientosHabilidades != null">
             <h2 class="space-top">Conocimientos</h2>
             <div class="space-top content-data space datos text-start bg-gray">
               <div
@@ -294,26 +289,29 @@
           lg="6"
           sm="12"
           xs="12"
-          v-if="candidato.conocimientosHabilidades.habilidades.length != 0"
+          v-if="candidato.conocimientosHabilidades != null"
         >
-          <h2>Habilidades</h2>
-          <div class="space-top content-data space datos text-start bg-gray">
-            <div
-              :key="i"
-              v-for="(hab, i) in candidato.conocimientosHabilidades.habilidades"
-              :data="hab"
-              class="item"
-            >
-              <vs-row class="space">
-                <vs-col lg="1" sm="2" xs="2" class="text-center space-top">
-                  <i class="bx bx-book-open bg-primary"></i>
-                </vs-col>
-                <vs-col lg="11" sm="10" xs="10" class="space-top">
-                  <p>{{ hab }}</p>
-                </vs-col>
-              </vs-row>
-              <div class="divider">
-                <span class="border"></span>
+          <div v-if="candidato.conocimientosHabilidades.habilidades.length > 0">
+            <h2>Habilidades</h2>
+            <div class="space-top content-data space datos text-start bg-gray">
+              <div
+                :key="i"
+                v-for="(hab, i) in candidato.conocimientosHabilidades
+                  .habilidades"
+                :data="hab"
+                class="item"
+              >
+                <vs-row class="space">
+                  <vs-col lg="1" sm="2" xs="2" class="text-center space-top">
+                    <i class="bx bx-book-open bg-primary"></i>
+                  </vs-col>
+                  <vs-col lg="11" sm="10" xs="10" class="space-top">
+                    <p>{{ hab }}</p>
+                  </vs-col>
+                </vs-row>
+                <div class="divider">
+                  <span class="border"></span>
+                </div>
               </div>
             </div>
           </div>
@@ -322,52 +320,54 @@
     </div>
     <div
       class="space space-top content-card"
-      v-if="candidato.certificaciones.length != 0"
+      v-if="candidato.certificaciones != null"
     >
-      <h2 class="text-center">Certificaciones</h2>
-      <div class="space-top content-data space datos text-start bg-gray">
-        <div class="center">
-          <vs-table>
-            <template #thead>
-              <vs-tr>
-                <vs-th> Nombre </vs-th>
-                <vs-th> Empresa </vs-th>
-                <vs-th> Obtención </vs-th>
-                <vs-th> Caaducidad </vs-th>
-              </vs-tr>
-            </template>
-            <template #tbody>
-              <vs-tr
-                :key="i"
-                v-for="(tr, i) in $vs.getPage(
-                  candidato.certificaciones,
-                  page2,
-                  max
-                )"
-                :data="tr"
-              >
-                <vs-td>
-                  {{ tr.nombre }}
-                </vs-td>
-                <vs-td>
-                  {{ tr.empresa }}
-                </vs-td>
-                <vs-td>
-                  {{ tr.fechaObtencion }}
-                </vs-td>
-                <vs-td>
-                  {{ tr.fechaCaducidad }}
-                </vs-td>
-              </vs-tr>
-            </template>
-            <template #footer>
-              <vs-pagination
-                v-model="page2"
-                :length="$vs.getLength(candidato.certificaciones, max)"
-              />
-            </template>
-            <template #notFound> No se encontraron registros </template>
-          </vs-table>
+      <div v-if="candidato.certificaciones.length > 0">
+        <h2 class="text-center">Certificaciones</h2>
+        <div class="space-top content-data space datos text-start bg-gray">
+          <div class="center">
+            <vs-table>
+              <template #thead>
+                <vs-tr>
+                  <vs-th> Nombre </vs-th>
+                  <vs-th> Empresa </vs-th>
+                  <vs-th> Obtención </vs-th>
+                  <vs-th> Caaducidad </vs-th>
+                </vs-tr>
+              </template>
+              <template #tbody>
+                <vs-tr
+                  :key="i"
+                  v-for="(tr, i) in $vs.getPage(
+                    candidato.certificaciones,
+                    page2,
+                    max
+                  )"
+                  :data="tr"
+                >
+                  <vs-td>
+                    {{ tr.nombre }}
+                  </vs-td>
+                  <vs-td>
+                    {{ tr.empresa }}
+                  </vs-td>
+                  <vs-td>
+                    {{ tr.fechaObtencion }}
+                  </vs-td>
+                  <vs-td>
+                    {{ tr.fechaCaducidad }}
+                  </vs-td>
+                </vs-tr>
+              </template>
+              <template #footer>
+                <vs-pagination
+                  v-model="page2"
+                  :length="$vs.getLength(candidato.certificaciones, max)"
+                />
+              </template>
+              <template #notFound> No se encontraron registros </template>
+            </vs-table>
+          </div>
         </div>
       </div>
     </div>
@@ -409,6 +409,7 @@
 
 <script>
 import CandidateService from "../../service/Candidate/CandidateService";
+import PDF from "./PDF.vue";
 export default {
   name: "Profile",
   data: () => ({
@@ -462,6 +463,7 @@ export default {
   mounted() {
     this.cargarPerfil();
   },
+  components: { PDF },
 };
 </script>
 
