@@ -6,7 +6,7 @@
           <vs-button success block @click="ChangeTap(2)">
             Enviadas:
             <vs-avatar circle size="25" class="margin-xy">
-              {{ solicitudes.length }}
+              {{ solicitudes }}
             </vs-avatar>
           </vs-button>
         </vs-col>
@@ -14,98 +14,142 @@
           <vs-button primary block @click="ChangeTap(3)">
             Por aceptar:
             <vs-avatar circle size="25" class="margin-xy">
-              {{ enviadas.length }}
+              {{ pendientes }}
             </vs-avatar>
           </vs-button>
         </vs-col>
       </vs-row>
       <h3 class="text-center">Tus contactos</h3>
-      <div class="center" v-if="$vs.getSearch(contactos, search).length < 1">
-        No se encontraron registros
-      </div>
-      <div>
-        <div
-          :key="i"
-          :data="c"
-          v-for="(c, i) in $vs.getPage(
-            $vs.getSearch(contactos, search),
-            page,
-            max
-          )"
-          class="item"
-        >
-          <vs-row class="space" justify="space-between">
-            <vs-col lg="1" sm="2" xs="2" class="space-top">
-              <vs-avatar class="end-item" size="50">
-                <img :src="c.foto" alt="" />
-              </vs-avatar>
-            </vs-col>
-            <vs-col lg="9" sm="9" xs="9" class="space-top">
-              <div
-                class="item-click"
-                @click="Confirmar(c), (detalles = !detalles)"
-              >
-                <p>
-                  <b
-                    >{{ c.nombre }} {{ c.apellidoMaterno }}
-                    {{ c.apellidoPaterno }}</b
+      <div v-if="contactos != null">
+        <div class="center" v-if="$vs.getSearch(contactos, search).length < 1">
+          No se encontraron registros
+        </div>
+        <div>
+          <div
+            :key="i"
+            :data="c"
+            v-for="(c, i) in $vs.getPage(
+              $vs.getSearch(contactos, search),
+              page,
+              max
+            )"
+            class="item"
+          >
+            <div v-if="idSession == c.id.candidatoId">
+              <vs-row class="space" justify="space-between">
+                <vs-col lg="1" sm="2" xs="2" class="space-top">
+                  <vs-avatar
+                    v-if="c.amigo.foto != null"
+                    class="end-item"
+                    size="50"
                   >
-                </p>
-                <small>{{ c.correoElectronico }}</small>
+                    <img :src="c.amigo.foto" alt="" />
+                  </vs-avatar>
+                  <vs-avatar v-else class="end-item" size="50">
+                    <img alt="" />
+                  </vs-avatar>
+                </vs-col>
+                <vs-col lg="9" sm="9" xs="9" class="space-top">
+                  <div
+                    class="item-click"
+                    @click="Confirmar(c.amigo), (detalles = !detalles)"
+                  >
+                    <p>
+                      <b
+                        >{{ c.amigo.nombre }} {{ c.amigo.apellidoMaterno }}
+                        {{ c.amigo.apellidoPaterno }}</b
+                      >
+                    </p>
+                    <small>{{ c.amigo.correoElectronico }}</small>
+                  </div>
+                </vs-col>
+                <vs-col lg="1" sm="12" xs="12" class="space-top">
+                  <vs-tooltip>
+                    <vs-button
+                      icon
+                      animation-type="rotate"
+                      danger
+                      @click="
+                        (activeRechazar = !activeRechazar), Confirmar(c.amigo)
+                      "
+                    >
+                      <i class="bx bx-trash-alt"></i>
+                      <template #animate>
+                        <i class="bx bxs-trash-alt"></i>
+                      </template>
+                    </vs-button>
+                    <template #tooltip> Quitar </template>
+                  </vs-tooltip>
+                </vs-col>
+              </vs-row>
+              <div class="divider">
+                <span class="border"></span>
               </div>
-            </vs-col>
-            <vs-col lg="1" sm="12" xs="12" class="space-top">
-              <vs-tooltip>
-                <vs-button
-                  icon
-                  animation-type="rotate"
-                  danger
-                  @click="(active = !active), Confirmar(c)"
-                >
-                  <i class="bx bx-trash-alt"></i>
-                  <template #animate>
-                    <i class="bx bxs-trash-alt"></i>
-                  </template>
-                </vs-button>
-                <template #tooltip> Quitar </template>
-              </vs-tooltip>
-            </vs-col>
-          </vs-row>
-          <div class="divider">
-            <span class="border"></span>
+            </div>
+            <div v-else>
+              <vs-row class="space" justify="space-between">
+                <vs-col lg="1" sm="2" xs="2" class="space-top">
+                  <vs-avatar
+                    v-if="c.candidato.foto != null"
+                    class="end-item"
+                    size="50"
+                  >
+                    <img :src="c.candidato.foto" alt="" />
+                  </vs-avatar>
+                  <vs-avatar v-else class="end-item" size="50">
+                    <img alt="" />
+                  </vs-avatar>
+                </vs-col>
+                <vs-col lg="9" sm="9" xs="9" class="space-top">
+                  <div
+                    class="item-click"
+                    @click="Confirmar(c.candidato), (detalles = !detalles)"
+                  >
+                    <p>
+                      <b
+                        >{{ c.candidato.nombre }}
+                        {{ c.candidato.apellidoMaterno }}
+                        {{ c.candidato.apellidoPaterno }}</b
+                      >
+                    </p>
+                    <small>{{ c.candidato.correoElectronico }}</small>
+                  </div>
+                </vs-col>
+                <vs-col lg="1" sm="12" xs="12" class="space-top">
+                  <vs-tooltip>
+                    <vs-button
+                      icon
+                      animation-type="rotate"
+                      danger
+                      @click="
+                        (activeRechazar = !activeRechazar),
+                          Confirmar(c.candidato)
+                      "
+                    >
+                      <i class="bx bx-trash-alt"></i>
+                      <template #animate>
+                        <i class="bx bxs-trash-alt"></i>
+                      </template>
+                    </vs-button>
+                    <template #tooltip> Quitar </template>
+                  </vs-tooltip>
+                </vs-col>
+              </vs-row>
+              <div class="divider">
+                <span class="border"></span>
+              </div>
+            </div>
           </div>
         </div>
+        <div class="pagination">
+          <vs-pagination
+            v-model="page"
+            :length="$vs.getLength($vs.getSearch(contactos, search), max)"
+          />
+        </div>
       </div>
-      <div class="pagination">
-        <vs-pagination
-          v-model="page"
-          :length="$vs.getLength($vs.getSearch(contactos, search), max)"
-        />
-      </div>
+      <div class="center" v-else>No se encontraron registros</div>
     </div>
-
-    <vs-dialog width="450px" class="text-center" v-model="active">
-      <template #header>
-        <h4><b>Confirmación</b></h4>
-      </template>
-      <div class="text-gray">
-        <p>
-          ¿Seguro de eliminar a <b>{{ contacto.nombre }}</b> de tus contactos?
-        </p>
-      </div>
-      <template #footer>
-        <vs-row justify="space-between">
-          <vs-col w="5">
-            <vs-button danger @click="active = false" block> Quitar </vs-button>
-          </vs-col>
-          <vs-col w="5">
-            <vs-button transparent dark @click="active = false" block>
-              Cancelar
-            </vs-button>
-          </vs-col>
-        </vs-row>
-      </template>
-    </vs-dialog>
 
     <ContactDetailDialog
       :detalles="detalles"
@@ -113,198 +157,85 @@
       :estado="estado"
       @CloseDetails="CloseDetails"
     />
+
+    <vs-dialog width="450px" class="text-center" v-model="activeRechazar">
+      <template #header>
+        <h4><b>Confirmación</b></h4>
+      </template>
+      <div class="text-gray">
+        <p>
+          ¿Seguro de rechazar la solicitud de <b>{{ contacto.nombre }}</b
+          >?
+        </p>
+      </div>
+      <template #footer>
+        <vs-row justify="space-between">
+          <vs-col w="5">
+            <vs-button
+              danger
+              block
+              @click="CargarCorreoEliminar(contacto.correoElectronico)"
+            >
+              Rechazar
+            </vs-button>
+          </vs-col>
+          <vs-col w="5">
+            <vs-button transparent dark @click="activeRechazar = false" block>
+              Cancelar
+            </vs-button>
+          </vs-col>
+        </vs-row>
+      </template>
+    </vs-dialog>
   </div>
 </template>
 
 <script>
 import ContactDetailDialog from "../dialogsContactos/ContactDetailDialog.vue";
+import CandidateService from "../../../service/Candidate/CandidateService";
 
 export default {
   name: "ContactList",
   data: () => ({
-    active: false,
+    activeRechazar: false,
     detalles: false,
+    idAmigo: 0,
     page: 1,
     max: 5,
     contacto: {},
     estado: {},
-    contactos: [
-      {
-        nombre: "Cameron",
-        apellidoMaterno: "Williamson",
-        apellidoPaterno: "Warren",
-        correoElectronico: "cameron@example.com",
-        telefono: "(704) 555-0127",
-        estadoRepublica: {
-          nombre: "Morelos",
-        },
-        tituloCurricular: "Administradora de base de datos (DBA)",
-        fechaNacimiento: "9/4/12",
-        foto: "https://images.unsplash.com/photo-1484186139897-d5fc6b908812?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
-      },
-      {
-        nombre: "Esther",
-        apellidoMaterno: "Howard",
-        apellidoPaterno: "Simmons",
-        correoElectronico: "esther@example.com",
-        telefono: "(907) 555-0101",
-        estadoRepublica: {
-          nombre: "Morelos",
-        },
-        tituloCurricular: "Administradora de base de datos (DBA)",
-        fechaNacimiento: "9/4/12",
-        foto: "https://images.unsplash.com/photo-1518577915332-c2a19f149a75?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=562&q=80",
-      },
-      {
-        nombre: "Robert",
-        apellidoMaterno: "Warren",
-        apellidoPaterno: "Hawkins",
-        correoElectronico: "robert@example.com",
-        telefono: "(217) 555-0113",
-        estadoRepublica: {
-          nombre: "Querétaro",
-        },
-        tituloCurricular: "Administradora de base de datos (DBA)",
-        fechaNacimiento: "9/4/12",
-        foto: "https://images.unsplash.com/photo-1529068755536-a5ade0dcb4e8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=581&q=80",
-      },
-      {
-        nombre: "Alexander",
-        apellidoMaterno: "Edwards",
-        apellidoPaterno: "Wade",
-        correoElectronico: "alexander@example.com",
-        telefono: "(308) 555-0121",
-        estadoRepublica: {
-          nombre: "Durango",
-        },
-        tituloCurricular: "Administradora de base de datos (DBA)",
-        fechaNacimiento: "9/4/12",
-        foto: "https://images.unsplash.com/photo-1485528562718-2ae1c8419ae2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=558&q=80",
-      },
-      {
-        nombre: "Leslie",
-        apellidoMaterno: "Brooklyn",
-        apellidoPaterno: "Williamson",
-        correoElectronico: "leslie@example.com",
-        telefono: "(302) 555-0107",
-        estadoRepublica: {
-          nombre: "Tamaulipas",
-        },
-        tituloCurricular: "Administradora de base de datos (DBA)",
-        fechaNacimiento: "9/4/12",
-        foto: "https://images.unsplash.com/photo-1485893086445-ed75865251e0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
-      },
-      {
-        nombre: "Ralph",
-        apellidoMaterno: "Williamson",
-        apellidoPaterno: "Fox",
-        correoElectronico: "ralph@example.com",
-        telefono: "(702) 555-0122",
-        estadoRepublica: {
-          nombre: "Oaxaca",
-        },
-        tituloCurricular: "Administradora de base de datos (DBA)",
-        fechaNacimiento: "9/4/12",
-        foto: "https://images.unsplash.com/photo-1483995564125-85915c11dcfe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=641&q=80",
-      },
-    ],
-    solicitudes: [
-      {
-        nombre: "Cameron",
-        apellidoMaterno: "Williamson",
-        apellidoPaterno: "Warren",
-        correoElectronico: "cameron@example.com",
-        telefono: "(704) 555-0127",
-        estadoRepublica: {
-          nombre: "Morelos",
-        },
-        tituloCurricular: "Administradora de base de datos (DBA)",
-        fechaNacimiento: "9/4/12",
-        foto: "https://images.unsplash.com/photo-1484186139897-d5fc6b908812?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
-      },
-      {
-        nombre: "Esther",
-        apellidoMaterno: "Howard",
-        apellidoPaterno: "Simmons",
-        correoElectronico: "esther@example.com",
-        telefono: "(907) 555-0101",
-        estadoRepublica: {
-          nombre: "Morelos",
-        },
-        tituloCurricular: "Administradora de base de datos (DBA)",
-        fechaNacimiento: "9/4/12",
-        foto: "https://images.unsplash.com/photo-1518577915332-c2a19f149a75?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=562&q=80",
-      },
-      {
-        nombre: "Robert",
-        apellidoMaterno: "Warren",
-        apellidoPaterno: "Hawkins",
-        correoElectronico: "robert@example.com",
-        telefono: "(217) 555-0113",
-        estadoRepublica: {
-          nombre: "Querétaro",
-        },
-        tituloCurricular: "Administradora de base de datos (DBA)",
-        fechaNacimiento: "9/4/12",
-        foto: "https://images.unsplash.com/photo-1529068755536-a5ade0dcb4e8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=581&q=80",
-      },
-      {
-        nombre: "Alexander",
-        apellidoMaterno: "Edwards",
-        apellidoPaterno: "Wade",
-        correoElectronico: "alexander@example.com",
-        telefono: "(308) 555-0121",
-        estadoRepublica: {
-          nombre: "Durango",
-        },
-        tituloCurricular: "Administradora de base de datos (DBA)",
-        fechaNacimiento: "9/4/12",
-        foto: "https://images.unsplash.com/photo-1485528562718-2ae1c8419ae2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=558&q=80",
-      },
-    ],
-    enviadas: [
-      {
-        nombre: "Cameron",
-        apellidoMaterno: "Williamson",
-        apellidoPaterno: "Warren",
-        correoElectronico: "cameron@example.com",
-        telefono: "(704) 555-0127",
-        estadoRepublica: {
-          nombre: "Morelos",
-        },
-        tituloCurricular: "Administradora de base de datos (DBA)",
-        fechaNacimiento: "9/4/12",
-        foto: "https://images.unsplash.com/photo-1484186139897-d5fc6b908812?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
-      },
-      {
-        nombre: "Esther",
-        apellidoMaterno: "Howard",
-        apellidoPaterno: "Simmons",
-        correoElectronico: "esther@example.com",
-        telefono: "(907) 555-0101",
-        estadoRepublica: {
-          nombre: "Morelos",
-        },
-        tituloCurricular: "Administradora de base de datos (DBA)",
-        fechaNacimiento: "9/4/12",
-        foto: "https://images.unsplash.com/photo-1518577915332-c2a19f149a75?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=562&q=80",
-      },
-      {
-        nombre: "Robert",
-        apellidoMaterno: "Warren",
-        apellidoPaterno: "Hawkins",
-        correoElectronico: "robert@example.com",
-        telefono: "(217) 555-0113",
-        estadoRepublica: {
-          nombre: "Querétaro",
-        },
-        tituloCurricular: "Administradora de base de datos (DBA)",
-        fechaNacimiento: "9/4/12",
-        foto: "https://images.unsplash.com/photo-1529068755536-a5ade0dcb4e8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=581&q=80",
-      },
-    ],
   }),
   methods: {
+    openNotification(border_, title_, text_) {
+      let tipo = "";
+      let icon_ = "";
+      switch (border_) {
+        case 1:
+          tipo = "success";
+          icon_ = `<i class='bx bx-check-circle' ></i>`;
+          break;
+        case 2:
+          tipo = "primary";
+          icon_ = `<i class='bx bx-info-circle'></i>`;
+          break;
+        case 3:
+          tipo = "warning";
+          icon_ = `<i class='bx bx-error'></i>`;
+          break;
+        case 4:
+          tipo = "danger";
+          icon_ = `<i class='bx bx-x-circle'></i>`;
+          break;
+      }
+      this.$vs.notification({
+        progress: "auto",
+        position: null,
+        title: title_,
+        text: text_,
+        border: tipo,
+        icon: icon_,
+      });
+    },
     Confirmar: function (contacto) {
       this.contacto = contacto;
       this.estado = contacto.estadoRepublica;
@@ -313,10 +244,75 @@ export default {
       this.detalles = !this.detalles;
     },
     ChangeTap: function (tap) {
-      this.$emit("ChangeTap", tap)
+      this.$emit("ChangeTap", tap);
+    },
+    CargarCorreoEliminar: function (correoElectronico) {
+      this.activeRechazar = !this.activeRechazar;
+      this.correoContacto = correoElectronico;
+      this.BuscarCandidato();
+      this.Rechazar();
+      this.CargarContactos();
+    },
+    BuscarCandidato: function () {
+      CandidateService.getByEmail(this.correoContacto)
+        .then((response) => {
+          if (response.data.data) {
+            this.amigoId = response.data.data;
+          } else {
+            this.openNotification(
+              4,
+              response.data.title,
+              response.data.message
+            );
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          this.openNotification(
+            4,
+            e.response.data.title,
+            e.response.data.message
+          );
+        });
+    },
+    Rechazar: function () {
+      CandidateService.rejectContact(this.amigoId)
+        .then((response) => {
+          if (response.data.data) {
+            this.amigoId = response.data.data;
+            this.openNotification(
+              1,
+              response.data.title,
+              response.data.message
+            );
+          } else {
+            this.openNotification(
+              4,
+              response.data.title,
+              response.data.message
+            );
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          this.openNotification(
+            4,
+            e.response.data.title,
+            e.response.data.message
+          );
+        });
+    },
+    CargarContactos: function () {
+      this.$emit("CargarContactos");
     },
   },
   components: { ContactDetailDialog },
-  props: { search: String },
+  props: {
+    search: String,
+    contactos: Array,
+    solicitudes: Number,
+    pendientes: Number,
+    idSession: Number,
+  },
 };
 </script>
