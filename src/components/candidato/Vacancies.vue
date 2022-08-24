@@ -69,7 +69,7 @@
                     class="custom-th"
                     sort
                     @click="
-                      vacantes = $vs.sortData($event, vacantes, 'fechaFin')
+                      vacantes = $vs.sortData($event, vacantes, 'fechaVigencia')
                     "
                   >
                     Vigencia
@@ -138,7 +138,7 @@
                       </vs-col>
                       <vs-col w="6">
                         <small class="bg-sec">
-                          Vigencia: {{ v.fechaFin }}
+                          Vigencia: {{ v.fechaVigencia }}
                         </small>
                       </vs-col>
                     </vs-row>
@@ -167,12 +167,13 @@
                 <vs-col lg="1" sm="12" xs="12" class="space-top">
                   <vs-row justify="space-between" class="space-top">
                     <vs-col lg="12" sm="2" xs="2">
-                      <ShareDialog :idVacante="v.id" />
+                      <ShareDialog v-if="isAuth" :idVacante="v.id" />
                     </vs-col>
                     <vs-col lg="12" sm="2" xs="2">
                       <vs-tooltip>
                         <vs-button
                           icon
+                          v-if="isAuth"
                           animation-type="vertical"
                           danger
                           @click="favoritos = !favoritos"
@@ -213,9 +214,10 @@
   </div>
 </template>
 
-<script>
+<script> 
 import ShareDialog from "./dialogsVacante/ShareDialog.vue";
 import DetailsDialog from "./dialogsVacante/DetailsDialog.vue";
+import CatalogueService from "../../service/Catalogues/CatalogueService";
 
 export default {
   name: "VacanciesList",
@@ -230,265 +232,40 @@ export default {
     vacante: {},
     vacantes: [
       {
-        id: 1,
-        nombre: "Desarrollador Full-stack Java",
+        id: 0,
+        nombre: "",
         reclutador: {
-          nombre: "Roberto",
-          apellidoPaterno: "Miramontes",
-          apellidoMaterno: "Ruiseñor",
-          nombreEmpresa: "Sony",
+          nombre: "",
+          apellidoPaterno: "",
+          apellidoMaterno: "",
+          nombreEmpresa: "",
           estadoRepublicaEmpresa: {
-            nombre: "Morelos",
+            nombre: "",
           },
         },
-        tipo: "Medio tiempo",
-        modalidad: "Híbrido",
-        periodoPago: "Quincenal",
-        sueldoMin: 10000,
-        sueldoMax: 30000,
-        fechaInicio: "5/19/12",
-        fechaFin: "8/19/12",
+        beneficios: [],
+        tipo: "",
+        modalidad: "",
+        periodoPago: "",
+        sueldoMin: 0,
+        sueldoMax: 0,
+        fechaInicio: "",
+        fechaVigencia: "",
         descripcion:
-          "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
-        beneficios: [
-          {
-            nombre: "Ofrecemos sueldo competitivo",
-          },
-          {
-            nombre: "Trabajo en modalidad híbrida (Homeoffice)",
-          },
-          {
-            nombre: "Cursos y Certificaciones constantes",
-          },
-          {
-            nombre: "Prestaciones de ley y Superirores",
-          },
-          {
-            nombre: "Programas de crecimiento a corto, mediano y largo plazo",
-          },
-        ],
-      },
-      {
-        id: 2,
-        nombre: "Desarrollador Full-stack PHP",
-        reclutador: {
-          nombre: "Roberto",
-          apellidoPaterno: "Miramontes",
-          apellidoMaterno: "Ruiseñor",
-          nombreEmpresa: "Sony",
-          estadoRepublicaEmpresa: {
-            nombre: "Morelos",
-          },
-        },
-        tipo: "Medio tiempo",
-        modalidad: "Híbrido",
-        periodoPago: "Mensual",
-        sueldoMin: 50000,
-        sueldoMax: 80000,
-        fechaInicio: "5/19/12",
-        fechaFin: "6/25/12",
-        descripcion:
-          "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
-      },
-      {
-        id: 3,
-        nombre: "President of Sales",
-        reclutador: {
-          nombre: "Roberto",
-          apellidoPaterno: "Miramontes",
-          apellidoMaterno: "Ruiseñor",
-          nombreEmpresa: "Sony",
-          estadoRepublicaEmpresa: {
-            nombre: "Quintana Roo",
-          },
-        },
-        beneficios: [
-          {
-            nombre: "Ofrecemos sueldo competitivo",
-          },
-          {
-            nombre: "Trabajo en modalidad híbrida (Homeoffice)",
-          },
-          {
-            nombre: "Cursos y Certificaciones constantes",
-          },
-          {
-            nombre: "Prestaciones de ley y Superirores",
-          },
-          {
-            nombre: "Programas de crecimiento a corto, mediano y largo plazo",
-          },
-        ],
-        tipo: "Medio tiempo",
-        modalidad: "Híbrido",
-        periodoPago: "Semanal",
-        sueldoMin: 15000,
-        sueldoMax: 30000,
-        fechaInicio: "5/19/12",
-        fechaFin: "7/19/12",
-        descripcion:
-          "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
-      },
-      {
-        id: 4,
-        nombre: "Web Designer",
-        reclutador: {
-          nombre: "Roberto",
-          apellidoPaterno: "Miramontes",
-          apellidoMaterno: "Ruiseñor",
-          nombreEmpresa: "Sony",
-          estadoRepublicaEmpresa: {
-            nombre: "Sonora",
-          },
-        },
-        beneficios: [
-          {
-            nombre: "Ofrecemos sueldo competitivo",
-          },
-          {
-            nombre: "Trabajo en modalidad híbrida (Homeoffice)",
-          },
-          {
-            nombre: "Cursos y Certificaciones constantes",
-          },
-          {
-            nombre: "Prestaciones de ley y Superirores",
-          },
-          {
-            nombre: "Programas de crecimiento a corto, mediano y largo plazo",
-          },
-        ],
-        tipo: "Medio tiempo",
-        empresa: "Sony",
-        modalidad: "Híbrido",
-        periodoPago: "Semanal",
-        sueldoMin: 1500,
-        sueldoMax: 3000,
-        fechaInicio: "5/19/12",
-        fechaFin: "9/19/12",
-        descripcion:
-          "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
-      },
-      {
-        id: 5,
-        nombre: "Desarrollador Full-stack PHP",
-        reclutador: {
-          nombre: "Roberto",
-          apellidoPaterno: "Miramontes",
-          apellidoMaterno: "Ruiseñor",
-          nombreEmpresa: "Sony",
-          estadoRepublicaEmpresa: {
-            nombre: "Nayarit",
-          },
-        },
-        beneficios: [
-          {
-            nombre: "Ofrecemos sueldo competitivo",
-          },
-          {
-            nombre: "Trabajo en modalidad híbrida (Homeoffice)",
-          },
-          {
-            nombre: "Cursos y Certificaciones constantes",
-          },
-          {
-            nombre: "Prestaciones de ley y Superirores",
-          },
-          {
-            nombre: "Programas de crecimiento a corto, mediano y largo plazo",
-          },
-        ],
-        tipo: "Medio tiempo",
-        modalidad: "Híbrido",
-        periodoPago: "Quincenal",
-        sueldoMin: 20000,
-        sueldoMax: 50000,
-        fechaInicio: "5/19/12",
-        fechaFin: "7/19/12",
-        descripcion:
-          "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
-      },
-      {
-        id: 6,
-        nombre: "Desarrollador Full-stack PHP",
-        reclutador: {
-          nombre: "Roberto",
-          apellidoPaterno: "Miramontes",
-          apellidoMaterno: "Ruiseñor",
-          nombreEmpresa: "Sony",
-          estadoRepublicaEmpresa: {
-            nombre: "Morelos",
-          },
-        },
-        beneficios: [
-          {
-            nombre: "Ofrecemos sueldo competitivo",
-          },
-          {
-            nombre: "Trabajo en modalidad híbrida (Homeoffice)",
-          },
-          {
-            nombre: "Cursos y Certificaciones constantes",
-          },
-          {
-            nombre: "Prestaciones de ley y Superirores",
-          },
-          {
-            nombre: "Programas de crecimiento a corto, mediano y largo plazo",
-          },
-        ],
-        tipo: "Medio tiempo",
-        modalidad: "Híbrido",
-        periodoPago: "Quincenal",
-        sueldoMin: 15000,
-        sueldoMax: 40000,
-        fechaInicio: "5/19/12",
-        fechaFin: "7/19/12",
-        descripcion:
-          "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
-      },
-      {
-        id: 7,
-        nombre: "Marketing Coordinator",
-        reclutador: {
-          nombre: "Roberto",
-          apellidoPaterno: "Miramontes",
-          apellidoMaterno: "Ruiseñor",
-          nombreEmpresa: "Sony",
-          estadoRepublicaEmpresa: {
-            nombre: "Morelos",
-          },
-        },
-        beneficios: [
-          {
-            nombre: "Ofrecemos sueldo competitivo",
-          },
-          {
-            nombre: "Trabajo en modalidad híbrida (Homeoffice)",
-          },
-          {
-            nombre: "Cursos y Certificaciones constantes",
-          },
-          {
-            nombre: "Prestaciones de ley y Superirores",
-          },
-          {
-            nombre: "Programas de crecimiento a corto, mediano y largo plazo",
-          },
-        ],
-        tipo: "Medio tiempo",
-        modalidad: "Híbrido",
-        periodoPago: "Quincenal",
-        sueldoMin: 12000,
-        sueldoMax: 23000,
-        fechaInicio: "5/19/12",
-        fechaFin: "7/19/12",
-        descripcion:
-          "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
+          "",
       },
     ],
   }),
   methods: {
+    cargarVacantes(){
+      CatalogueService.listarVacantes()
+      .then((response) => {
+        console.log(response.data.data);
+        this.vacantes = response.data.data;
+      }).catch((e) => {
+        console.log(e);
+      });
+    },
     Detalles: function (vacante) {
       this.active = !this.active;
       this.vacante = vacante;
@@ -501,5 +278,13 @@ export default {
     },
   },
   components: { ShareDialog, DetailsDialog },
-};
+  mounted(){
+    this.cargarVacantes();
+  },
+  computed: {
+    isAuth(){
+      return localStorage.getItem("token");
+    }
+  }
+}; 
 </script>
