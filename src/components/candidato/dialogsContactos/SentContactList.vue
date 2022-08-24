@@ -29,7 +29,7 @@
                 <img :src="c.foto" alt="" />
               </vs-avatar>
             </vs-col>
-            <vs-col lg="10" sm="9" xs="9" class="space-top">
+            <vs-col lg="9" sm="9" xs="9" class="space-top">
               <div
                 class="item-click"
                 @click="Confirmar(c), (detalles = !detalles)"
@@ -42,6 +42,22 @@
                 </p>
                 <small>{{ c.correoElectronico }}</small>
               </div>
+            </vs-col>
+            <vs-col lg="1" sm="2" xs="2" class="space-top">
+              <vs-tooltip v-if="isPending">
+                <vs-button
+                  icon
+                  animation-type="rotate"
+                  success
+                  @click="(active = !active), Confirmar(c)"
+                >
+                  <i class="bx bx-user-check"></i>
+                  <template #animate>
+                    <i class="bx bxs-user-check"></i>
+                  </template>
+                </vs-button>
+                <template #tooltip> Aceptar </template>
+              </vs-tooltip>
             </vs-col>
           </vs-row>
           <div class="divider">
@@ -63,6 +79,29 @@
       :estado="estado"
       @CloseDetails="CloseDetails"
     />
+
+    <vs-dialog width="450px" class="text-center" v-model="active">
+      <template #header>
+        <h4><b>Confirmación</b></h4>
+      </template>
+      <div class="text-gray">
+        <p>
+          ¿Seguro de aceptar la solicitud de <b>{{ contacto.nombre }}</b>?
+        </p>
+      </div>
+      <template #footer>
+        <vs-row justify="space-between">
+          <vs-col w="5">
+            <vs-button success @click="active = false" block> Aceptar </vs-button>
+          </vs-col>
+          <vs-col w="5">
+            <vs-button transparent dark @click="active = false" block>
+              Cancelar
+            </vs-button>
+          </vs-col>
+        </vs-row>
+      </template>
+    </vs-dialog>
   </div>
 </template>
 
@@ -92,6 +131,11 @@ export default {
     },
   },
   components: { ContactDetailDialog },
-  props: { search: String, contactos: Array, titulo: String },
+  props: {
+    search: String,
+    contactos: Array,
+    titulo: String,
+    isPending: Boolean,
+  },
 };
 </script>

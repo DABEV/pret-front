@@ -39,6 +39,7 @@
       :search="search"
       :contactos="contactos"
       :titulo="'Solicitudes Pendientes'"
+      :isPending="solicitud"
       @ChangeTap="ChangeTap"
     />
     <SentContactList
@@ -46,6 +47,7 @@
       :contactos="contactos"
       :titulo="'Han solicitado ser tu contacto'"
       :search="search"
+      :isPending="pendiente"
       @ChangeTap="ChangeTap"
     />
   </div>
@@ -62,6 +64,8 @@ export default {
     search: "",
     estado: {},
     tap: 1,
+    solicitud: false,
+    pendiente: true,
     contactos: [
       {
         nombre: "Cameron",
