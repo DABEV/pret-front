@@ -21,8 +21,16 @@ class RecruiterService {
         return API_TOKEN.get("vacante/obtener/reclutador", );
     }
 
+    obtenerVacanteUnica(id){
+        return API.get(`vacante/obtener/${id}`, );
+    }
+
     registrarVacante(data){
         return API_TOKEN.post("vacante/registrar", data);
+    }
+
+    actualizarVacante(data){
+        return API_TOKEN.post("vacante/actualizar", data);
     }
     
 }

@@ -79,7 +79,9 @@
                 >
                 <vs-th
                   sort
-                  @click="vacantes = $vs.sortData($event, vacantes, 'fechaFin')"
+                  @click="
+                    vacantes = $vs.sortData($event, vacantes, 'fechaVigencia')
+                  "
                 >
                   Vigencia</vs-th
                 >
@@ -108,7 +110,7 @@
                   {{ tr.fechaInicio }}
                 </vs-td>
                 <vs-td>
-                  {{ tr.fechaFin }}
+                  {{ tr.fechaVigencia }}
                 </vs-td>
                 <template #expand>
                   <div class="divider">
@@ -135,7 +137,12 @@
                       </vs-col>
                       <vs-col lg="1" class="center-item">
                         <vs-tooltip>
-                          <vs-button icon animation-type="rotate" warn>
+                          <vs-button
+                            @click="editarVacante(tr.id)"
+                            icon
+                            animation-type="rotate"
+                            warn
+                          >
                             <i class="bx bx-edit"></i>
                             <template #animate>
                               <i class="bx bxs-edit"></i>
@@ -147,6 +154,159 @@
                     </vs-row>
                   </div>
                 </template>
+                <vs-dialog prevent-close v-model="actualizar">
+                  <template #header>
+                    <h4 class="not-margin">
+                      <b>Editar datos de la vacante</b>
+                    </h4>
+                  </template>
+                  <div class="center">
+                    <vs-row justify="space-around">
+                      <vs-col
+                        lg="6"
+                        sm="12"
+                        xs="12"
+                        class="text-center center-item"
+                      >
+                        <div
+                          class="content-selection padding-xy space content-card center-item"
+                        >
+                          Fecha vigencia
+                          <vs-input
+                            type="date"
+                            block
+                            class="space input-date"
+                            primary
+                            v-model="vacanteDialog.fechaVigencia"
+                          >
+                            <template #icon
+                              ><em class="bx bxs-calendar"></em
+                            ></template>
+                          </vs-input>
+                        </div>
+                        <div
+                          class="content-selection padding-xy space content-card center-item"
+                        >
+                          Sueldo mínimo
+                          <vs-input
+                            primary
+                            block
+                            class="space"
+                            type="number"
+                            v-model="vacanteDialog.sueldoMin"
+                            placeholder="1000"
+                          >
+                            <template #icon
+                              ><em class="bx bx-money"></em
+                            ></template>
+                          </vs-input>
+                        </div>
+                        <div
+                          class="content-selection padding-xy space content-card center-item"
+                        >
+                          Tipo
+                          <vs-input
+                            primary
+                            block
+                            class="space"
+                            v-model="vacanteDialog.tipo"
+                            placeholder="Horario de trabajo"
+                          >
+                            <template #icon
+                              ><em class="bx bxs-time-five"></em
+                            ></template>
+                          </vs-input>
+                        </div>
+                      </vs-col>
+                      <vs-col
+                        lg="6"
+                        sm="12"
+                        xs="12"
+                        class="text-center center-item"
+                      >
+                        <div
+                          class="content-selection padding-xy space content-card center-item"
+                        >
+                          Modalidad
+                          <vs-input
+                            primary
+                            v-model="vacanteDialog.modalidad"
+                            placeholder="Modalidad de trabajo"
+                            block
+                            class="space"
+                          >
+                            <template #icon
+                              ><em class="bx bxs-briefcase"></em
+                            ></template>
+                          </vs-input>
+                        </div>
+                        <div
+                          class="content-selection padding-xy space content-card center-item"
+                        >
+                          Sueldo máximo
+                          <vs-input
+                            type="number"
+                            block
+                            class="space"
+                            primary
+                            v-model="vacanteDialog.sueldoMax"
+                            placeholder="1000.99"
+                          >
+                            <template #icon
+                              ><em class="bx bx-money"></em
+                            ></template>
+                          </vs-input>
+                        </div>
+                        <div
+                          class="content-selection padding-xy space content-card center-item"
+                        >
+                          Periodo de pago
+                          <vs-input
+                            primary
+                            v-model="vacanteDialog.periodoPago"
+                            placeholder="Lapso de pago"
+                            block
+                            class="space"
+                          >
+                            <template #icon
+                              ><em class="bx bxs-graduation"></em
+                            ></template>
+                          </vs-input>
+                        </div>
+                      </vs-col>
+                      <vs-col
+                        lg="4"
+                        sm="12"
+                        xs="12"
+                      >
+                      </vs-col>
+                      <vs-col
+                        lg="4"
+                        sm="12"
+                        xs="12"
+                        class="text-center center-item"
+                      >
+                        <vs-button
+                          @click="actualizarVacante()"
+                          success
+                          block
+                          animation-type="vertical"
+                        >
+                          Actualizar vacante
+                          <template #animate>
+                            <i class="bx bxs-save"></i>&nbsp;Guardar
+                          </template>
+                        </vs-button>
+                      </vs-col>
+                      <vs-col
+                        lg="4"
+                        sm="12"
+                        xs="12"
+                      >
+                      </vs-col>
+                    </vs-row>
+                  </div>
+                </vs-dialog>
               </vs-tr>
             </template>
             <template #footer>
@@ -170,11 +330,13 @@ export default {
   name: "VacanciesList",
   data: () => ({
     active: false,
+    actualizar: false,
     page: 1,
     max: 5,
     search: "",
-    vacantes: [
+    vacanteDialog: [
       {
+        id: "",
         nombre: "",
         reclutador: {
           nombre: "",
@@ -192,20 +354,102 @@ export default {
         sueldoMax: 0,
         fechaInicio: "",
         fechaVigencia: "",
-        descripcion:
-          "",
+        descripcion: "",
+      },
+    ],
+    vacantes: [
+      {
+        id: "",
+        nombre: "",
+        reclutador: {
+          nombre: "",
+          apellidoPaterno: "",
+          apellidoMaterno: "",
+          nombreEmpresa: "",
+          estadoRepublicaEmpresa: {
+            nombre: "",
+          },
+        },
+        tipo: "",
+        modalidad: "",
+        periodoPago: "",
+        sueldoMin: 0,
+        sueldoMax: 0,
+        fechaInicio: "",
+        fechaVigencia: "",
+        descripcion: "",
       },
     ],
   }),
   methods: {
-    listarVacantes (){
-      RecruiterService.listarVacantes()
-      .then((response) => {
-        console.log(response.data.data);
-        this.vacantes = response.data.data;
-      }).catch((e) => {
+    async editarVacante(i) {
+      try {
+        this.actualizar = true;
+        RecruiterService.obtenerVacanteUnica(i).then((response) => {
+          if (response.data) {
+            this.vacanteDialog = response.data.data;
+          }
+        });
+      } catch (e) {
         console.log(e);
+      }
+    },
+    async actualizarVacante(){
+      try{
+        RecruiterService.actualizarVacante(this.vacanteDialog)
+        .then((response) =>{
+          if(response.data){
+            this.openNotification(1, response.data.title, response.data.message);
+            this.actualizar = false;
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          this.openNotification(4, e.response.data.title, e.response.data.message);
+        });
+      }catch(e){
+        console.log(e);
+        this.openNotification(4, "Hubo un error!", "Espera a que soporte técnico repare el problema");
+      }
+    },
+    openNotification(border_, title_, text_) {
+      let tipo = "";
+      let icon_ = "";
+      switch (border_) {
+        case 1:
+          tipo = "success";
+          icon_ = `<i class='bx bx-check-circle' ></i>`;
+          break;
+        case 2:
+          tipo = "primary";
+          icon_ = `<i class='bx bx-info-circle'></i>`;
+          break;
+        case 3:
+          tipo = "warning";
+          icon_ = `<i class='bx bx-error'></i>`;
+          break;
+        case 4:
+          tipo = "danger";
+          icon_ = `<i class='bx bx-x-circle'></i>`;
+          break;
+      }
+      this.$vs.notification({
+        progress: "auto",
+        position: null,
+        title: title_,
+        text: text_,
+        border: tipo,
+        icon: icon_,
       });
+    },
+    listarVacantes() {
+      RecruiterService.listarVacantes()
+        .then((response) => {
+          this.vacantes = response.data.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     },
     Confirmar: function (contacto) {
       this.contacto = contacto;
@@ -214,7 +458,7 @@ export default {
       this.$router.push("/reclutador/candidatos");
     },
   },
-  mounted(){
+  mounted() {
     this.listarVacantes();
   },
 };

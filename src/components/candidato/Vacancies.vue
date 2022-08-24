@@ -214,7 +214,7 @@
   </div>
 </template>
 
-<script>
+<script> 
 import ShareDialog from "./dialogsVacante/ShareDialog.vue";
 import DetailsDialog from "./dialogsVacante/DetailsDialog.vue";
 import CatalogueService from "../../service/Catalogues/CatalogueService";
