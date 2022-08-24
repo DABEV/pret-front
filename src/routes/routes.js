@@ -72,7 +72,8 @@ const routes = [
         name: "Vacantes",
         component: VacanciesList,
         meta: {
-          requiresAuth: true
+          requiresAuth: true,
+          isCandidate: false
         },
       },
       {
@@ -80,7 +81,8 @@ const routes = [
         name: "Registro Vacante",
         component: RegisterVacancy,
         meta: {
-          requiresAuth: true
+          requiresAuth: true,
+          isCandidate: false
         },
       },
       {
@@ -88,7 +90,8 @@ const routes = [
         name: "Lista de Candidatos",
         component: CandidatesList,
         meta: {
-          requiresAuth: true
+          requiresAuth: true,
+          isCandidate: false
         },
       },
       {
@@ -96,13 +99,15 @@ const routes = [
         name: "Perfil reclutador",
         component: ProfileRec,
         meta: {
-          requiresAuth: true
+          requiresAuth: true,
+          isCandidate: false
         },
       },
       
     ],
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      isCandidate: false
     },
   },
 
@@ -120,7 +125,8 @@ const routes = [
         name: "Vacantes disponibles",
         component: Vacancies,
         meta: {
-          requiresAuth: true
+          requiresAuth: true,
+          isCandidate: true
         },
       },
       {
@@ -128,7 +134,8 @@ const routes = [
         name: "Perfil de usuario",
         component: Profile,
         meta: {
-          requiresAuth: true
+          requiresAuth: true,
+          isCandidate: true
         },
       },
       {
@@ -136,7 +143,8 @@ const routes = [
         name: "Editar Perfil",
         component: EditProfile,
         meta: {
-          requiresAuth: true
+          requiresAuth: true,
+          isCandidate: true
         },
       },
       {
@@ -144,7 +152,8 @@ const routes = [
         name: "Contactos",
         component: ContactList,
         meta: {
-          requiresAuth: true
+          requiresAuth: true,
+          isCandidate: true
         },
       },
       {
@@ -152,7 +161,8 @@ const routes = [
         name: "Postulaciones",
         component: Status,
         meta: {
-          requiresAuth: true
+          requiresAuth: true,
+          isCandidate: true
         },
       },
       {
@@ -160,7 +170,8 @@ const routes = [
         name: "Favoritos",
         component: Favorites,
         meta: {
-          requiresAuth: true
+          requiresAuth: true,
+          isCandidate: true
         },
       },
       {
@@ -168,12 +179,14 @@ const routes = [
         name: "Detalle de Vacante",
         component: VacancyDetail,
         meta: {
-          requiresAuth: true
+          requiresAuth: true,
+          isCandidate: true
         },
       },
     ],
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      isCandidate: true
     },
   },
 

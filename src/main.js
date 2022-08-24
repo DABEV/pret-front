@@ -28,6 +28,19 @@ router.beforeEach((to, from, next) => {
   next();
 })
 
+router.beforeEach((to, from, next) => {
+  if(to.meta.requiresAuth) {
+    if(to.meta.isCandidate && store.getters.getRole == 'ROL_CANDIDATO'){
+      next();
+    }else if(!to.meta.isCandidate && store.getters.getRole == 'ROL_RECLUTADOR'){
+      next();
+    }else{
+      from();
+    }
+  }
+  next();
+})
+
 Vue.use(VueRouter);
 Vue.use(Vuesax);
 

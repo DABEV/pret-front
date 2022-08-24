@@ -40,7 +40,7 @@
       <template #logo>
         <img alt="img" src="../assets/img/logo.svg" />
       </template>
-      <vs-sidebar-item id="perfil" to="/candidato/perfil">
+      <vs-sidebar-item v-if="isRole == candidate" id="perfil" to="/candidato/perfil">
         <template #icon>
           <i class="bx bx-user"></i>
         </template>
@@ -48,7 +48,7 @@
       </vs-sidebar-item>
       <vs-sidebar-group>
         <template #header>
-          <vs-sidebar-item arrow>
+          <vs-sidebar-item v-if="isRole == candidate" arrow>
             <template #icon>
               <i class="bx bx-task"></i>
             </template>
@@ -74,13 +74,13 @@
           Favoritos
         </vs-sidebar-item>
       </vs-sidebar-group>
-      <vs-sidebar-item id="contactos" to="/candidato/contactos">
+      <vs-sidebar-item v-if="isRole == candidate" id="contactos" to="/candidato/contactos">
         <template #icon>
           <i class="bx bx-user-pin"></i>
         </template>
         Contactos
       </vs-sidebar-item>
-      <vs-sidebar-item id="perfilReclutador" to="/reclutador/perfil">
+      <vs-sidebar-item v-if="isRole == recruiter" id="perfilReclutador" to="/reclutador/perfil">
         <template #icon>
           <i class="bx bx-buildings"></i>
         </template>
@@ -88,7 +88,7 @@
       </vs-sidebar-item>
       <vs-sidebar-group>
         <template #header>
-          <vs-sidebar-item arrow>
+          <vs-sidebar-item v-if="isRole == recruiter" arrow>
             <template #icon>
               <i class="bx bx-task"></i>
             </template>
@@ -131,6 +131,8 @@ export default {
   data: () => ({
     active: "home",
     activeSidebar: false,
+    candidate: "ROL_CANDIDATO",
+    recruiter: "ROL_RECLUTADOR",
   }),
   methods: {
     async cerrarSesion() {
@@ -144,6 +146,9 @@ export default {
   computed: {
     isAuth(){
       return localStorage.getItem("token");
+    },
+    isRole(){
+      return localStorage.getItem("role");
     }
   }
 };

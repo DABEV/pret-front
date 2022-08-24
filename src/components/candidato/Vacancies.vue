@@ -260,7 +260,6 @@ export default {
     cargarVacantes(){
       CatalogueService.listarVacantes()
       .then((response) => {
-        console.log(response.data.data);
         this.vacantes = response.data.data;
       }).catch((e) => {
         console.log(e);
