@@ -243,7 +243,12 @@ export default {
             nombre: "",
           },
         },
-        beneficios: [],
+        beneficios: [
+          {
+            id: 0,
+            nombre: ""
+          }
+        ],
         tipo: "",
         modalidad: "",
         periodoPago: "",
