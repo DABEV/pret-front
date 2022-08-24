@@ -33,52 +33,35 @@
       </div>
     </div>
 
-    <ContactDetailDialog
-      :detalles="detalles"
-      :contacto="contacto"
-      :estado="estado"
-      @CloseDetails="CloseDetails"
+    <MyContactList v-if="tap == 1" :search="search" @ChangeTap="ChangeTap" />
+    <SentContactList
+      v-else-if="tap == 2"
+      :search="search"
+      :contactos="contactos"
+      :titulo="'Solicitudes Pendientes'"
+      @ChangeTap="ChangeTap"
     />
-
-    <vs-dialog width="450px" class="text-center" v-model="active">
-      <template #header>
-        <h4><b>Confirmación</b></h4>
-      </template>
-      <div class="text-gray">
-        <p>
-          ¿Seguro de eliminar a <b>{{ contacto.nombre }}</b> de tus contactos?
-        </p>
-      </div>
-      <template #footer>
-        <vs-row justify="space-between">
-          <vs-col w="5">
-            <vs-button danger @click="active = false" block> Quitar </vs-button>
-          </vs-col>
-          <vs-col w="5">
-            <vs-button transparent dark @click="active = false" block>
-              Cancelar
-            </vs-button>
-          </vs-col>
-        </vs-row>
-      </template>
-    </vs-dialog>
+    <SentContactList
+      v-else
+      :contactos="contactos"
+      :titulo="'Han solicitado ser tu contacto'"
+      :search="search"
+      @ChangeTap="ChangeTap"
+    />
   </div>
 </template>
 
 <script>
 import AddContactDialog from "./dialogsContactos/AddContactDialog.vue";
-import ContactDetailDialog from "./dialogsContactos/ContactDetailDialog.vue";
+import MyContactList from "./dialogsContactos/MyContactList.vue";
+import SentContactList from "./dialogsContactos/SentContactList.vue";
+
 export default {
   name: "ContactList",
   data: () => ({
-    active: false,
-    detalles: false,
-    page: 1,
-    listaContactos: 0,
-    max: 5,
     search: "",
-    contacto: {},
     estado: {},
+    tap: 1,
     contactos: [
       {
         nombre: "Cameron",
@@ -159,115 +142,12 @@ export default {
         foto: "https://images.unsplash.com/photo-1483995564125-85915c11dcfe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=641&q=80",
       },
     ],
-    solicitudes: [
-      {
-        nombre: "Cameron",
-        apellidoMaterno: "Williamson",
-        apellidoPaterno: "Warren",
-        correoElectronico: "cameron@example.com",
-        telefono: "(704) 555-0127",
-        estadoRepublica: {
-          nombre: "Morelos",
-        },
-        tituloCurricular: "Administradora de base de datos (DBA)",
-        fechaNacimiento: "9/4/12",
-        foto: "https://images.unsplash.com/photo-1484186139897-d5fc6b908812?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
-      },
-      {
-        nombre: "Esther",
-        apellidoMaterno: "Howard",
-        apellidoPaterno: "Simmons",
-        correoElectronico: "esther@example.com",
-        telefono: "(907) 555-0101",
-        estadoRepublica: {
-          nombre: "Morelos",
-        },
-        tituloCurricular: "Administradora de base de datos (DBA)",
-        fechaNacimiento: "9/4/12",
-        foto: "https://images.unsplash.com/photo-1518577915332-c2a19f149a75?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=562&q=80",
-      },
-      {
-        nombre: "Robert",
-        apellidoMaterno: "Warren",
-        apellidoPaterno: "Hawkins",
-        correoElectronico: "robert@example.com",
-        telefono: "(217) 555-0113",
-        estadoRepublica: {
-          nombre: "Querétaro",
-        },
-        tituloCurricular: "Administradora de base de datos (DBA)",
-        fechaNacimiento: "9/4/12",
-        foto: "https://images.unsplash.com/photo-1529068755536-a5ade0dcb4e8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=581&q=80",
-      },
-      {
-        nombre: "Alexander",
-        apellidoMaterno: "Edwards",
-        apellidoPaterno: "Wade",
-        correoElectronico: "alexander@example.com",
-        telefono: "(308) 555-0121",
-        estadoRepublica: {
-          nombre: "Durango",
-        },
-        tituloCurricular: "Administradora de base de datos (DBA)",
-        fechaNacimiento: "9/4/12",
-        foto: "https://images.unsplash.com/photo-1485528562718-2ae1c8419ae2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=558&q=80",
-      },
-    ],
-    enviadas: [
-      {
-        nombre: "Cameron",
-        apellidoMaterno: "Williamson",
-        apellidoPaterno: "Warren",
-        correoElectronico: "cameron@example.com",
-        telefono: "(704) 555-0127",
-        estadoRepublica: {
-          nombre: "Morelos",
-        },
-        tituloCurricular: "Administradora de base de datos (DBA)",
-        fechaNacimiento: "9/4/12",
-        foto: "https://images.unsplash.com/photo-1484186139897-d5fc6b908812?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
-      },
-      {
-        nombre: "Esther",
-        apellidoMaterno: "Howard",
-        apellidoPaterno: "Simmons",
-        correoElectronico: "esther@example.com",
-        telefono: "(907) 555-0101",
-        estadoRepublica: {
-          nombre: "Morelos",
-        },
-        tituloCurricular: "Administradora de base de datos (DBA)",
-        fechaNacimiento: "9/4/12",
-        foto: "https://images.unsplash.com/photo-1518577915332-c2a19f149a75?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=562&q=80",
-      },
-      {
-        nombre: "Robert",
-        apellidoMaterno: "Warren",
-        apellidoPaterno: "Hawkins",
-        correoElectronico: "robert@example.com",
-        telefono: "(217) 555-0113",
-        estadoRepublica: {
-          nombre: "Querétaro",
-        },
-        tituloCurricular: "Administradora de base de datos (DBA)",
-        fechaNacimiento: "9/4/12",
-        foto: "https://images.unsplash.com/photo-1529068755536-a5ade0dcb4e8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=581&q=80",
-      },
-    ],
   }),
   methods: {
-    Confirmar: function (contacto) {
-      this.contacto = contacto;
-      this.estado = contacto.estadoRepublica;
-    },
-    OpenDetail: function () {
-      this.detalles = !this.detalles;
-      this.contacto = contacto;
-    },
-    CloseDetails: function () {
-      this.detalles = !this.detalles;
+    ChangeTap(tap) {
+      this.tap = tap;
     },
   },
-  components: { ContactDetailDialog, AddContactDialog },
+  components: { AddContactDialog, MyContactList, SentContactList },
 };
 </script>
