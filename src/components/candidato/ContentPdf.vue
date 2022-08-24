@@ -17,54 +17,18 @@
             </vs-avatar>
           </vs-col>
         </vs-row>
-        <!-- <vs-row v-if="candidato2.idiomas != null">
-          <vs-col class="space-top text-center">
-            <div v-if="candidato2.idiomas.length != 0">
-              <div class="space center">
-                <h3 class="margin-xy space bg-light">Idiomas de dominio</h3>
-                <div
-                  :key="i"
-                  v-for="(idi, i) in candidato.idiomas"
-                  :data="idi"
-                  class="text-start long"
-                >
-                  <div class="divider">
-                    <span class="border-light"></span>
-                  </div>
-                  <vs-row class="space">
-                    <vs-col lg="2" sm="2" xs="2" class="text-center space-top">
-                      <i class="bx bx-world bg-light"></i>
-                    </vs-col>
-                    <vs-col lg="6" sm="6" xs="6" class="space-top text-middle">
-                      <small class="bg-light">{{ idi.idioma.nombre }}</small>
-                    </vs-col>
-                    <vs-col lg="4" sm="4" xs="4" class="text-center space-top">
-                      <span class="badge-sec">{{ idi.nivel }}</span>
-                    </vs-col>
-                  </vs-row>
-                </div>
-                <div class="text-start long">
-                  <div class="divider">
-                    <span class="border-light"></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </vs-col>
-        </vs-row> -->
-
-        <vs-row v-if="candidato2.conocimientosHabilidades != null">
+        <vs-row v-if="candidato.conocimientosHabilidades != null">
           <vs-col class="text-center">
             <div
               v-if="
-                candidato2.conocimientosHabilidades.conocimientos.length != 0
+                candidato.conocimientosHabilidades.conocimientos.length != 0
               "
             >
               <div class="space center">
                 <h3 class="margin-xy space bg-light">Conocimientos</h3>
                 <div
                   :key="i"
-                  v-for="(con, i) in candidato2.conocimientosHabilidades
+                  v-for="(con, i) in candidato.conocimientosHabilidades
                     .conocimientos"
                   :data="con"
                   class="text-start long"
@@ -91,13 +55,13 @@
           </vs-col>
           <vs-col class="text-center">
             <div
-              v-if="candidato2.conocimientosHabilidades.habilidades.length != 0"
+              v-if="candidato.conocimientosHabilidades.habilidades.length != 0"
             >
               <div class="space center">
                 <h3 class="margin-xy space bg-light">Habilidades</h3>
                 <div
                   :key="i"
-                  v-for="(hab, i) in candidato2.conocimientosHabilidades
+                  v-for="(hab, i) in candidato.conocimientosHabilidades
                     .habilidades"
                   :data="hab"
                   class="text-start long"
@@ -183,12 +147,12 @@
           </vs-col>
         </vs-row>
         <vs-row justify="space-between">
-          <vs-col lg="12" sm="12" xs="12" v-if="candidato2.idiomas.length != 0">
+          <vs-col lg="12" sm="12" xs="12" v-if="candidato.idiomas.length != 0">
             <h3>Idiomas de dominio</h3>
             <div class="space-top content-data space datos text-start bg-gray">
               <div
                 :key="i"
-                v-for="(idioma, i) in candidato2.idiomas"
+                v-for="(idioma, i) in candidato.idiomas"
                 :data="idioma"
                 class="item"
               >
@@ -214,150 +178,146 @@
     </vs-row>
     <vs-row justify="space-around">
       <vs-col lg="12" sm="12" xs="12" class="space-top space">
-       
-          <!-- Estudios -->
-          <div class="space space-top" v-if="candidato2.estudios != null">
-            <h1 class="bold bg-primary">Estudios</h1>
-            <vs-table class="content-data space-top">
-              <template #thead>
-                <vs-tr>
-                  <vs-th> Grado académico </vs-th>
-                  <vs-th> Universidad </vs-th>
-                  <vs-th> Carrera </vs-th>
-                  <vs-th> Fecha inicio </vs-th>
-                  <vs-th>Fecha fin </vs-th>
-                </vs-tr>
-              </template>
-              <template #tbody>
-                <vs-tr :key="i" v-for="(c, i) in candidato2.estudios" :data="c">
-                  <vs-td>
-                    {{ c.gradoAcademico }}
-                  </vs-td>
-                  <vs-td>
-                    {{ c.universidad }}
-                  </vs-td>
-                  <vs-td>
-                    {{ c.carrera }}
-                  </vs-td>
-                  <vs-td>
-                    {{ c.fechaInicio }}
-                  </vs-td>
-                  <vs-td>
-                    {{ c.fechaFin }}
-                  </vs-td>
-                </vs-tr>
-              </template>
-              <template #footer> </template>
-              <template #notFound> No se encontraron registros </template>
-            </vs-table>
-          </div>
-          <!-- Cursos -->
-          <div class="space-top space" v-if="candidato2.cursos != null">
-             <h1 class="bold bg-primary">Cursos</h1>
-            <vs-table class="content-data space-top">
-              <template #thead>
-                <vs-tr>
-                  <vs-th> Nombre </vs-th>
-                  <vs-th> Empresa </vs-th>
-                  <vs-th> Obtención </vs-th>
-                  <vs-th> Caducidad </vs-th>
-                </vs-tr>
-              </template>
-              <template #tbody>
-                <vs-tr :key="i" v-for="(tr, i) in candidato2.cursos" :data="tr">
-                  <vs-td>
-                    {{ tr.nombre }}
-                  </vs-td>
-                  <vs-td>
-                    {{ tr.empresa }}
-                  </vs-td>
-                  <vs-td>
-                    {{ tr.fechaObtencion }}
-                  </vs-td>
-                  <vs-td>
-                    {{ tr.fechaCaducidad }}
-                  </vs-td>
-                </vs-tr>
-              </template>
-              <template #footer> </template>
-              <template #notFound> No se encontraron registros </template>
-            </vs-table>
-          </div>
-          <!-- Experiencia laboral -->
-          <div class="space space-top" v-if="candidato2.experienciasLaborales != null"
-          >
-            <h1 class="bold bg-primary">Experiencia laboral</h1>
-                <vs-table class="content-data space-top">
-                  <template #thead>
-                    <vs-tr>
-                      <vs-th> Puesto </vs-th>
-                      <vs-th> Tiempo </vs-th>
-                      <vs-th> Actividades que realizó </vs-th>
-                    </vs-tr>
-                  </template>
-                  <template #tbody>
-                    <vs-tr
-                      :key="i"
-                      v-for="(tr, i) in candidato2.experienciasLaborales"
-                      :data="tr"
-                    >
-                      <vs-td>
-                        {{ tr.puesto }}
-                      </vs-td>
-                      <vs-td>
-                        {{ tr.fechaInicio }}
-                      </vs-td>
-                      <vs-td>
-                        {{ tr.actividadesRealizadas }}
-                      </vs-td>
-                    </vs-tr>
-                  </template>
-                  <template #footer> </template>
-                   <template #notFound> No se encontraron registros </template>
-                </vs-table>
-            
-          </div>
-          <!-- Certificaciones -->
-          <div class="space space-top" v-if="candidato2.certificaciones != null"
-          >
-            <h1 class="bold bg-primary">Certificaciones</h1>
-           
-                <vs-table class="content-data space-top">
-                  <template #thead>
-                    <vs-tr>
-                      <vs-th> Nombre </vs-th>
-                      <vs-th> Empresa </vs-th>
-                      <vs-th> Obtención </vs-th>
-                      <vs-th> Caducidad </vs-th>
-                    </vs-tr>
-                  </template>
-                  <template #tbody>
-                    <vs-tr
-                      :key="i"
-                      v-for="(tr, i) in 
-                        candidato2.certificaciones"
-                      :data="tr"
-                    >
-                      <vs-td>
-                        {{ tr.nombre }}
-                      </vs-td>
-                      <vs-td>
-                        {{ tr.empresa }}
-                      </vs-td>
-                      <vs-td>
-                        {{ tr.fechaObtencion }}
-                      </vs-td>
-                      <vs-td>
-                        {{ tr.fechaCaducidad }}
-                      </vs-td>
-                    </vs-tr>
-                  </template>
-                  <template #footer> </template>
-                  <template #notFound> No se encontraron registros </template>
-                </vs-table>
-              
-          </div>
-      
+        <!-- Estudios -->
+        <div class="space space-top" v-if="candidato.estudios != null">
+          <h1 class="bold bg-primary">Estudios</h1>
+          <vs-table class="content-data space-top">
+            <template #thead>
+              <vs-tr>
+                <vs-th> Grado académico </vs-th>
+                <vs-th> Universidad </vs-th>
+                <vs-th> Carrera </vs-th>
+                <vs-th> Fecha inicio </vs-th>
+                <vs-th>Fecha fin </vs-th>
+              </vs-tr>
+            </template>
+            <template #tbody>
+              <vs-tr :key="i" v-for="(c, i) in candidato.estudios" :data="c">
+                <vs-td>
+                  {{ c.gradoAcademico }}
+                </vs-td>
+                <vs-td>
+                  {{ c.universidad }}
+                </vs-td>
+                <vs-td>
+                  {{ c.carrera }}
+                </vs-td>
+                <vs-td>
+                  {{ c.fechaInicio }}
+                </vs-td>
+                <vs-td>
+                  {{ c.fechaFin }}
+                </vs-td>
+              </vs-tr>
+            </template>
+            <template #footer> </template>
+            <template #notFound> No se encontraron registros </template>
+          </vs-table>
+        </div>
+        <!-- Cursos -->
+        <div class="space-top space" v-if="candidato.cursos != null">
+          <h1 class="bold bg-primary">Cursos</h1>
+          <vs-table class="content-data space-top">
+            <template #thead>
+              <vs-tr>
+                <vs-th> Nombre </vs-th>
+                <vs-th> Empresa </vs-th>
+                <vs-th> Obtención </vs-th>
+                <vs-th> Caducidad </vs-th>
+              </vs-tr>
+            </template>
+            <template #tbody>
+              <vs-tr :key="i" v-for="(tr, i) in candidato.cursos" :data="tr">
+                <vs-td>
+                  {{ tr.nombre }}
+                </vs-td>
+                <vs-td>
+                  {{ tr.empresa }}
+                </vs-td>
+                <vs-td>
+                  {{ tr.fechaObtencion }}
+                </vs-td>
+                <vs-td>
+                  {{ tr.fechaCaducidad }}
+                </vs-td>
+              </vs-tr>
+            </template>
+            <template #footer> </template>
+            <template #notFound> No se encontraron registros </template>
+          </vs-table>
+        </div>
+        <!-- Experiencia laboral -->
+        <div
+          class="space space-top"
+          v-if="candidato.experienciasLaborales != null"
+        >
+          <h1 class="bold bg-primary">Experiencia laboral</h1>
+          <vs-table class="content-data space-top">
+            <template #thead>
+              <vs-tr>
+                <vs-th> Puesto </vs-th>
+                <vs-th> Tiempo </vs-th>
+                <vs-th> Actividades que realizó </vs-th>
+              </vs-tr>
+            </template>
+            <template #tbody>
+              <vs-tr
+                :key="i"
+                v-for="(tr, i) in candidato.experienciasLaborales"
+                :data="tr"
+              >
+                <vs-td>
+                  {{ tr.puesto }}
+                </vs-td>
+                <vs-td>
+                  {{ tr.fechaInicio }}
+                </vs-td>
+                <vs-td>
+                  {{ tr.actividadesRealizadas }}
+                </vs-td>
+              </vs-tr>
+            </template>
+            <template #footer> </template>
+            <template #notFound> No se encontraron registros </template>
+          </vs-table>
+        </div>
+        <!-- Certificaciones -->
+        <div class="space space-top" v-if="candidato.certificaciones != null">
+          <h1 class="bold bg-primary">Certificaciones</h1>
+
+          <vs-table class="content-data space-top">
+            <template #thead>
+              <vs-tr>
+                <vs-th> Nombre </vs-th>
+                <vs-th> Empresa </vs-th>
+                <vs-th> Obtención </vs-th>
+                <vs-th> Caducidad </vs-th>
+              </vs-tr>
+            </template>
+            <template #tbody>
+              <vs-tr
+                :key="i"
+                v-for="(tr, i) in candidato.certificaciones"
+                :data="tr"
+              >
+                <vs-td>
+                  {{ tr.nombre }}
+                </vs-td>
+                <vs-td>
+                  {{ tr.empresa }}
+                </vs-td>
+                <vs-td>
+                  {{ tr.fechaObtencion }}
+                </vs-td>
+                <vs-td>
+                  {{ tr.fechaCaducidad }}
+                </vs-td>
+              </vs-tr>
+            </template>
+            <template #footer> </template>
+            <template #notFound> No se encontraron registros </template>
+          </vs-table>
+        </div>
       </vs-col>
     </vs-row>
   </div>
