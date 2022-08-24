@@ -22,7 +22,7 @@
         :enable-download="enableDownload"
         :preview-modal="previewModal"
         paginate-elements-by-height="1100"
-        pdf-quality="1"
+        pdf-quality="2"
         :manual-pagination="manualPagination"
         pdf-format="a4"
         pdf-orientation="portrait"
@@ -54,7 +54,7 @@ export default {
     exportToPDF() {
       this.charge = true;
       html2pdf(this.$refs.html2Pdf, {
-        margin: 0,
+        margin: 0.5,
         filename:
           "CV_" +
           this.nombre +
