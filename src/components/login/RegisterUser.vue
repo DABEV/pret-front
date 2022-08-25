@@ -22,6 +22,9 @@
               placeholder="Nombre"
             >
               <template #icon><em class="bx bxs-user"></em></template>
+              <template v-if="validado && nombre == ''" #message-danger>
+                Dato de nombre faltante
+              </template>
             </vs-input>
             <vs-input
               block
@@ -31,11 +34,15 @@
               placeholder="Apellido paterno"
             >
               <template #icon><em class="bx bxs-user"></em></template>
+              <template v-if="validado && apellidoPaterno == ''" #message-danger>
+                Dato de apellido paterno faltante
+              </template>
             </vs-input>
             <vs-input
               block
               class="space"
               primary
+              maxlength="10"
               v-model="apellidoMaterno"
               placeholder="Apellido materno"
             >
@@ -49,6 +56,9 @@
               placeholder="Télefono"
             >
               <template #icon><em class="bx bxs-phone"></em></template>
+              <template v-if="telefono.length > 10" #message-danger>
+                Número de teléfono excede el límite
+              </template>
             </vs-input>
             <vs-input
               block
@@ -58,6 +68,9 @@
               v-model="fechaNacimiento"
             >
               <template #icon><em class="bx bxs-calendar"></em></template>
+              <template v-if="validado && fechaNacimiento == ''" #message-danger>
+                Fecha de nacimiento faltante
+              </template>
             </vs-input>
           </vs-col>
           <vs-col lg="5" sm="12" xs="12">
@@ -69,29 +82,32 @@
               placeholder="Grado de estudios"
             >
               <template #icon><em class="bx bxs-graduation"></em></template>
+              <template v-if="validado &&tituloCurricular == ''" #message-danger>
+                Título curricular requerido
+              </template>
             </vs-input>
             <div class="input-icon-register">
               <span><i class="bx bxs-map"></i> </span>
               <select
-                      class="select-custom space"
-                      placeholder="Estado"
-                      v-model="candidato.estadoRepublica"
-                    >
-                      <option
-                        class="select-option"
-                        disabled
-                        :value="candidato.estadoRepublica"
-                      >
-                        {{ candidato.estadoRepublica.nombre }}
-                      </option>
-                      <option
-                        class="select-option"
-                        v-for="(edo, i) in estados"
-                        :key="i"
-                        :value="edo"
-                      >
-                        {{ edo.nombre }}
-                      </option>
+                class="select-custom space"
+                placeholder="Estado"
+                v-model="candidato.estadoRepublica"
+              >
+                <option
+                  class="select-option"
+                  disabled
+                  :value="candidato.estadoRepublica"
+                >
+                  {{ candidato.estadoRepublica.nombre }}
+                </option>
+                <option
+                  class="select-option"
+                  v-for="(edo, i) in estados"
+                  :key="i"
+                  :value="edo"
+                >
+                  {{ edo.nombre }}
+                </option>
               </select>
             </div>
             <vs-input
@@ -102,6 +118,12 @@
               placeholder="Correo"
             >
               <template #icon> @ </template>
+              <template
+                v-if="!validEmail && correoElectronico !== ''"
+                #message-danger
+              >
+                Formato de correo invalido
+              </template>
             </vs-input>
             <vs-input
               primary
@@ -112,6 +134,12 @@
               placeholder="Contraseña"
             >
               <template #icon><em class="bx bxs-lock-alt"></em></template>
+              <template
+                v-if="!validPassword && contrasena !== ''"
+                #message-danger
+              >
+                Requiere de mínimo una minúscula, una mayúscula y un número
+              </template>
             </vs-input>
             <vs-input
               primary
@@ -122,13 +150,25 @@
               placeholder="Repetir contraseña"
             >
               <template #icon><em class="bx bxs-lock-alt"></em></template>
+              <template v-if="value !== contrasena" #message-danger>
+                Las contraseñas no coinciden
+              </template>
+              <template
+                v-if="value == contrasena && contrasena !== ''"
+                #message-success
+              >
+                Las contraseñas coinciden
+              </template>
             </vs-input>
           </vs-col>
         </vs-row>
         <vs-row justify="space-around">
           <vs-col lg="11" sm="12" xs="12">
-            <textarea v-model="descripcionPerfil" placeholder="Breve descripción">
-          </textarea>
+            <textarea
+              v-model="descripcionPerfil"
+              placeholder="Breve descripción"
+            >
+            </textarea>
           </vs-col>
         </vs-row>
         <vs-row justify="space-around" class="space-top">
@@ -158,6 +198,8 @@ import CandidateService from "../../service/Candidate/CandidateService";
 export default {
   name: "RegisterUser",
   data: () => ({
+    fechaHoy: new Date(),
+    validado: false,
     value: "",
     nombre: "",
     apellidoPaterno: "",
@@ -201,13 +243,13 @@ export default {
         })
         .catch((e) => {
           console.log(e);
-        }); 
+        });
     },
-    async registrar(){
-      try{
-        let candidateData = { 
-          nombre: this.nombre, 
-          apellidoPaterno: this.apellidoPaterno, 
+    async registrar() {
+      try {
+        let candidateData = {
+          nombre: this.nombre,
+          apellidoPaterno: this.apellidoPaterno,
           apellidoMaterno: this.apellidoMaterno,
           correoElectronico: this.correoElectronico,
           contrasena: this.contrasena,
@@ -216,48 +258,53 @@ export default {
           estadoRepublica: this.candidato.estadoRepublica,
           descripcionPerfil: this.descripcionPerfil,
           tituloCurricular: this.tituloCurricular,
-           };
+        };
+        this.validado = true;
         CandidateService.registrar(candidateData)
-        .then((response) =>{
-          if(response){
-            this.llamarNotificacion(1, response.data.title, response.data.message);
-            setTimeout(location.href = "#/acceso/login",4000);
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-          this.llamarNotificacion(4, "Hubo un error!", "Verifica los datos, puede que te haya faltado ingresar uno");
-        });
-      }catch(e){
+          .then((response) => {
+            if (response) {
+              this.llamarNotificacion(
+                1,
+                response.data.title,
+                response.data.message
+              );
+              setTimeout((location.href = "#/acceso/login"), 4000);
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+            this.llamarNotificacion(
+              4,
+              "Hubo un error!",
+              "Verifica los datos, puede que te haya faltado ingresar uno"
+            );
+          });
+      } catch (e) {
         console.log(e);
         this.llamarNotificacion(4, "Hubo un error!");
       }
     },
     llamarNotificacion: function (color, titulo, mensaje) {
-      this.openNotification(
-        color,
-        titulo,
-        mensaje
-      );
+      this.openNotification(color, titulo, mensaje);
     },
     openNotification(border_, title_, text_) {
       let tipo = "";
       let icon_ = "";
       switch (border_) {
         case 1:
-          tipo = 'success';
+          tipo = "success";
           icon_ = `<i class='bx bx-check-circle' ></i>`;
           break;
         case 2:
-          tipo = 'primary';
+          tipo = "primary";
           icon_ = `<i class='bx bx-info-circle'></i>`;
           break;
         case 3:
-          tipo = 'warning';
+          tipo = "warning";
           icon_ = `<i class='bx bx-error'></i>`;
           break;
         case 4:
-          tipo = 'danger';
+          tipo = "danger";
           icon_ = `<i class='bx bx-x-circle'></i>`;
           break;
       }
@@ -271,9 +318,17 @@ export default {
       });
     },
   },
-  
+
   mounted() {
     this.cargarEstados();
+  },
+  computed: {
+    validEmail() {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.correoElectronico);
+    },
+    validPassword(){
+      return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{3,}$/.test(this.contrasena);
+    }
   },
 };
 </script>

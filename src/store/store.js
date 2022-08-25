@@ -47,10 +47,6 @@ export default new Vuex.Store({
             location.href = "#/reclutador/perfil";
           }
           
-        })
-        .catch((e) => {
-          commit("logout");
-          console.log(e);
         });
     },
     logout({ commit }) {

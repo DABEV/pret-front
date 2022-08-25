@@ -23,6 +23,9 @@
                 placeholder="Correo"
               >
                 <template #icon> @ </template>
+                <template v-if="emailCompleto && correoElectronico == ''" #message-danger>
+                  Faltó agregar correo
+                </template>
               </vs-input>
               <vs-input
                 primary
@@ -33,6 +36,9 @@
               >
                 <template #icon>
                   <em class="bx bxs-lock-alt"></em>
+                </template>
+                <template v-if="passwordCompleto && contrasena == ''" #message-danger>
+                  Faltó agregar contraseña
                 </template>
               </vs-input>
               <div class="center-item space space-top">
@@ -104,10 +110,20 @@ export default {
           correoElectronico: this.correoElectronico,
           contrasena: this.contrasena,
         };
+        if(sessionData.correoElectronico == ""){
+          this.emailCompleto = true;
+        }
+        if(sessionData.contrasena == ""){
+          this.passwordCompleto = true;
+        }
         await this.$store.dispatch("doLogin", sessionData);
       } catch (e) {
         console.log(e);
-        this.llamarNotificacion(3, "Oh no!", "Parece que los datos son incorrectos")
+        this.llamarNotificacion(
+          3,
+          "Oh no!",
+          "Parece que los datos son incorrectos"
+        );
       }
     },
     llamarNotificacion: function (color, titulo, mensaje) {
@@ -154,6 +170,8 @@ export default {
     active: false,
     correoElectronico: "",
     contrasena: "",
+    emailCompleto: false,
+    passwordCompleto: false,
   }),
 };
 </script>
