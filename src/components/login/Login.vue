@@ -23,7 +23,10 @@
                 placeholder="Correo"
               >
                 <template #icon> @ </template>
-                <template v-if="emailCompleto && correoElectronico == ''" #message-danger>
+                <template
+                  v-if="emailCompleto && correoElectronico == ''"
+                  #message-danger
+                >
                   Faltó agregar correo
                 </template>
               </vs-input>
@@ -37,14 +40,13 @@
                 <template #icon>
                   <em class="bx bxs-lock-alt"></em>
                 </template>
-                <template v-if="passwordCompleto && contrasena == ''" #message-danger>
+                <template
+                  v-if="passwordCompleto && contrasena == ''"
+                  #message-danger
+                >
                   Faltó agregar contraseña
                 </template>
               </vs-input>
-              <div class="center-item space space-top">
-                <vs-checkbox v-model="option"> Recuérdame </vs-checkbox>
-              </div>
-              <a href="#">Olvidaste la contraseña?</a>
             </div>
           </vs-col>
         </vs-row>
@@ -60,6 +62,7 @@
             </vs-button>
           </vs-col>
         </vs-row>
+        <br />
       </div>
     </vs-col>
     <vs-dialog prevent-close v-model="active">
@@ -72,7 +75,13 @@
         <vs-row justify="space-around">
           <vs-col lg="5" sm="12" xs="12" class="text-center center-item">
             <div
-              class="content-selection padding-xy space content-card center-item"
+              class="
+                content-selection
+                padding-xy
+                space
+                content-card
+                center-item
+              "
             >
               <vs-button icon class="logo" @click="IrCandidato()">
                 <i class="bx bx-user"></i>
@@ -84,7 +93,13 @@
           </vs-col>
           <vs-col lg="5" sm="12" xs="12" class="text-center center-item">
             <div
-              class="content-selection padding-xy space content-card center-item"
+              class="
+                content-selection
+                padding-xy
+                space
+                content-card
+                center-item
+              "
             >
               <vs-button icon class="logo" @click="IrReclutador()">
                 <i class="bx bx-buildings"></i>
@@ -110,10 +125,10 @@ export default {
           correoElectronico: this.correoElectronico,
           contrasena: this.contrasena,
         };
-        if(sessionData.correoElectronico == ""){
+        if (sessionData.correoElectronico == "") {
           this.emailCompleto = true;
         }
-        if(sessionData.contrasena == ""){
+        if (sessionData.contrasena == "") {
           this.passwordCompleto = true;
         }
         await this.$store.dispatch("doLogin", sessionData);
