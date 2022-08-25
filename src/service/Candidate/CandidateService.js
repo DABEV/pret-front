@@ -36,5 +36,9 @@ class CandidateService {
   getByEmail(email) {
     return API_TOKEN.post("candidato/get-id-by-email", email);
   }
+
+  addCertificate(data) {
+    return API_TOKEN.post("certificacion/registrar", data);
+  }
 }
 export default new CandidateService();

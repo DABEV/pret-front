@@ -76,6 +76,7 @@
 </template>
 
 <script>
+import CandidateService from "../../../service/Candidate/CandidateService";
 export default {
   name: "CertificateDialog",
   data: () => ({
@@ -120,7 +121,34 @@ export default {
     },
     enviarCer: function () {
       this.activeCer = false;
-      this.success = true;
+      CandidateService.addCertificate(this.certificado)
+        .then((response) => {
+          if (response.data) {
+            this.openNotification(
+              1,
+              response.data.title,
+              response.data.message
+            );
+            this.CargarPerfil();
+          } else {
+            this.openNotification(
+              4,
+              response.data.title,
+              response.data.message
+            );
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          this.openNotification(
+            4,
+            e.response.data.title,
+            e.response.data.message
+          );
+        });
+    },
+    CargarPerfil: function () {
+      this.$emit("CargarPerfil");
     },
   },
 };
