@@ -273,7 +273,7 @@
                   <i class="bx bx-world bg-primary"></i>
                 </vs-col>
                 <vs-col lg="8" sm="6" xs="6" class="space-top">
-                  <p>{{ idioma.nombre }}</p>
+                  <p>{{ idioma.idioma.nombre }}</p>
                 </vs-col>
                 <vs-col lg="3" sm="4" xs="4" class="text-center space-top">
                   <span class="badge-sec">{{ idioma.nivel }}</span>
