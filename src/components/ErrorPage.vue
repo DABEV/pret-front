@@ -11,7 +11,7 @@
         Parece que estás perdido...<br />¿Eso es un problema?
       </p>
       <vs-row>
-        <vs-button block animation-type="vertical" class="space-top">
+        <vs-button onclick="history.back()" block animation-type="vertical" class="space-top">
           Volver
           <template #animate> <em class="bx bx-arrow-back"></em></template>
         </vs-button>

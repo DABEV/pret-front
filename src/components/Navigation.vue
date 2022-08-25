@@ -26,7 +26,7 @@
         </vs-navbar-item>
       </template>
       <template #right>
-        <vs-button v-if="!isAuth" transparent class="bg-white">Acceso</vs-button>
+        <vs-button v-if="!isAuth" to="/acceso/login" transparent class="bg-white">Acceso</vs-button>
         <vs-button @click="cerrarSesion()" v-else transparent class="bg-white">Cerrar sesión</vs-button>
         &nbsp;
       </template>
@@ -108,19 +108,6 @@
           Registrar vacante
         </vs-sidebar-item>
       </vs-sidebar-group>
-      <template #footer>
-        <vs-row justify="space-between">
-          <vs-avatar>
-            <img src="/avatars/avatar-5.png" alt="" />
-          </vs-avatar>
-
-          <vs-avatar badge-color="danger" badge-position="top-right">
-            <i class="bx bx-bell"></i>
-
-            <template #badge> 28 </template>
-          </vs-avatar>
-        </vs-row>
-      </template>
     </vs-sidebar>
   </div>
 </template>

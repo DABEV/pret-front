@@ -107,6 +107,7 @@ export default {
         await this.$store.dispatch("doLogin", sessionData);
       } catch (e) {
         console.log(e);
+        this.llamarNotificacion(3, "Oh no!", "Parece que los datos son incorrectos")
       }
     },
     llamarNotificacion: function (color, titulo, mensaje) {

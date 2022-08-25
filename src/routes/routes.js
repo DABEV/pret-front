@@ -191,7 +191,7 @@ const routes = [
   },
 
   {
-    path: "/error",
+    path: "*",
     component: ErrorLayout,
     children: [
       {

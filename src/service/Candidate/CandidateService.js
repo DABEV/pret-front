@@ -20,5 +20,9 @@ class CandidateService {
     addLanguage(data){
         return API_TOKEN.post("idioma-candidato/registrar", data)
     }
+
+    listarAmigos(){
+        return API_TOKEN.get("contacto/lista-amigos",);
+    }
 }
 export default new CandidateService();

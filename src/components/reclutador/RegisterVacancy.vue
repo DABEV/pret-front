@@ -6,7 +6,12 @@
         <div class="center">
           <vs-row justify="center">
             <vs-col lg="2">
-              <vs-button @click="registrarVacante()" success block animation-type="vertical">
+              <vs-button
+                @click="registrarVacante()"
+                success
+                block
+                animation-type="vertical"
+              >
                 Publicar vacante
                 <template #animate>
                   <i class="bx bxs-save"></i>&nbsp;Guardar
@@ -103,7 +108,10 @@
             </vs-col>
             <vs-col lg="11" sm="12" xs="12">
               Descripción
-              <textarea v-model="vacante.descripcion" placeholder="Breve descripción">
+              <textarea
+                v-model="vacante.descripcion"
+                placeholder="Breve descripción"
+              >
               </textarea>
             </vs-col>
           </vs-row>
@@ -122,7 +130,7 @@
                 animation-type="vertical"
                 @click="activeBen = !activeBen"
               >
-                Añadir vacante
+                Añadir beneficio
                 <template #animate>
                   <i class="bx bx-check-shield"></i>&nbsp;Añadir
                 </template>
@@ -174,12 +182,12 @@
           <select
             class="select-custom space-top space"
             placeholder="Beneficios"
-            v-model="vacante.beneficios"
+            v-model="beneficio"
           >
             <option
               class="select-option"
               disabled
-              v-if="vacante.beneficios == null"
+              v-if="beneficio == null"
             >
               Selecciona ...
             </option>
@@ -218,6 +226,8 @@ export default {
   name: "RegisterVacancy",
   data: () => ({
     activeBen: false,
+    page2: 0,
+    max: 2,
     vacante: {
       nombre: "",
       descripcion: "",
@@ -237,26 +247,44 @@ export default {
           nombre: "",
         },
       },
-      beneficios: null,
+      beneficios: [
+        
+      ],
     },
     beneficiosLista: [],
+    beneficio: {
+      id: 0,
+      nombre: "",
+    },
   }),
   methods: {
-    async registrarVacante(){
-      try{
+    async registrarVacante() {
+      try {
         RecruiterService.registrarVacante(this.vacante)
-        .then((response) =>{
-          if(response.data){
-            this.openNotification(1, response.data.title, response.data.message);
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-          this.openNotification(4, e.response.data.title, e.response.data.message);
-        });
-      }catch(e){
+          .then((response) => {
+            if (response.data) {
+              this.openNotification(
+                1,
+                response.data.title,
+                response.data.message
+              );
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+            this.openNotification(
+              4,
+              e.response.data.title,
+              e.response.data.message
+            );
+          });
+      } catch (e) {
         console.log(e);
-        this.openNotification(4, "Hubo un error!", "Espera a que soporte técnico repare el problema");
+        this.openNotification(
+          4,
+          "Hubo un error!",
+          "Espera a que soporte técnico repare el problema"
+        );
       }
     },
     openNotification(border_, title_, text_) {
@@ -298,7 +326,11 @@ export default {
           console.log(e);
         });
     },
-    enviarBen: function () {},
+    enviarBen() {
+      console.log(this.beneficio);
+      this.vacante.beneficios.push(this.beneficio);
+      this.activeBen = false;
+    },
   },
   mounted() {
     this.cargarBeneficios();
