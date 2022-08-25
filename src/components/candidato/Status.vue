@@ -55,40 +55,22 @@
                   {{ tr.vacante.reclutador.estadoRepublicaEmpresa.nombre }}
                 </vs-td>
                 <vs-td class="text-center">
-                  <span
-                    v-if="tr.estadoVacante.nombre == 'Idóneo'"
-                    class="badge-suc"
-                  >
+                  <span v-if="tr.estadoVacante.id == 4" class="badge-suc">
                     {{ tr.estadoVacante.nombre }}
                   </span>
-                  <span
-                    v-else-if="tr.estadoVacante.nombre == 'Postulado'"
-                    class="badge-def"
-                  >
+                  <span v-else-if="tr.estadoVacante.id == 1" class="badge-def">
                     {{ tr.estadoVacante.nombre }}
                   </span>
-                  <span
-                    v-else-if="tr.estadoVacante.nombre == 'CV visto'"
-                    class="badge-war"
-                  >
+                  <span v-else-if="tr.estadoVacante.id == 2" class="badge-war">
                     {{ tr.estadoVacante.nombre }}
                   </span>
-                  <span
-                    v-else-if="tr.estadoVacante.nombre == 'Rechazado'"
-                    class="badge-dan"
-                  >
+                  <span v-else-if="tr.estadoVacante.id == 6" class="badge-dan">
                     {{ tr.estadoVacante.nombre }}
                   </span>
-                  <span
-                    v-else-if="tr.estadoVacante.nombre == 'Entrevista'"
-                    class="badge-sec"
-                  >
+                  <span v-else-if="tr.estadoVacante.id == 3" class="badge-sec">
                     {{ tr.estadoVacante.nombre }}
                   </span>
-                  <span
-                    v-else-if="tr.estadoVacante.nombre == 'Contratado'"
-                    class="badge-pri"
-                  >
+                  <span v-else-if="tr.estadoVacante.id == 5" class="badge-pri">
                     {{ tr.estadoVacante.nombre }}
                   </span>
                   <span v-else class="badge-def"
