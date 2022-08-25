@@ -131,6 +131,11 @@ export default {
       CandidateService.getByEmail(this.correoContacto)
         .then((response) => {
           if (response.data.data) {
+            this.openNotification(
+              1,
+              response.data.title,
+              response.data.message
+            );
             this.solicitudEnviar.id.amigoId = response.data.data;
             this.Solicitar();
           } else {

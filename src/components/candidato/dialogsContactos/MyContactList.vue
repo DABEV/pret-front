@@ -191,8 +191,8 @@
 </template>
 
 <script>
-import ContactDetailDialog from "../dialogsContactos/ContactDetailDialog.vue";
 import CandidateService from "../../../service/Candidate/CandidateService";
+import ContactDetailDialog from "../dialogsContactos/ContactDetailDialog.vue";
 
 export default {
   name: "ContactList",
@@ -243,21 +243,13 @@ export default {
     CloseDetails: function () {
       this.detalles = !this.detalles;
     },
-    ChangeTap: function (tap) {
-      this.$emit("ChangeTap", tap);
-    },
-    CargarCorreoEliminar: function (correoElectronico) {
+    CargarCorreoEliminar(correoContacto) {
       this.activeRechazar = !this.activeRechazar;
-      this.correoContacto = correoElectronico;
-      this.BuscarCandidato();
-      this.Rechazar();
-      this.CargarContactos();
-    },
-    BuscarCandidato: function () {
-      CandidateService.getByEmail(this.correoContacto)
+      CandidateService.getByEmail(correoContacto)
         .then((response) => {
-          if (response.data.data) {
-            this.amigoId = response.data.data;
+          if (response.data) {
+            this.idAmigo = response.data.data;
+            this.EnviarEliminar();
           } else {
             this.openNotification(
               4,
@@ -275,11 +267,11 @@ export default {
           );
         });
     },
-    Rechazar: function () {
-      CandidateService.rejectContact(this.amigoId)
+    EnviarEliminar() {
+      console.log(this.idAmigo);
+      CandidateService.rejectContact(this.idAmigo)
         .then((response) => {
-          if (response.data.data) {
-            this.amigoId = response.data.data;
+          if (response.data) {
             this.openNotification(
               1,
               response.data.title,
@@ -302,11 +294,14 @@ export default {
           );
         });
     },
+    ChangeTap: function (tap) {
+      this.$emit("ChangeTap", tap);
+    },
     CargarContactos: function () {
       this.$emit("CargarContactos");
     },
   },
-  components: { ContactDetailDialog },
+  components: { ContactDetailDialog  },
   props: {
     search: String,
     contactos: Array,

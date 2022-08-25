@@ -93,8 +93,8 @@ export default {
       this.tap = tap;
     },
     CargarContactos: function () {
-      this.tap = 1;
       this.CargarIdSession();
+      this.tap = 1;
       CandidateService.listContacts()
         .then((response) => {
           this.contactos = response.data.data;

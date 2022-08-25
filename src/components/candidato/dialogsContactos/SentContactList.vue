@@ -193,7 +193,7 @@
           <vs-col w="5">
             <vs-button
               success
-              @click="CargarCorreoAceptar(contacto.correoElectronico)"
+              @click="CargarCorreo(contacto.correoElectronico)"
               block
             >
               Aceptar
@@ -298,26 +298,17 @@ export default {
     ChangeTap: function (tap) {
       this.$emit("ChangeTap", tap);
     },
-    CargarCorreoAceptar: function (correoElectronico) {
+    CargarCorreo: function (correoElectronico) {
       this.activeAdd = !this.activeAdd;
       this.correoContacto = correoElectronico;
       this.BuscarCandidato();
-      this.Aceptar();
-      this.CargarContactos();
-    },
-    CargarCorreoEliminar: function (correoElectronico) {
-      this.activeRechazar = !this.activeRechazar;
-      this.correoContacto = correoElectronico;
-      this.BuscarCandidato();
-      this.Rechazar();
-      this.CargarContactos();
     },
     BuscarCandidato: function () {
-      console.log(this.correoContacto)
       CandidateService.getByEmail(this.correoContacto)
         .then((response) => {
-          if (response.data.data) {
+          if (response.data) {
             this.amigoId = response.data.data;
+            this.Aceptar();
           } else {
             this.openNotification(
               4,
@@ -362,34 +353,6 @@ export default {
           );
         });
       this.activeAdd = false;
-    },
-    Rechazar: function () {
-      console.log(this.amigoId)
-      CandidateService.rejectContact(this.amigoId)
-        .then((response) => {
-          if (response.data) {
-            this.amigoId = response.data.data;
-            this.openNotification(
-              1,
-              response.data.title,
-              response.data.message
-            );
-          } else {
-            this.openNotification(
-              4,
-              response.data.title,
-              response.data.message
-            );
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-          this.openNotification(
-            4,
-            e.response.data.title,
-            e.response.data.message
-          );
-        });
     },
     CargarContactos: function () {
       this.$emit("CargarContactos");
