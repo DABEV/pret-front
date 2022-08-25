@@ -48,7 +48,7 @@
                   icon
                   animation-type="rotate"
                   danger
-                  @click="AbrirEliminar(c.candidato)"
+                  @click="AbrirEliminar(c)"
                 >
                   <i class="bx bx-trash"></i>
                   <template #animate>
@@ -200,7 +200,7 @@
       <template #footer>
         <vs-row justify="space-between">
           <vs-col w="5">
-            <vs-button success @click="active = !active" block>
+            <vs-button success @click="EnviarActualizar()" block>
               Añadir
             </vs-button>
           </vs-col>
@@ -230,7 +230,7 @@
           <vs-col w="5">
             <vs-button
               primary
-              @click="activeContratar = !activeContratar"
+              @click="(activeContratar = !activeContratar), EnviarActualizar()"
               block
             >
               Contratar
@@ -263,7 +263,11 @@
       <template #footer>
         <vs-row justify="space-between">
           <vs-col w="5">
-            <vs-button danger @click="activeDelete = !activeDelete" block>
+            <vs-button
+              danger
+              @click="(activeDelete = !activeDelete), EnviarActualizar()"
+              block
+            >
               Quitar
             </vs-button>
           </vs-col>
@@ -355,7 +359,16 @@ export default {
       estadoRepublica: {},
     },
     postulacion: {
+      id: {
+        vacanteId: 0,
+        candidatoId: 0,
+      },
+      estadoVacante: {
+        id: 0,
+      },
       candidato: {},
+      vacante: {},
+      cv: "",
     },
     postulaciones: [],
   }),
@@ -367,8 +380,39 @@ export default {
       this.candidato = postulacion.candidato;
       this.active = !this.active;
     },
-    AbrirEliminar: function (candidato) {
-      this.candidato = candidato;
+    EnviarActualizar: function () {
+      this.postulacion.estadoVacante.id = this.estadoVacante.id;
+      RecruiterService.actualizarEstadoPostulacion(this.postulacion)
+        .then((response) => {
+          if (response.data) {
+            this.openNotification(
+              1,
+              response.data.title,
+              response.data.message
+            );
+            this.CargarCandidatos();
+          } else {
+            this.openNotification(
+              4,
+              response.data.title,
+              response.data.message
+            );
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          this.openNotification(
+            4,
+            e.response.data.title,
+            e.response.data.message
+          );
+        });
+    },
+    AbrirEliminar: function (postulacion) {
+      this.postulacion = postulacion;
+      this.estadoVacante.id = 6;
+      this.sigNivel = "Rechazar";
+      this.candidato = postulacion.candidato;
       this.activeDelete = true;
     },
     AbrirDetalles: function (candidato) {
@@ -376,11 +420,13 @@ export default {
       this.activeDetalles = true;
     },
     AbrirContratar: function (postulacion) {
+      this.postulacion = postulacion;
+      this.estadoVacante.id = 5;
+      this.sigNivel = "Contratado";
       this.candidato = postulacion.candidato;
       this.activeContratar = true;
     },
     CargarCandidatos: function () {
-      console.log(this.vacante.id);
       RecruiterService.obtenerListacandidatos(this.vacante.id)
         .then((response) => {
           this.postulaciones = response.data.data;
@@ -389,7 +435,6 @@ export default {
           console.log(e);
         });
     },
-
     CargarVacante: function (id) {
       RecruiterService.obtenerVacanteUnica(id)
         .then((response) => {
@@ -399,6 +444,36 @@ export default {
         .catch((e) => {
           console.log(e);
         });
+    },
+    openNotification(border_, title_, text_) {
+      let tipo = "";
+      let icon_ = "";
+      switch (border_) {
+        case 1:
+          tipo = "success";
+          icon_ = `<i class='bx bx-check-circle' ></i>`;
+          break;
+        case 2:
+          tipo = "primary";
+          icon_ = `<i class='bx bx-info-circle'></i>`;
+          break;
+        case 3:
+          tipo = "warning";
+          icon_ = `<i class='bx bx-error'></i>`;
+          break;
+        case 4:
+          tipo = "danger";
+          icon_ = `<i class='bx bx-x-circle'></i>`;
+          break;
+      }
+      this.$vs.notification({
+        progress: "auto",
+        position: null,
+        title: title_,
+        text: text_,
+        border: tipo,
+        icon: icon_,
+      });
     },
   },
   mounted() {

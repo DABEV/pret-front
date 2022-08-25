@@ -179,7 +179,7 @@ const routes = [
         name: "Detalle de Vacante",
         component: VacancyDetail,
         meta: {
-          requiresAuth: true,
+          requiresAuth: false,
           isCandidate: true
         },
       },
