@@ -86,7 +86,7 @@ const routes = [
         },
       },
       {
-        path: "candidatos",
+        path: "candidatos/:id",
         name: "Lista de Candidatos",
         component: CandidatesList,
         meta: {
@@ -179,7 +179,7 @@ const routes = [
         name: "Detalle de Vacante",
         component: VacancyDetail,
         meta: {
-          requiresAuth: true,
+          requiresAuth: false,
           isCandidate: true
         },
       },

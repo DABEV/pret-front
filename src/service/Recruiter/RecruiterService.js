@@ -32,6 +32,14 @@ class RecruiterService {
     actualizarVacante(data){
         return API_TOKEN.post("vacante/actualizar", data);
     }
+
+    obtenerListacandidatos (id){
+        return API_TOKEN.get(`postulacion/obtener/vacante/${id}`);
+    }
+
+    actualizarEstadoPostulacion(data){
+        return API_TOKEN.post("postulacion/actualizar", data);
+    }
     
 }
 export default new RecruiterService();

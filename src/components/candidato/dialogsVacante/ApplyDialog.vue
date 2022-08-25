@@ -1,12 +1,12 @@
 <template>
   <div>
-    <vs-button success @click="AbrirPostular(vacante)"> Postularse </vs-button>
+    <vs-button success @click="AbrirPostular()"> Postularse </vs-button>
     <vs-dialog width="450px" prevent-close v-model="activePostular">
       <template #header>
         <h2>Postularse</h2>
       </template>
       <div class="margin-xy space space-top text-center">
-        <small class="bold">Vacante: {{ postulacion.vacante.nombre }}</small>
+        <small class="bold">Vacante: {{ vacante.nombre }}</small>
         <br />
         <small class="bg-primary">Agregar CV</small>
         <vs-input
@@ -48,6 +48,7 @@
 <script>
 import { storage } from "../../../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import CandidateService from "../../../service/Candidate/CandidateService";
 
 export default {
   name: "ShareDialog",
@@ -55,15 +56,12 @@ export default {
     activePostular: false,
     searchCompartir: "",
     postulacion: {
-      id: 0,
-      cv: "",
-      vacante: {},
-      candidato: {},
-      estadoVacante: {
-        id: 1,
+      id: {
+        vacanteId: 0,
       },
+      cv: "",
     },
-    candidato: { id: 1 },
+    candidato: {},
     contactos: [
       {
         nombre: "Cameron",
@@ -150,10 +148,41 @@ export default {
         foto: "https://images.unsplash.com/photo-1483995564125-85915c11dcfe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=641&q=80",
       },
     ],
+    pdf: null,
   }),
   methods: {
-    AbrirPostular: function (vacante) {
-      this.postulacion.vacante = vacante;
+    openNotification(border_, title_, text_) {
+      let tipo = "";
+      let icon_ = "";
+      switch (border_) {
+        case 1:
+          tipo = "success";
+          icon_ = `<i class='bx bx-check-circle' ></i>`;
+          break;
+        case 2:
+          tipo = "primary";
+          icon_ = `<i class='bx bx-info-circle'></i>`;
+          break;
+        case 3:
+          tipo = "warning";
+          icon_ = `<i class='bx bx-error'></i>`;
+          break;
+        case 4:
+          tipo = "danger";
+          icon_ = `<i class='bx bx-x-circle'></i>`;
+          break;
+      }
+      this.$vs.notification({
+        progress: "auto",
+        position: null,
+        title: title_,
+        text: text_,
+        border: tipo,
+        icon: icon_,
+      });
+    },
+    AbrirPostular: function () {
+      this.postulacion.id.vacanteId = this.vacante.id;
       this.activePostular = !this.activePostular;
     },
     EnviarPostular: function () {
@@ -161,12 +190,35 @@ export default {
         "cv/vacante" + this.vacante.id + "_candidato" + this.candidato.id;
       const refPdf = ref(storage, child);
       const fullPath = refPdf.fullPath;
-      const metadata = { contentType: "pdf" };
+      const metadata = { contentType: "application/pdf" };
       uploadBytes(refPdf, this.pdf, metadata).then(() => {
         getDownloadURL(ref(storage, fullPath))
           .then((url) => {
             this.postulacion.cv = url;
-            //petición de guardar
+            CandidateService.applyVancy(this.postulacion)
+              .then((response) => {
+                if (response.data) {
+                  this.openNotification(
+                    1,
+                    response.data.title,
+                    response.data.message
+                  );
+                } else {
+                  this.openNotification(
+                    4,
+                    response.data.title,
+                    response.data.message
+                  );
+                }
+              })
+              .catch((e) => {
+                console.log(e);
+                this.openNotification(
+                  4,
+                  e.response.data.title,
+                  e.response.data.message
+                );
+              });
           })
           .catch((error) => {
             console.log(error);
@@ -179,11 +231,24 @@ export default {
       this.pdf = e.target.files[0];
     },
     CloseDetails: function () {
-      this.$emit('CloseDetails')
+      this.$emit("CloseDetails");
+    },
+    CargarSession: function () {
+      CandidateService.getProfile()
+        .then((response) => {
+          this.candidato = response.data.data;
+        })
+        .catch((e) => {
+          console.log(e);
+          //Toast de error al obtener datos
+        });
     },
   },
   props: {
     vacante: Object,
   },
+  mounted(){
+    this.CargarSession();
+  }
 };
 </script>
