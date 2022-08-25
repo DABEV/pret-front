@@ -238,7 +238,7 @@
                 </small>
                 <small v-else> Guardados: 0 </small>
                 <div class="center-item">
-                  <LanguageDialog />
+                  <LanguageDialog @CargarPerfil="cargarPerfil" />
                 </div>
               </template>
             </vs-card>
