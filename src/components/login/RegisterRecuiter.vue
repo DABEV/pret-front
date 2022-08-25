@@ -22,6 +22,9 @@
               placeholder="Nombre"
             >
               <template #icon><em class="bx bxs-user"></em></template>
+              <template v-if="validado && nombre == ''" #message-danger>
+                Dato de nombre faltante
+              </template>
             </vs-input>
             <vs-input
               block
@@ -31,6 +34,9 @@
               placeholder="Apellido paterno"
             >
               <template #icon><em class="bx bxs-user"></em></template>
+              <template v-if="validado && apellidoPaterno == ''" #message-danger>
+                Dato de apellido paterno faltante
+              </template>
             </vs-input>
             <vs-input
               block
@@ -49,6 +55,9 @@
               placeholder="Télefono"
             >
               <template #icon><em class="bx bxs-phone"></em></template>
+              <template v-if="telefono.length > 10" #message-danger>
+                Número de teléfono excede el límite
+              </template>
             </vs-input>
             <div class="input-icon-register">
               <span><i class="bx bxs-briefcase"></i> </span>
@@ -77,6 +86,9 @@
               v-model="fechaNacimiento"
             >
               <template #icon><em class="bx bxs-calendar"></em></template>
+              <template v-if="validado && fechaNacimiento == ''" #message-danger>
+                Fecha de nacimiento es requerida
+              </template>
             </vs-input>
             <div class="input-icon-register">
               <span><i class="bx bxs-map"></i> </span>
@@ -110,6 +122,12 @@
               placeholder="Correo"
             >
               <template #icon> @ </template>
+              <template
+                v-if="!validEmail && correoElectronico !== ''"
+                #message-danger
+              >
+                Formato de correo invalido
+              </template>
             </vs-input>
             <vs-input
               primary
@@ -120,6 +138,12 @@
               placeholder="Contraseña"
             >
               <template #icon><em class="bx bxs-lock-alt"></em></template>
+              <template
+                v-if="!validPassword && contrasena !== ''"
+                #message-danger
+              >
+                Requiere de mínimo una minúscula, una mayúscula y un número
+              </template>
             </vs-input>
             <vs-input
               primary
@@ -130,6 +154,15 @@
               placeholder="Repetir contraseña"
             >
               <template #icon><em class="bx bxs-lock-alt"></em></template>
+              <template v-if="value !== contrasena" #message-danger>
+                Las contraseñas no coinciden
+              </template>
+              <template
+                v-if="value == contrasena && contrasena !== ''"
+                #message-success
+              >
+                Las contraseñas coinciden
+              </template>
             </vs-input>
           </vs-col>
         </vs-row>
@@ -143,6 +176,9 @@
               placeholder="Empresa"
             >
               <template #icon><em class="bx bxs-buildings"></em></template>
+              <template v-if="validado && nombreEmpresa == ''" #message-danger>
+                Nombre de la empresa es requerido
+              </template>
             </vs-input>
           </vs-col>
         </vs-row>
@@ -174,6 +210,7 @@ import RecruiterService from "../../service/Recruiter/RecruiterService";
 export default {
   name: "RegisterRecuiter",
   data: () => ({
+    validado: false,
     value: "",
     placeholder: "",
     nombre: "",
@@ -250,6 +287,7 @@ export default {
           nombreEmpresa: this.nombreEmpresa,
           estadoRepublicaEmpresa: this.candidato.estadoRepublica,
         };
+        this.validado = true;
         RecruiterService.registrar(recruiterData)
           .then((response) => {
             if (response) {
@@ -311,6 +349,14 @@ export default {
   mounted() {
     this.cargarPuestos();
     this.cargarEstados();
+  },
+  computed: {
+    validEmail() {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.correoElectronico);
+    },
+    validPassword(){
+      return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{3,}$/.test(this.contrasena);
+    }
   },
 };
 </script>

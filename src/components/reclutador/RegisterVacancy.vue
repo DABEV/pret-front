@@ -30,6 +30,9 @@
                 placeholder="Título de la postulación"
               >
                 <template #icon><em class="bx bxs-notepad"></em></template>
+                <template v-if="validado && vacante.nombre == ''" #message-danger>
+                  Título de la vacante requerido
+                </template>
               </vs-input>
               Tipo
               <vs-input
@@ -40,6 +43,9 @@
                 placeholder="Horario de trabajo"
               >
                 <template #icon><em class="bx bxs-time-five"></em></template>
+                <template v-if="validado && vacante.tipo == ''" #message-danger>
+                  Se requiere tipo de horario: Tiempo completo, medio tiempo o asignatura
+                </template>
               </vs-input>
               Sueldo mínimo
               <vs-input
@@ -51,6 +57,12 @@
                 placeholder="1000"
               >
                 <template #icon><em class="bx bx-money"></em></template>
+                <template v-if="validado && vacante.sueldoMin == ''" #message-danger>
+                  Se requiere un sueldo mínimo
+                </template>
+                <template v-if="vacante.sueldoMin < 150 && vacante.sueldoMin !== ''" #message-warn>
+                  Se debe colocar una cifra mayor a 150 pesos
+                </template>
               </vs-input>
               Fecha inicio
               <vs-input
@@ -61,6 +73,9 @@
                 v-model="vacante.fechaInicio"
               >
                 <template #icon><em class="bx bxs-calendar"></em></template>
+                <template v-if="validado && vacante.fechaInicio == ''" #message-danger>
+                  Se requiere de la fecha en la que deberá iniciar las postulaciones
+                </template>
               </vs-input>
             </vs-col>
             <vs-col lg="5" sm="12" xs="12">
@@ -73,6 +88,9 @@
                 class="space"
               >
                 <template #icon><em class="bx bxs-briefcase"></em></template>
+                <template v-if="validado && vacante.modalidad == ''" #message-danger>
+                  Se requiere una modalidad de trabajo: Presencial, remoto o mixto
+                </template>
               </vs-input>
               Periodo de pago
               <vs-input
@@ -83,6 +101,9 @@
                 class="space"
               >
                 <template #icon><em class="bx bxs-graduation"></em></template>
+                <template v-if="validado && vacante.periodoPago == ''" #message-danger>
+                  Se requiere un lapso de pago: Semanal, quincenal o mensual
+                </template>
               </vs-input>
               Sueldo máximo
               <vs-input
@@ -94,6 +115,12 @@
                 placeholder="1000.99"
               >
                 <template #icon><em class="bx bx-money"></em></template>
+                <template v-if="validado && vacante.sueldoMax == ''" #message-danger>
+                  Se requiere un sueldo máximo
+                </template>
+                <template v-if="vacante.sueldoMax > 100000" #message-warn>
+                  Se debe colocar una cifra menor a 100,000 pesos
+                </template>
               </vs-input>
               Fecha vigencia
               <vs-input
@@ -104,6 +131,9 @@
                 v-model="vacante.fechaVigencia"
               >
                 <template #icon><em class="bx bxs-calendar"></em></template>
+                <template v-if="validado && vacante.fechaVigencia == ''" #message-danger>
+                  Se requiere de la fecha en la que concluirá el periodo para poder postularse
+                </template>
               </vs-input>
             </vs-col>
             <vs-col lg="11" sm="12" xs="12">
@@ -229,6 +259,7 @@ import RecruiterService from "../../service/Recruiter/RecruiterService";
 export default {
   name: "RegisterVacancy",
   data: () => ({
+    validado: false,
     activeBen: false,
     page2: 1,
     max: 2,
@@ -262,6 +293,7 @@ export default {
   methods: {
     async registrarVacante() {
       try {
+        this.validado = true;
         RecruiterService.registrarVacante(this.vacante)
           .then((response) => {
             if (response.data) {
