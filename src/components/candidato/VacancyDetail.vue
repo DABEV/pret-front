@@ -7,27 +7,6 @@
           {{ vacante.reclutador.nombreEmpresa }},
           {{ vacante.reclutador.estadoRepublicaEmpresa.nombre }}</small
         >
-        <vs-row justify="center" class="space-top">
-          <vs-col lg="2" sm="12" xs="12" class="center-item">
-           <ApplyDialog :vacante="vacante"/>
-          </vs-col>
-          <vs-col lg="2" sm="12" xs="12" class="center-item">
-            <vs-tooltip>
-              <vs-button
-                icon
-                animation-type="vertical"
-                danger
-                @click="favoritos = !favoritos"
-              >
-                <i class="bx bx-heart"></i>
-                <template #animate>
-                  <i class="bx bxs-heart"></i>
-                </template>
-              </vs-button>
-              <template #tooltip> Favoritos </template>
-            </vs-tooltip>
-          </vs-col>
-        </vs-row>
         <div class="divider space-top">
           <span class="border"></span>
         </div>
@@ -92,7 +71,6 @@
 </template>
 
 <script>
-import ApplyDialog from "./dialogsVacante/ApplyDialog.vue";
 import RecruiterService from "../../service/Recruiter/RecruiterService";
 
 export default {
@@ -156,6 +134,5 @@ export default {
       this.CargarVacante(this.$route.params.id);
     }
   },
-  components: {  ApplyDialog },
 };
 </script>
