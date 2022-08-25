@@ -146,7 +146,7 @@
                 </small>
                 <small v-else> Guardados: 0 </small>
                 <div class="center-item">
-                  <KnowledgeDialog :candidato="candidato" />
+                  <KnowledgeDialog :candidato="candidato" @CargarPerfil="cargarPerfil" />
                 </div>
               </template>
             </vs-card>
@@ -166,7 +166,7 @@
                 </small>
                 <small v-else> Guardados: 0 </small>
                 <div class="center-item">
-                  <HabilityDialog :candidato="candidato" />
+                  <HabilityDialog :candidato="candidato" @CargarPerfil="cargarPerfil"/>
                 </div>
               </template>
             </vs-card>
