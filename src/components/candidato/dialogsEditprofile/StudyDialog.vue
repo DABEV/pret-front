@@ -97,6 +97,7 @@
 </template>
 
 <script>
+import CandidateService from "../../../service/Candidate/CandidateService";
 import CatalogueService from "../../../service/Catalogues/CatalogueService";
 
 export default {
@@ -156,6 +157,31 @@ export default {
     },
     enviarEst: function () {
       this.activeEst = false;
+      CandidateService.addStudy(this.estudio)
+        .then((response) => {
+          if (response.data) {
+            this.openNotification(
+              1,
+              response.data.title,
+              response.data.message
+            );
+            this.CargarPerfil();
+          } else {
+            this.openNotification(
+              4,
+              response.data.title,
+              response.data.message
+            );
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          this.openNotification(
+            4,
+            e.response.data.title,
+            e.response.data.message
+          );
+        });
     },
     cargarUniversidades: function () {
       CatalogueService.listarUniversidades()
@@ -165,6 +191,9 @@ export default {
         .catch((e) => {
           console.log(e);
         });
+    },
+    CargarPerfil: function () {
+      this.$emit("CargarPerfil");
     },
   },
 };

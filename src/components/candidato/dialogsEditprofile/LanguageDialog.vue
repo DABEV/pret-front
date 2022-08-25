@@ -87,11 +87,13 @@ export default {
     success: false,
     error: false,
     idiomaCandidato: {
+      id: {
+        idiomaId: 0,
+      },
+      nivel: "",
       idioma: {
         nombre: "",
       },
-      candidato: {},
-      nivel: "",
     },
     idiomas: [],
     niveles: ["Experto", "Intermedio", "Básico", "Traductor"],
@@ -129,19 +131,16 @@ export default {
     },
     enviarIdi: function () {
       this.activeIdi = false;
-      console.log(this.idiomaCandidato.idioma)
-      console.log(this.idiomaCandidato.candidato)
-      console.log(this.idiomaCandidato.nivel)
-
+      this.idiomaCandidato.id.idiomaId = this.idiomaCandidato.idioma.id;
       CandidateService.addLanguage(this.idiomaCandidato)
         .then((response) => {
           if (response.data) {
-            this.idiomaCandidato = response.data.data;
             this.openNotification(
               1,
               response.data.title,
               response.data.message
             );
+            this.CargarPerfil();
           } else {
             this.openNotification(
               4,
@@ -159,10 +158,12 @@ export default {
           );
         });
     },
+    CargarPerfil: function () {
+      this.$emit("CargarPerfil");
+    },
     cargarIdiomas: function () {
       CatalogueService.listarIdiomas()
         .then((response) => {
-          console.log("data");
           this.idiomas = response.data.data;
         })
         .catch((e) => {

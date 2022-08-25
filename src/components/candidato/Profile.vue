@@ -190,7 +190,7 @@
                   </vs-col>
                   <vs-col lg="10" sm="9" xs="9" class="text-start space-top">
                     <h4>{{ c.gradoAcademico }}</h4>
-                    <small>{{ c.universidad }}</small>
+                    <small>{{ c.universidad.siglas }} - {{ c.universidad.nombre }}</small>
                   </vs-col>
                 </vs-row>
                 <small class="bold"> {{ c.carrera }}</small>
@@ -273,7 +273,7 @@
                   <i class="bx bx-world bg-primary"></i>
                 </vs-col>
                 <vs-col lg="8" sm="6" xs="6" class="space-top">
-                  <p>{{ idioma.nombre }}</p>
+                  <p>{{ idioma.idioma.nombre }}</p>
                 </vs-col>
                 <vs-col lg="3" sm="4" xs="4" class="text-center space-top">
                   <span class="badge-sec">{{ idioma.nivel }}</span>
@@ -380,12 +380,13 @@
               <template #title>
                 <vs-row>
                   <vs-col lg="2" sm="3" xs="3">
-                    <vs-avatar primary>
+                    <vs-avatar primary size="40">
                       <i class="bx bxs-hot"></i>
                     </vs-avatar>
                   </vs-col>
                   <vs-col lg="10" sm="9" xs="9">
-                    <h3>{{ c.nombre }}</h3>
+                    <p class="bold">{{ c.nombre }}</p>
+                    <small>{{c.empresa}}</small>
                   </vs-col>
                 </vs-row>
               </template>

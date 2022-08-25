@@ -146,7 +146,7 @@
                 </small>
                 <small v-else> Guardados: 0 </small>
                 <div class="center-item">
-                  <KnowledgeDialog :candidato="candidato" />
+                  <KnowledgeDialog :candidato="candidato" @CargarPerfil="cargarPerfil" />
                 </div>
               </template>
             </vs-card>
@@ -166,7 +166,7 @@
                 </small>
                 <small v-else> Guardados: 0 </small>
                 <div class="center-item">
-                  <HabilityDialog :candidato="candidato" />
+                  <HabilityDialog :candidato="candidato" @CargarPerfil="cargarPerfil"/>
                 </div>
               </template>
             </vs-card>
@@ -184,7 +184,7 @@
                 </small>
                 <small v-else> Guardados: 0 </small>
                 <div class="center-item">
-                  <StudyDialog />
+                  <StudyDialog @CargarPerfil="cargarPerfil" />
                 </div>
               </template>
             </vs-card>
@@ -202,7 +202,7 @@
                 </small>
                 <small v-else> Guardados: 0 </small>
                 <div class="center-item">
-                  <ExperienceDialog />
+                  <ExperienceDialog @CargarPerfil="cargarPerfil" />
                 </div>
               </template>
             </vs-card>
@@ -220,7 +220,7 @@
                 </small>
                 <small v-else> Guardados: 0 </small>
                 <div class="center-item">
-                  <CertificateDialog />
+                  <CertificateDialog @CargarPerfil="cargarPerfil" />
                 </div>
               </template>
             </vs-card>
@@ -238,7 +238,7 @@
                 </small>
                 <small v-else> Guardados: 0 </small>
                 <div class="center-item">
-                  <LanguageDialog />
+                  <LanguageDialog @CargarPerfil="cargarPerfil" />
                 </div>
               </template>
             </vs-card>
@@ -256,7 +256,7 @@
                 </small>
                 <small v-else> Guardados: 0 </small>
                 <div class="center-item">
-                  <CourseDialog />
+                  <CourseDialog @CargarPerfil="cargarPerfil" />
                 </div>
               </template>
             </vs-card>

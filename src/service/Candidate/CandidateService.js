@@ -36,5 +36,21 @@ class CandidateService {
   getByEmail(email) {
     return API_TOKEN.post("candidato/get-id-by-email", email);
   }
+
+  addCertificate(data) {
+    return API_TOKEN.post("certificacion/registrar", data);
+  }
+
+  addCourse(data) {
+    return API_TOKEN.post("curso/registrar", data);
+  }
+
+  addExperience(data){
+    return API_TOKEN.post("experiencia-laboral/registrar", data);
+  }
+
+  addStudy(data){
+    return API_TOKEN.post("estudio/registrar", data);
+  }
 }
 export default new CandidateService();
