@@ -48,5 +48,9 @@ class CandidateService {
   addExperience(data){
     return API_TOKEN.post("experiencia-laboral/registrar", data);
   }
+
+  addStudy(data){
+    return API_TOKEN.post("estudio/registrar", data);
+  }
 }
 export default new CandidateService();

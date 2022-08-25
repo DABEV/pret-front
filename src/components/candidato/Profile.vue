@@ -190,7 +190,7 @@
                   </vs-col>
                   <vs-col lg="10" sm="9" xs="9" class="text-start space-top">
                     <h4>{{ c.gradoAcademico }}</h4>
-                    <small>{{ c.universidad }}</small>
+                    <small>{{ c.universidad.siglas }} - {{ c.universidad.nombre }}</small>
                   </vs-col>
                 </vs-row>
                 <small class="bold"> {{ c.carrera }}</small>

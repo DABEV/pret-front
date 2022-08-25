@@ -184,7 +184,7 @@
                 </small>
                 <small v-else> Guardados: 0 </small>
                 <div class="center-item">
-                  <StudyDialog />
+                  <StudyDialog @CargarPerfil="cargarPerfil" />
                 </div>
               </template>
             </vs-card>
