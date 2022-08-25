@@ -86,7 +86,7 @@ const routes = [
         },
       },
       {
-        path: "candidatos",
+        path: "candidatos/:id",
         name: "Lista de Candidatos",
         component: CandidatesList,
         meta: {

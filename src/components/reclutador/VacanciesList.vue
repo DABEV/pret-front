@@ -131,7 +131,7 @@
                         >
                       </vs-col>
                       <vs-col lg="2" class="center-item">
-                        <vs-button success @click="IrSeleccion1()">
+                        <vs-button success @click="IrSeleccion1(tr.id)">
                           Ver candidatos
                         </vs-button>
                       </vs-col>
@@ -432,8 +432,8 @@ export default {
     Confirmar: function (contacto) {
       this.contacto = contacto;
     },
-    IrSeleccion1: function () {
-      this.$router.push("/reclutador/candidatos");
+    IrSeleccion1: function (id) {
+      this.$router.push("/reclutador/candidatos/" + id);
     },
   },
   mounted() {

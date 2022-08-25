@@ -61,7 +61,7 @@ export default {
       },
       cv: "",
     },
-    candidato: { id: 1 },
+    candidato: {},
     contactos: [
       {
         nombre: "Cameron",
@@ -190,7 +190,7 @@ export default {
         "cv/vacante" + this.vacante.id + "_candidato" + this.candidato.id;
       const refPdf = ref(storage, child);
       const fullPath = refPdf.fullPath;
-      const metadata = { contentType: "pdf" };
+      const metadata = { contentType: "application/pdf" };
       uploadBytes(refPdf, this.pdf, metadata).then(() => {
         getDownloadURL(ref(storage, fullPath))
           .then((url) => {
@@ -233,9 +233,22 @@ export default {
     CloseDetails: function () {
       this.$emit("CloseDetails");
     },
+    CargarSession: function () {
+      CandidateService.getProfile()
+        .then((response) => {
+          this.candidato = response.data.data;
+        })
+        .catch((e) => {
+          console.log(e);
+          //Toast de error al obtener datos
+        });
+    },
   },
   props: {
     vacante: Object,
   },
+  mounted(){
+    this.CargarSession();
+  }
 };
 </script>

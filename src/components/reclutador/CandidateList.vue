@@ -6,7 +6,7 @@
         <vs-row justify="space-between">
           <vs-col lg="5" sm="12" xs="12">
             Candidatos postulados en la vacante:
-            <strong>"{{ postulaciones[0].vacante.nombre }}"</strong>
+            <strong>{{ vacante.nombre }}</strong>
           </vs-col>
           <vs-col lg="4" sm="12" xs="12">
             <vs-input
@@ -42,10 +42,7 @@
           <vs-row class="space">
             <vs-col lg="1" sm="3" xs="3" class="space-top center-item">
               <vs-tooltip
-                v-if="
-                  c.estadoVacante.nombre != 'Rechazado' &&
-                  c.estadoVacante.nombre != 'Contratado'
-                "
+                v-if="c.estadoVacante.id != 6 && c.estadoVacante.id != 5"
               >
                 <vs-button
                   icon
@@ -78,40 +75,22 @@
                     <small>{{ c.candidato.tituloCurricular }}</small>
                   </vs-col>
                   <vs-col lg="6" sm="9" xs="9" class="space-top text-center">
-                    <span
-                      v-if="c.estadoVacante.nombre == 'Idóneo'"
-                      class="badge-suc"
-                    >
+                    <span v-if="c.estadoVacante.id == 4" class="badge-suc">
                       {{ c.estadoVacante.nombre }}
                     </span>
-                    <span
-                      v-else-if="c.estadoVacante.nombre == 'Postulado'"
-                      class="badge-def"
-                    >
+                    <span v-else-if="c.estadoVacante.id == 1" class="badge-def">
                       {{ c.estadoVacante.nombre }}
                     </span>
-                    <span
-                      v-else-if="c.estadoVacante.nombre == 'CV visto'"
-                      class="badge-war"
-                    >
+                    <span v-else-if="c.estadoVacante.id == 2" class="badge-war">
                       {{ c.estadoVacante.nombre }}
                     </span>
-                    <span
-                      v-else-if="c.estadoVacante.nombre == 'Rechazado'"
-                      class="badge-dan"
-                    >
+                    <span v-else-if="c.estadoVacante.id == 6" class="badge-dan">
                       {{ c.estadoVacante.nombre }}
                     </span>
-                    <span
-                      v-else-if="c.estadoVacante.nombre == 'Entrevista'"
-                      class="badge-sec"
-                    >
+                    <span v-else-if="c.estadoVacante.id == 3" class="badge-sec">
                       {{ c.estadoVacante.nombre }}
                     </span>
-                    <span
-                      v-else-if="c.estadoVacante.nombre == 'Contratado'"
-                      class="badge-pri"
-                    >
+                    <span v-else-if="c.estadoVacante.id == 5" class="badge-pri">
                       {{ c.estadoVacante.nombre }}
                     </span>
                     <span v-else class="badge-def"
@@ -123,7 +102,13 @@
             </vs-col>
             <vs-col lg="1" sm="3" xs="3" class="space-top center-item">
               <vs-tooltip>
-                <vs-button icon animation-type="rotate" color="#88BAF3">
+                <vs-button
+                  icon
+                  animation-type="rotate"
+                  color="#88BAF3"
+                  :href="c.cv"
+                  blank
+                >
                   <i class="bx bx-download"></i>
                   <template #animate>
                     <i class="bx bx-import"></i>
@@ -133,7 +118,7 @@
               </vs-tooltip>
             </vs-col>
             <vs-col lg="1" sm="3" xs="3" class="space-top center-item">
-              <vs-tooltip v-if="c.estadoVacante.nombre == 'Postulado'">
+              <vs-tooltip v-if="c.estadoVacante.id == 1">
                 <vs-button
                   @click="ActualizarEstadoVacante(c, 2, 'CV visto')"
                   icon
@@ -145,7 +130,7 @@
                 </vs-button>
                 <template #tooltip> Marcar CV visto </template>
               </vs-tooltip>
-              <vs-tooltip v-else-if="c.estadoVacante.nombre == 'CV visto'">
+              <vs-tooltip v-else-if="c.estadoVacante.id == 2">
                 <vs-button
                   color="#b13cd2"
                   @click="ActualizarEstadoVacante(c, 3, 'Entrevista')"
@@ -159,7 +144,7 @@
                 </vs-button>
                 <template #tooltip> Marcar Entrevista </template>
               </vs-tooltip>
-              <vs-tooltip v-else-if="c.estadoVacante.nombre == 'Entrevista'">
+              <vs-tooltip v-else-if="c.estadoVacante.id == 3">
                 <vs-button
                   @click="ActualizarEstadoVacante(c, 4, 'Idóneo')"
                   icon
@@ -173,7 +158,7 @@
                 </vs-button>
                 <template #tooltip> Marcar Idóneo </template>
               </vs-tooltip>
-              <vs-tooltip v-else-if="c.estadoVacante.nombre == 'Idóneo'">
+              <vs-tooltip v-else-if="c.estadoVacante.id == 4">
                 <vs-button
                   icon
                   animation-type="rotate"
@@ -349,6 +334,7 @@
 </template>
 
 <script>
+import RecruiterService from "../../service/Recruiter/RecruiterService";
 export default {
   name: "CandidatesList",
   data: () => ({
@@ -363,6 +349,7 @@ export default {
     estadoVacante: {
       id: 0,
     },
+    vacante: {},
     candidato: {
       nombre: "",
       estadoRepublica: {},
@@ -370,398 +357,7 @@ export default {
     postulacion: {
       candidato: {},
     },
-    postulaciones: [
-      {
-        cv: "",
-        candidato: {
-          nombre: "Michelle",
-          apellidoPaterno: "Rivera",
-          apellidoMaterno: "Solaz",
-          correoElectronico: "michelle.rivera@example.com",
-          habilitado: true,
-          telefono: "(225) 555-0118",
-          fechaNacimiento: "9/4/12",
-          estadoRepublica: {
-            nombre: "Morelos",
-          },
-          tituloCurricular: "Administradora de base de datos (DBA)",
-          descripcionPerfil:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aenean praesent non donec adipiscing ullamcorper. Tincidunt id suspendisse id sit. Nisi sed diam est.",
-          foto: "https://images.unsplash.com/photo-1609505848912-b7c3b8b4beda?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=465&q=80",
-        },
-        estadoVacante: { nombre: "Postulado" },
-        vacante: {
-          nombre: "Desarrollador Full-stack Java",
-          reclutador: {
-            nombre: "Roberto",
-            apellidoPaterno: "Miramontes",
-            apellidoMaterno: "Ruiseñor",
-            nombreEmpresa: "Sony",
-            estadoRepublicaEmpresa: {
-              nombre: "Morelos",
-            },
-          },
-          beneficios: [
-            {
-              nombre: "Ofrecemos sueldo competitivo",
-            },
-            {
-              nombre: "Trabajo en modalidad híbrida (Homeoffice)",
-            },
-            {
-              nombre: "Cursos y Certificaciones constantes",
-            },
-            {
-              nombre: "Prestaciones de ley y Superirores",
-            },
-            {
-              nombre: "Programas de crecimiento a corto, mediano y largo plazo",
-            },
-          ],
-          tipo: "Medio tiempo",
-          modalidad: "Remoto",
-          periodoPago: "Quincenal",
-          sueldoMin: 10000,
-          sueldoMax: 30000,
-          fechaInicio: "5/19/12",
-          fechaFin: "8/19/12",
-          descripcion:
-            "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
-        },
-      },
-      {
-        cv: "",
-        candidato: {
-          nombre: "Robert",
-          apellidoMaterno: "Warren",
-          apellidoPaterno: "Hawkins",
-          correoElectronico: "robert@example.com",
-          telefono: "(217) 555-0113",
-          estadoRepublica: {
-            nombre: "Querétaro",
-          },
-          tituloCurricular: "Administrador de base de datos (DBA)",
-          fechaNacimiento: "9/4/12",
-          foto: "https://images.unsplash.com/photo-1529068755536-a5ade0dcb4e8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=581&q=80",
-        },
-        estadoVacante: { nombre: "CV visto" },
-        vacante: {
-          nombre: "President of Sales",
-          reclutador: {
-            nombre: "Roberto",
-            apellidoPaterno: "Miramontes",
-            apellidoMaterno: "Ruiseñor",
-            nombreEmpresa: "Sony",
-            estadoRepublicaEmpresa: {
-              nombre: "Quintana Roo",
-            },
-          },
-          beneficios: [
-            {
-              nombre: "Ofrecemos sueldo competitivo",
-            },
-            {
-              nombre: "Trabajo en modalidad híbrida (Homeoffice)",
-            },
-            {
-              nombre: "Cursos y Certificaciones constantes",
-            },
-            {
-              nombre: "Prestaciones de ley y Superirores",
-            },
-            {
-              nombre: "Programas de crecimiento a corto, mediano y largo plazo",
-            },
-          ],
-          tipo: "Medio tiempo",
-          modalidad: "Híbrido",
-          periodoPago: "Semanal",
-          sueldoMin: 15000,
-          sueldoMax: 30000,
-          fechaInicio: "5/19/12",
-          fechaFin: "7/19/12",
-          descripcion:
-            "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
-        },
-      },
-      {
-        cv: "",
-        candidato: {
-          nombre: "Alexander",
-          apellidoMaterno: "Edwards",
-          apellidoPaterno: "Wade",
-          correoElectronico: "alexander@example.com",
-          telefono: "(308) 555-0121",
-          estadoRepublica: {
-            nombre: "Durango",
-          },
-          tituloCurricular: "Administrador de base de datos (DBA)",
-          fechaNacimiento: "9/4/12",
-          foto: "https://images.unsplash.com/photo-1485528562718-2ae1c8419ae2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=558&q=80",
-        },
-        estadoVacante: { nombre: "Idóneo" },
-        vacante: {
-          nombre: "Web Designer",
-          reclutador: {
-            nombre: "Roberto",
-            apellidoPaterno: "Miramontes",
-            apellidoMaterno: "Ruiseñor",
-            nombreEmpresa: "Sony",
-            estadoRepublicaEmpresa: {
-              nombre: "Sonora",
-            },
-          },
-          beneficios: [
-            {
-              nombre: "Ofrecemos sueldo competitivo",
-            },
-            {
-              nombre: "Trabajo en modalidad híbrida (Homeoffice)",
-            },
-            {
-              nombre: "Cursos y Certificaciones constantes",
-            },
-            {
-              nombre: "Prestaciones de ley y Superirores",
-            },
-            {
-              nombre: "Programas de crecimiento a corto, mediano y largo plazo",
-            },
-          ],
-          tipo: "Medio tiempo",
-          empresa: "Sony",
-          modalidad: "Híbrido",
-          periodoPago: "Semanal",
-          sueldoMin: 1500,
-          sueldoMax: 3000,
-          fechaInicio: "5/19/12",
-          fechaFin: "9/19/12",
-          descripcion:
-            "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
-        },
-      },
-      {
-        cv: "",
-        candidato: {
-          nombre: "Leslie",
-          apellidoMaterno: "Brooklyn",
-          apellidoPaterno: "Williamson",
-          correoElectronico: "leslie@example.com",
-          telefono: "(302) 555-0107",
-          estadoRepublica: {
-            nombre: "Tamaulipas",
-          },
-          tituloCurricular: "Administrador de base de datos (DBA)",
-          fechaNacimiento: "9/4/12",
-          foto: "https://images.unsplash.com/photo-1485893086445-ed75865251e0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
-        },
-        estadoVacante: { nombre: "Entrevista" },
-        vacante: {
-          nombre: "Desarrollador Full-stack PHP",
-          reclutador: {
-            nombre: "Roberto",
-            apellidoPaterno: "Miramontes",
-            apellidoMaterno: "Ruiseñor",
-            nombreEmpresa: "Sony",
-            estadoRepublicaEmpresa: {
-              nombre: "Nayarit",
-            },
-          },
-          beneficios: [
-            {
-              nombre: "Ofrecemos sueldo competitivo",
-            },
-            {
-              nombre: "Trabajo en modalidad híbrida (Homeoffice)",
-            },
-            {
-              nombre: "Cursos y Certificaciones constantes",
-            },
-            {
-              nombre: "Prestaciones de ley y Superirores",
-            },
-            {
-              nombre: "Programas de crecimiento a corto, mediano y largo plazo",
-            },
-          ],
-          tipo: "Medio tiempo",
-          modalidad: "Híbrido",
-          periodoPago: "Quincenal",
-          sueldoMin: 20000,
-          sueldoMax: 50000,
-          fechaInicio: "5/19/12",
-          fechaFin: "7/19/12",
-          descripcion:
-            "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
-        },
-      },
-      {
-        cv: "",
-        candidato: {
-          nombre: "Ralph",
-          apellidoMaterno: "Williamson",
-          apellidoPaterno: "Fox",
-          correoElectronico: "ralph@example.com",
-          telefono: "(702) 555-0122",
-          estadoRepublica: {
-            nombre: "Oaxaca",
-          },
-          tituloCurricular: "Administrador de base de datos (DBA)",
-          fechaNacimiento: "9/4/12",
-          foto: "https://images.unsplash.com/photo-1483995564125-85915c11dcfe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=641&q=80",
-        },
-        estadoVacante: { nombre: "CV visto" },
-        vacante: {
-          nombre: "Desarrollador Full-stack PHP",
-          reclutador: {
-            nombre: "Roberto",
-            apellidoPaterno: "Miramontes",
-            apellidoMaterno: "Ruiseñor",
-            nombreEmpresa: "Sony",
-            estadoRepublicaEmpresa: {
-              nombre: "Morelos",
-            },
-          },
-
-          beneficios: [
-            {
-              nombre: "Ofrecemos sueldo competitivo",
-            },
-            {
-              nombre: "Trabajo en modalidad híbrida (Homeoffice)",
-            },
-            {
-              nombre: "Cursos y Certificaciones constantes",
-            },
-            {
-              nombre: "Prestaciones de ley y Superirores",
-            },
-            {
-              nombre: "Programas de crecimiento a corto, mediano y largo plazo",
-            },
-          ],
-          tipo: "Medio tiempo",
-          modalidad: "Híbrido",
-          periodoPago: "Quincenal",
-          sueldoMin: 15000,
-          sueldoMax: 40000,
-          fechaInicio: "5/19/12",
-          fechaFin: "7/19/12",
-          descripcion:
-            "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
-        },
-      },
-      {
-        cv: "",
-        candidato: {
-          nombre: "Esther",
-          apellidoMaterno: "Howard",
-          apellidoPaterno: "Simmons",
-          correoElectronico: "esther@example.com",
-          telefono: "(907) 555-0101",
-          estadoRepublica: {
-            nombre: "Morelos",
-          },
-          tituloCurricular: "Administrador de base de datos (DBA)",
-          fechaNacimiento: "9/4/12",
-          foto: "https://images.unsplash.com/photo-1518577915332-c2a19f149a75?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=562&q=80",
-        },
-        estadoVacante: { nombre: "Rechazado" },
-        vacante: {
-          nombre: "Desarrollador Full-stack PHP",
-          reclutador: {
-            nombre: "Roberto",
-            apellidoPaterno: "Miramontes",
-            apellidoMaterno: "Ruiseñor",
-            nombreEmpresa: "Sony",
-            estadoRepublicaEmpresa: {
-              nombre: "Morelos",
-            },
-          },
-          beneficios: [
-            {
-              nombre: "Ofrecemos sueldo competitivo",
-            },
-            {
-              nombre: "Trabajo en modalidad híbrida (Homeoffice)",
-            },
-            {
-              nombre: "Cursos y Certificaciones constantes",
-            },
-            {
-              nombre: "Prestaciones de ley y Superirores",
-            },
-            {
-              nombre: "Programas de crecimiento a corto, mediano y largo plazo",
-            },
-          ],
-          tipo: "Medio tiempo",
-          modalidad: "Híbrido",
-          periodoPago: "Mensual",
-          sueldoMin: 50000,
-          sueldoMax: 80000,
-          fechaInicio: "5/19/12",
-          fechaFin: "6/25/12",
-          descripcion:
-            "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
-        },
-      },
-      {
-        cv: "",
-        candidato: {
-          nombre: "Esther",
-          apellidoMaterno: "Howard",
-          apellidoPaterno: "Simmons",
-          correoElectronico: "esther@example.com",
-          telefono: "(907) 555-0101",
-          estadoRepublica: {
-            nombre: "Morelos",
-          },
-          tituloCurricular: "Administrador de base de datos (DBA)",
-          fechaNacimiento: "9/4/12",
-          foto: "https://images.unsplash.com/photo-1518577915332-c2a19f149a75?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=562&q=80",
-        },
-        estadoVacante: { nombre: "Contratado" },
-        vacante: {
-          nombre: "Desarrollador Full-stack PHP",
-          reclutador: {
-            nombre: "Roberto",
-            apellidoPaterno: "Miramontes",
-            apellidoMaterno: "Ruiseñor",
-            nombreEmpresa: "Sony",
-            estadoRepublicaEmpresa: {
-              nombre: "Morelos",
-            },
-          },
-          beneficios: [
-            {
-              nombre: "Ofrecemos sueldo competitivo",
-            },
-            {
-              nombre: "Trabajo en modalidad híbrida (Homeoffice)",
-            },
-            {
-              nombre: "Cursos y Certificaciones constantes",
-            },
-            {
-              nombre: "Prestaciones de ley y Superirores",
-            },
-            {
-              nombre: "Programas de crecimiento a corto, mediano y largo plazo",
-            },
-          ],
-          tipo: "Medio tiempo",
-          modalidad: "Híbrido",
-          periodoPago: "Mensual",
-          sueldoMin: 50000,
-          sueldoMax: 80000,
-          fechaInicio: "5/19/12",
-          fechaFin: "6/25/12",
-          descripcion:
-            "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
-        },
-      },
-    ],
+    postulaciones: [],
   }),
   methods: {
     ActualizarEstadoVacante: function (postulacion, estadoId, estadoNombre) {
@@ -783,6 +379,32 @@ export default {
       this.candidato = postulacion.candidato;
       this.activeContratar = true;
     },
+    CargarCandidatos: function () {
+      console.log(this.vacante.id);
+      RecruiterService.obtenerListacandidatos(this.vacante.id)
+        .then((response) => {
+          this.postulaciones = response.data.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+
+    CargarVacante: function (id) {
+      RecruiterService.obtenerVacanteUnica(id)
+        .then((response) => {
+          this.vacante = response.data.data;
+          this.CargarCandidatos();
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+  },
+  mounted() {
+    if (this.$route.params.id != undefined) {
+      this.CargarVacante(this.$route.params.id);
+    }
   },
 };
 </script>
