@@ -71,6 +71,8 @@
 </template>
 
 <script>
+import CandidateService from "../../../service/Candidate/CandidateService";
+
 export default {
   name: "ExperienceDialog",
   data: () => ({
@@ -80,6 +82,7 @@ export default {
       fechaInicio: "",
       fechaFin: "",
       actividadesRealizadas: "",
+      candidato: { id: 0 },
     },
   }),
   methods: {
@@ -115,7 +118,34 @@ export default {
     },
     enviarExp: function () {
       this.activeExp = false;
-      this.success = true;
+      CandidateService.addExperience(this.experiencia)
+        .then((response) => {
+          if (response.data) {
+            this.openNotification(
+              1,
+              response.data.title,
+              response.data.message
+            );
+            this.CargarPerfil();
+          } else {
+            this.openNotification(
+              4,
+              response.data.title,
+              response.data.message
+            );
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          this.openNotification(
+            4,
+            e.response.data.title,
+            e.response.data.message
+          );
+        });
+    },
+    CargarPerfil: function () {
+      this.$emit("CargarPerfil");
     },
   },
 };

@@ -202,7 +202,7 @@
                 </small>
                 <small v-else> Guardados: 0 </small>
                 <div class="center-item">
-                  <ExperienceDialog />
+                  <ExperienceDialog @CargarPerfil="cargarPerfil" />
                 </div>
               </template>
             </vs-card>
