@@ -137,37 +137,45 @@
               </vs-button>
             </vs-col>
           </vs-row>
-          <div v-if="vacante.beneficios != null">
-            <vs-table v-if="vacante.beneficios.length != 0">
-              <template #thead>
-                <vs-tr>
-                  <vs-th> Nombre </vs-th>
-                  <vs-th> Acción </vs-th>
-                </vs-tr>
-              </template>
-              <template #tbody>
-                <vs-tr
-                  :key="i"
-                  v-for="(tr, i) in $vs.getPage(vacante.beneficios, page2, max)"
-                  :data="tr"
-                >
-                  <vs-td>
-                    {{ tr.nombre }}
-                  </vs-td>
-                  <vs-td>
-                    <vs-button>Quitar</vs-button>
-                  </vs-td>
-                </vs-tr>
-              </template>
-              <template #footer>
-                <vs-pagination
-                  v-model="page2"
-                  :length="$vs.getLength(vacante.beneficios, max)"
-                />
-              </template>
-              <template #notFound> No se encontraron registros </template>
-            </vs-table>
-          </div>
+          <vs-row class="space-top">
+            <vs-col>
+              <div v-if="vacante.beneficios != null">
+                <vs-table v-if="vacante.beneficios.length != 0">
+                  <template #thead>
+                    <vs-tr>
+                      <vs-th> Nombre </vs-th>
+                      <vs-th> Acción </vs-th>
+                    </vs-tr>
+                  </template>
+                  <template #tbody>
+                    <vs-tr
+                      :key="i"
+                      v-for="(tr, i) in $vs.getPage(
+                        vacante.beneficios,
+                        page2,
+                        max
+                      )"
+                      :data="tr"
+                    >
+                      <vs-td>
+                        {{ tr.nombre }}
+                      </vs-td>
+                      <vs-td>
+                        <vs-button>Quitar</vs-button>
+                      </vs-td>
+                    </vs-tr>
+                  </template>
+                  <template #footer>
+                    <vs-pagination
+                      v-model="page2"
+                      :length="$vs.getLength(vacante.beneficios, max)"
+                    />
+                  </template>
+                  <template #notFound> No se encontraron registros </template>
+                </vs-table>
+              </div>
+            </vs-col>
+          </vs-row>
         </div>
       </div>
     </div>
@@ -184,11 +192,7 @@
             placeholder="Beneficios"
             v-model="beneficio"
           >
-            <option
-              class="select-option"
-              disabled
-              v-if="beneficio == null"
-            >
+            <option class="select-option" disabled v-if="beneficio == null">
               Selecciona ...
             </option>
             <option
@@ -226,7 +230,7 @@ export default {
   name: "RegisterVacancy",
   data: () => ({
     activeBen: false,
-    page2: 0,
+    page2: 1,
     max: 2,
     vacante: {
       nombre: "",
@@ -247,9 +251,7 @@ export default {
           nombre: "",
         },
       },
-      beneficios: [
-        
-      ],
+      beneficios: [],
     },
     beneficiosLista: [],
     beneficio: {
@@ -268,6 +270,27 @@ export default {
                 response.data.title,
                 response.data.message
               );
+              this.vacante = {
+                nombre: "",
+                descripcion: "",
+                modalidad: "",
+                tipo: "",
+                fechaInicio: "",
+                fechaVigencia: "",
+                sueldoMin: "",
+                sueldoMax: "",
+                periodoPago: "",
+                reclutador: {
+                  nombre: "",
+                  apellidoPaterno: "",
+                  apellidoMaterno: "",
+                  nombreEmpresa: "",
+                  beneficiosEmpresa: {
+                    nombre: "",
+                  },
+                },
+                beneficios: [],
+              };
             }
           })
           .catch((e) => {

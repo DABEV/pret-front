@@ -162,124 +162,95 @@
                   </template>
                   <div class="center">
                     <vs-row justify="space-around">
-                      <vs-col
-                        lg="6"
-                        sm="12"
-                        xs="12"
-                        class="text-center center-item"
-                      >
-                        <div
-                          class="content-selection padding-xy space content-card center-item"
+                      <vs-col lg="5" sm="12" xs="12">
+                        Fecha vigencia
+                        <vs-input
+                          type="date"
+                          block
+                          class="space input-date"
+                          primary
+                          v-model="vacanteDialog.fechaVigencia"
                         >
-                          Fecha vigencia
-                          <vs-input
-                            type="date"
-                            block
-                            class="space input-date"
-                            primary
-                            v-model="vacanteDialog.fechaVigencia"
-                          >
-                            <template #icon
-                              ><em class="bx bxs-calendar"></em
-                            ></template>
-                          </vs-input>
-                        </div>
-                        <div
-                          class="content-selection padding-xy space content-card center-item"
-                        >
-                          Sueldo mínimo
-                          <vs-input
-                            primary
-                            block
-                            class="space"
-                            type="number"
-                            v-model="vacanteDialog.sueldoMin"
-                            placeholder="1000"
-                          >
-                            <template #icon
-                              ><em class="bx bx-money"></em
-                            ></template>
-                          </vs-input>
-                        </div>
-                        <div
-                          class="content-selection padding-xy space content-card center-item"
-                        >
-                          Tipo
-                          <vs-input
-                            primary
-                            block
-                            class="space"
-                            v-model="vacanteDialog.tipo"
-                            placeholder="Horario de trabajo"
-                          >
-                            <template #icon
-                              ><em class="bx bxs-time-five"></em
-                            ></template>
-                          </vs-input>
-                        </div>
+                          <template #icon>
+                            <em class="bx bxs-calendar"></em>
+                          </template>
+                        </vs-input>
                       </vs-col>
-                      <vs-col
-                        lg="6"
-                        sm="12"
-                        xs="12"
-                        class="text-center center-item"
-                      >
-                        <div
-                          class="content-selection padding-xy space content-card center-item"
+                      <vs-col lg="5" sm="12" xs="12">
+                        Sueldo mínimo
+                        <vs-input
+                          primary
+                          block
+                          class="space"
+                          type="number"
+                          v-model="vacanteDialog.sueldoMin"
+                          placeholder="1000"
                         >
-                          Modalidad
-                          <vs-input
-                            primary
-                            v-model="vacanteDialog.modalidad"
-                            placeholder="Modalidad de trabajo"
-                            block
-                            class="space"
-                          >
-                            <template #icon
-                              ><em class="bx bxs-briefcase"></em
-                            ></template>
-                          </vs-input>
-                        </div>
-                        <div
-                          class="content-selection padding-xy space content-card center-item"
-                        >
-                          Sueldo máximo
-                          <vs-input
-                            type="number"
-                            block
-                            class="space"
-                            primary
-                            v-model="vacanteDialog.sueldoMax"
-                            placeholder="1000.99"
-                          >
-                            <template #icon
-                              ><em class="bx bx-money"></em
-                            ></template>
-                          </vs-input>
-                        </div>
-                        <div
-                          class="content-selection padding-xy space content-card center-item"
-                        >
-                          Periodo de pago
-                          <vs-input
-                            primary
-                            v-model="vacanteDialog.periodoPago"
-                            placeholder="Lapso de pago"
-                            block
-                            class="space"
-                          >
-                            <template #icon
-                              ><em class="bx bxs-graduation"></em
-                            ></template>
-                          </vs-input>
-                        </div>
+                          <template #icon>
+                            <em class="bx bx-money"></em>
+                          </template>
+                        </vs-input>
                       </vs-col>
-                      <vs-col
-                        lg="4"
-                        sm="12"
-                        xs="12"
-                      >
+                      <vs-col lg="5" sm="12" xs="12">
+                        Tipo
+                        <vs-input
+                          primary
+                          block
+                          class="space"
+                          v-model="vacanteDialog.tipo"
+                          placeholder="Horario de trabajo"
+                        >
+                          <template #icon>
+                            <em class="bx bxs-time-five"></em>
+                          </template>
+                        </vs-input>
                       </vs-col>
+                      <vs-col lg="5" sm="12" xs="12">
+                        Modalidad
+                        <vs-input
+                          primary
+                          v-model="vacanteDialog.modalidad"
+                          placeholder="Modalidad de trabajo"
+                          block
+                          class="space"
+                        >
+                          <template #icon>
+                            <em class="bx bxs-briefcase"></em>
+                          </template>
+                        </vs-input>
+                      </vs-col>
+                      <vs-col lg="5" sm="12" xs="12">
+                        Sueldo máximo
+                        <vs-input
+                          type="number"
+                          block
+                          class="space"
+                          primary
+                          v-model="vacanteDialog.sueldoMax"
+                          placeholder="1000.99"
+                        >
+                          <template #icon>
+                            <em class="bx bx-money"></em>
+                          </template>
+                        </vs-input>
+                      </vs-col>
+                      <vs-col lg="5" sm="12" xs="12">
+                        Periodo de pago
+                        <vs-input
+                          primary
+                          v-model="vacanteDialog.periodoPago"
+                          placeholder="Lapso de pago"
+                          block
+                          class="space"
+                        >
+                          <template #icon>
+                            <em class="bx bxs-graduation"></em>
+                          </template>
+                        </vs-input>
+                      </vs-col>
+                      <vs-col lg="4" sm="12" xs="12"> </vs-col>
+                    </vs-row>
+                    <vs-row justify="center">
                       <vs-col
                         lg="4"
                         sm="12"
@@ -297,12 +268,6 @@
                             <i class="bx bxs-save"></i>&nbsp;Guardar
                           </template>
                         </vs-button>
-                      </vs-col>
-                      <vs-col
-                        lg="4"
-                        sm="12"
-                        xs="12"
-                      >
                       </vs-col>
                     </vs-row>
                   </div>
@@ -394,22 +359,35 @@ export default {
         console.log(e);
       }
     },
-    async actualizarVacante(){
-      try{
+    async actualizarVacante() {
+      try {
         RecruiterService.actualizarVacante(this.vacanteDialog)
-        .then((response) =>{
-          if(response.data){
-            this.openNotification(1, response.data.title, response.data.message);
-            this.actualizar = false;
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-          this.openNotification(4, e.response.data.title, e.response.data.message);
-        });
-      }catch(e){
+          .then((response) => {
+            if (response.data) {
+              this.openNotification(
+                1,
+                response.data.title,
+                response.data.message
+              );
+              this.actualizar = false;
+              this.listarVacantes();
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+            this.openNotification(
+              4,
+              e.response.data.title,
+              e.response.data.message
+            );
+          });
+      } catch (e) {
         console.log(e);
-        this.openNotification(4, "Hubo un error!", "Espera a que soporte técnico repare el problema");
+        this.openNotification(
+          4,
+          "Hubo un error!",
+          "Espera a que soporte técnico repare el problema"
+        );
       }
     },
     openNotification(border_, title_, text_) {
