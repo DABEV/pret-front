@@ -40,5 +40,9 @@ class CandidateService {
   addCertificate(data) {
     return API_TOKEN.post("certificacion/registrar", data);
   }
+
+  addCourse(data) {
+    return API_TOKEN.post("curso/registrar", data);
+  }
 }
 export default new CandidateService();

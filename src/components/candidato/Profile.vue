@@ -380,12 +380,13 @@
               <template #title>
                 <vs-row>
                   <vs-col lg="2" sm="3" xs="3">
-                    <vs-avatar primary>
+                    <vs-avatar primary size="40">
                       <i class="bx bxs-hot"></i>
                     </vs-avatar>
                   </vs-col>
                   <vs-col lg="10" sm="9" xs="9">
-                    <h3>{{ c.nombre }}</h3>
+                    <p class="bold">{{ c.nombre }}</p>
+                    <small>{{c.empresa}}</small>
                   </vs-col>
                 </vs-row>
               </template>
