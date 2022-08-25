@@ -28,5 +28,9 @@ class CandidateService {
     applyVancy(data){
         return API_TOKEN.post("postulacion/registrar", data)
     }
+
+    listarPostulaciones(){
+        return API_TOKEN.get("postulacion/obtener/candidato",);
+    }
 }
 export default new CandidateService();
