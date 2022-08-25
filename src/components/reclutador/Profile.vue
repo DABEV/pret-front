@@ -119,13 +119,8 @@
                   <span class="border"></span>
                 </div>
                 <div class="callout-seccess">
-                  <p v-if="reclutador.vacantes != null">
-                    Vacantes:
-                    <small>{{ reclutador.vacantes.length }} publicadas</small>
-                  </p>
-                  <p v-else>
-                    Vacantes:
-                    <small>0 publicadas</small>
+                  <p>
+                    Vacantes: publica una nueva vacante
                   </p>
                 </div>
                 <vs-row justify="center">
@@ -252,6 +247,7 @@ export default {
       RecruiterService.getProfile()
         .then((response) => {
           this.reclutador = response.data.data;
+          console.log(response.data.data)
           this.reclutador.contrasena = "Ninguna1*";
         })
         .catch((e) => {
