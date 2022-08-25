@@ -214,7 +214,7 @@
   </div>
 </template>
 
-<script> 
+<script>
 import ShareDialog from "./dialogsVacante/ShareDialog.vue";
 import DetailsDialog from "./dialogsVacante/DetailsDialog.vue";
 import CatalogueService from "../../service/Catalogues/CatalogueService";
@@ -246,8 +246,8 @@ export default {
         beneficios: [
           {
             id: 0,
-            nombre: ""
-          }
+            nombre: "",
+          },
         ],
         tipo: "",
         modalidad: "",
@@ -256,19 +256,19 @@ export default {
         sueldoMax: 0,
         fechaInicio: "",
         fechaVigencia: "",
-        descripcion:
-          "",
+        descripcion: "",
       },
     ],
   }),
   methods: {
-    cargarVacantes(){
+    cargarVacantes() {
       CatalogueService.listarVacantes()
-      .then((response) => {
-        this.vacantes = response.data.data;
-      }).catch((e) => {
-        console.log(e);
-      });
+        .then((response) => {
+          this.vacantes = response.data.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     },
     Detalles: function (vacante) {
       this.active = !this.active;
@@ -282,13 +282,13 @@ export default {
     },
   },
   components: { ShareDialog, DetailsDialog },
-  mounted(){
+  mounted() {
     this.cargarVacantes();
   },
   computed: {
-    isAuth(){
+    isAuth() {
       return localStorage.getItem("token");
-    }
-  }
-}; 
+    },
+  },
+};
 </script>

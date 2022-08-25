@@ -24,5 +24,9 @@ class CandidateService {
     listarAmigos(){
         return API_TOKEN.get("contacto/lista-amigos",);
     }
+
+    applyVancy(data){
+        return API_TOKEN.post("postulacion/registrar", data)
+    }
 }
 export default new CandidateService();
